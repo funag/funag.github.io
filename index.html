@@ -1,39 +1,345 @@
-<html><head><title>funag</title><style>
-        body, html {
-          height: 100%;
-          width: 100%;
-          margin: 0;
-          padding: 0;
-        }
-        
-        body {
-          font-family: Open Sans, sans-serif;
-          font-weight: 400;
-          color: rgb(51, 51, 51);
-          -webkit-font-smoothing: antialiased;
-          -webkit-user-select: none;
-          overflow: hidden;
-        }
-        
-        input {
-          font-family: Open Sans, sans-serif;
-        }
-        
-        input::-webkit-input-placeholder{
-          color: inherit;
-          opacity: 0.5;
-        }
-        
-        div, form {
-          box-sizing: border-box;
-        }
-        
-        #container {
-          height: 100%;
-        }
-        @keyframes horizontal-motion { 
-          0%{background-position:0% 50%}
-          50%{background-position:100% 50%}
-          100%{background-position:0% 50%}
-        }
-        </style><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600"><link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"></head><body><div id="container"><div style="height: 100%; display: flex; flex-direction: column"><form class="search" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; min-height: 60px; box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.70); transform: translateZ(0); background-color: #2196F3; color: rgb(255, 255, 255); top: 0; left: 0; right: 0; margin: 0"><input type="text" placeholder="Search" value="" style="border: none; flex: 1 0 0; font-size: 1em; color: rgb(255, 255, 255); font-weight: 600; outline: none; background-color: transparent; padding-left: 10px"><div style="height: 60px; width: 60px; display: flex; flex-direction: column; justify-content: center; align-items: center"><div class="loader"></div></div></form><div class="playlist" style="background-color: #fff; overflow: auto; height: 100%"><div><div class="playlist-item-placeholder" style="display: flex; flex-direction: row; justify-content: flex-start; padding: 10px; align-items: center; border-bottom: 1px solid rgb(249, 246, 246); border-radius: 2px"><div style="height: 50px; width: 50px; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%"></div><div style="flex: 1 0 0; margin: 0 10px"><div style="height: 1em; width: 100%; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%"></div><div style="height: 1em; width: 75%; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%; margin-top: 10px"></div></div></div><div class="playlist-item-placeholder" style="display: flex; flex-direction: row; justify-content: flex-start; padding: 10px; align-items: center; border-bottom: 1px solid rgb(249, 246, 246); border-radius: 2px"><div style="height: 50px; width: 50px; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%"></div><div style="flex: 1 0 0; margin: 0 10px"><div style="height: 1em; width: 100%; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%"></div><div style="height: 1em; width: 75%; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%; margin-top: 10px"></div></div></div><div class="playlist-item-placeholder" style="display: flex; flex-direction: row; justify-content: flex-start; padding: 10px; align-items: center; border-bottom: 1px solid rgb(249, 246, 246); border-radius: 2px"><div style="height: 50px; width: 50px; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%"></div><div style="flex: 1 0 0; margin: 0 10px"><div style="height: 1em; width: 100%; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%"></div><div style="height: 1em; width: 75%; background: linear-gradient(to right , rgb(245, 245, 245), #fff); animation: horizontal-motion 1000ms linear infinite; background-size: 400%; margin-top: 10px"></div></div></div></div></div><div style="transform: translateZ(0); box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.70); background-color: #2196F3; color: #FFF"><div class="scrobber"><div style="height: 4px; width: 100%"><div class="scrobber-track" style="display: flex; flex-direction: row; justify-content: flex-end; background: rgba(0, 0, 0, 0.3); height: 100%; will-change: transform; transform: translateX(-100%); transform-origin: left; transition: transform 100ms linear; margin-right: 15px"><div class="scrobber-icon" style="height: 15px; width: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 20px; background-color: rgb(153, 145, 255); transform: translateY(-50%) translateX(100%); box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.70)"></div></div></div></div><div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center"><div><div class="ctrl-play" style="height: 60px; width: 60px; display: flex; flex-direction: column; justify-content: center; align-items: center"><i class="fa fa-play" style="font-size: 1em; display: flex; flex-direction: column; justify-content: center; align-items: center"></i></div></div></div></div></div></div><script src="74dee19e1a9d12c54c41.bundle.js"></script></body></html>
+<html><head><title>funag</title><script src="f0c524ea8d117a05f11a.sw.js"></script><style id="server-side-css">.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+.rowSpaceBetween {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.rowSpaceAround {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.colSpaceAround {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.colSpaceBetween {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.colCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.rowCenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.colMiddle {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.rowMiddle {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+.rowLeft {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.rowRight {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.rowWrap {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.colWrap {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.flexSpread {
+  flex: 1 0 0;
+}
+.alignCenter {
+  align-items: center;
+}
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  color: rgb(51, 51, 51);
+  overflow: hidden;
+  font-family:  Open Sans, sans-serif;
+  font-weight: 400;
+  -webkit-user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+input {
+  font-family: Open Sans, sans-serif;
+}
+input::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+div, form {
+  box-sizing: border-box;
+}
+#container {
+  height: 100%;
+}
+.fade-in {
+  animation: fade-in 500ms 1 linear;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.scrobber-3923685673 {
+  width: 100%;
+  height: 4px;
+}
+.scrobberTrack-3462916490 {
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  will-change: transform;
+  margin-right: 15px;
+  transform-origin: left;
+}
+.scrobberIcon-1448664579 {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  transform: translateY(-50%) translateX(100%);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.50);
+  align-items: center;
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #2196F3;
+}
+.loaderContainer-1065740614 {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-714654009 {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 1);
+  transform: translateZ(0);
+  animation: load8 1s infinite linear;
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loader-714654009, .loader-714654009:after {
+  border-radius: 50%;
+}
+.container-3590050811 {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #F6F6F6;
+}
+.playingAnimation-3064614203 {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  flex-direction: row;
+  justify-content: space-between;
+}
+@keyframes playing-animation {
+  0% {
+    transform: scaleY(0.1);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0.1);
+  }
+}
+.placeholder-1408839282 {
+  width: 50px;
+  color: rgba(0, 0, 0, 0.3);
+  height: 50px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #F6F6F6;
+}
+.artwork-3935120754 {
+  width: 50px;
+  margin: 10px;
+  height: 50px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+.playingAnimation-3064614203 li {
+  display: block;
+  flex-grow: 1;
+  margin-right: 1px;
+  background-color: rgb(34, 34, 34);
+  transform-origin: 0 100%;
+}
+.playingAnimation-3064614203 li:last-child {
+  margin-right: 0;
+}
+.playingAnimation-3064614203 li:nth-child(1) {
+  animation: playing-animation 1250ms infinite;
+}
+.playingAnimation-3064614203 li:nth-child(2) {
+  animation: playing-animation 1000ms infinite;
+}
+.playingAnimation-3064614203 li:nth-child(3) {
+  animation: playing-animation 750ms infinite;
+}
+.playingAnimation-3064614203.pause-animation li {
+  animation-play-state: paused;
+}
+.trackDuration-1880482555 {
+  color: rgb(178, 178, 178);
+  font-size: 0.8rem;
+}
+.trackDetailContainer-690834817 {
+  flex: 1 0 0;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.trackDetail-2542201007 {
+  overflow: hidden;
+  margin-right: 10px;
+}
+.title-4198250168 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.artist-602960861 {
+  color: rgb(178, 178, 178);
+  overflow: hidden;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.playlistItem-1570386229 {
+  overflow: hidden;
+  font-size: 1rem;
+}
+.trackInfo-2816264288 {
+  color: rgb(34, 34, 34);
+  border-bottom: 1px solid rgb(249, 246, 246);
+}
+.animatedBG-814673597 {
+  animation: horizontal-motion 1000ms linear infinite;
+  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
+  background-size: 400%;
+}
+.square50-1025100122 {
+  width: 50px;
+  height: 50px;
+  animation: horizontal-motion 1000ms linear infinite;
+  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
+  background-size: 400%;
+}
+.line100-2432056525 {
+  width: 100%;
+  height: 1rem;
+  animation: horizontal-motion 1000ms linear infinite;
+  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
+  background-size: 400%;
+}
+.line75-2461449564 {
+  width: 75%;
+  height: 1rem;
+  animation: horizontal-motion 1000ms linear infinite;
+  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
+  background-size: 400%;
+}
+.lineCol-2505690528 {
+  flex: 1 0 0;
+  margin: 0 10px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.placeholder-3573985942 {
+  padding: 10px;
+  align-items: center;
+  border-bottom: 1px solid rgb(249, 246, 246);
+  border-radius: 2px;
+}
+@keyframes horizontal-motion {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.playlist-796534786 {
+  height: 100%;
+  overflow: auto;
+}
+.input-3281239563 {
+  flex: 1 0 0;
+  color: #FFF;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: transparent;
+}
+.container-3000878586 {
+  color: #FFF;
+  margin: 0;
+  transform: translateZ(0);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.50);
+  padding-left: 10px;
+  background-color: #2196F3;
+}
+.inputContainer-306655957 {
+  min-height: 60px;
+}
+.main-1651175958 {
+  height: 100%;
+}</style><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="manifest" href="5dedb5aad89c8e7942788723f6a4985c.manifest.json"><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600"><link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"></head><body><div id="container"><div class="main-1651175958 flexCol"><form class="search container-3000878586"><div class="inputContainer-306655957 rowSpaceAround alignCenter"><input type="text" class="input-3281239563" placeholder="Search" value=""><div style="height: 60px; width: 60px; display: flex; flex-direction: column; justify-content: center; align-items: center"><div class="loaderContainer-1065740614"><div class="loader-714654009"></div></div></div></div></form><div class="playlist-796534786"><div><div class="placeholder-3573985942 rowLeft"><div class="square50-1025100122"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-3573985942 rowLeft"><div class="square50-1025100122"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-3573985942 rowLeft"><div class="square50-1025100122"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div></div></div><div style="transform: translateZ(0); box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.50); background-color: #2196F3; color: #FFF"><div class="scrobber-3923685673 scrobber"><div class="scrobberTrack-3462916490 rowRight" style="transform: translateX(-100%); transition: transform 100ms linear"><div class="scrobberIcon-1448664579"></div></div></div><div class="rowLeft alignCenter"><div><div class="ctrl-play" style="height: 60px; width: 60px; display: flex; flex-direction: column; justify-content: center; align-items: center"><i class="fa fa-play" style="font-size: 1em"></i></div></div><div></div></div></div></div></div><script src="299f8f997628db42826a.client.js"></script></body></html>
