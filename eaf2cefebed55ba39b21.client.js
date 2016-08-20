@@ -24073,7 +24073,7 @@
 	  return _rx.Observable.combineLatest(searchBox.DOM, playlist.DOM, controls.DOM).map(function (views) {
 	    return snabbdom.html(
 	      'div',
-	      { className: (0, _main2.default)(_main2.default.main, 'flexCol') },
+	      { className: (0, _main2.default)(_main2.default.main, 'flb col') },
 	      views
 	    );
 	  });
@@ -33293,7 +33293,7 @@
 	      { className: (0, _scrobber2.default)(_scrobber2.default.scrobber, 'scrobber') },
 	      snabbdom.html(
 	        'div',
-	        { className: (0, _scrobber2.default)(_scrobber2.default.scrobberTrack, 'rowRight', 'draggable-marker'),
+	        { className: (0, _scrobber2.default)(_scrobber2.default.scrobberTrack, 'flb row jc_fe', 'draggable-marker'),
 	          style: style({ completion: completion, transition: transition }) },
 	        snabbdom.html('div', { className: _scrobber2.default.scrobberIcon })
 	      )
@@ -36322,7 +36322,7 @@
 
 	var fa = exports.fa = function fa(name) {
 	  var dim = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
-	  return (0, _dom.i)('.fa.fa-' + name + ' colMiddle', { style: { fontSize: dim + 'em' } });
+	  return (0, _dom.i)('.fa.fa-' + name + ' flb col jc_c ai_c', { style: { fontSize: dim + 'em' } });
 	};
 	var overflowEllipsisSTY = exports.overflowEllipsisSTY = {
 	  overflow: 'hidden',
@@ -36385,7 +36385,7 @@
 	    DOM: _rx.Observable.combineLatest(playbackButtons.DOM, (0, _PlaybackInfo2.default)({ selectedTrack$: selectedTrack$ }).DOM).map(function (views) {
 	      return snabbdom.html(
 	        'div',
-	        { className: 'rowLeft alignCenter' },
+	        { className: 'flb row jc_s ai_c' },
 	        views
 	      );
 	    })
@@ -37363,7 +37363,7 @@
 	      { className: (0, _playlistItem2.default)(_playlistItem2.default.playlistItem, 'playlist-item') },
 	      snabbdom.html(
 	        'div',
-	        { className: (0, _playlistItem2.default)(_playlistItem2.default.trackInfo, 'rowSpaceBetween', 'alignCenter') },
+	        { className: (0, _playlistItem2.default)(_playlistItem2.default.trackInfo, 'flb row jc_sb ai_c') },
 	        icon,
 	        trackDetail
 	      )
@@ -37583,7 +37583,7 @@
 	  return snabbdom.html(
 	    'div',
 	    {
-	      className: (0, _trackDetails2.default)(_trackDetails2.default.trackDetailContainer, 'rowSpaceBetween', 'alignCenter') },
+	      className: (0, _trackDetails2.default)(_trackDetails2.default.trackDetailContainer, 'flb row js_sb ai_c') },
 	    snabbdom.html(
 	      'div',
 	      { className: _trackDetails2.default.trackDetail },
@@ -37954,7 +37954,7 @@
 
 	var PlaylistItem = exports.PlaylistItem = snabbdom.html(
 	  'div',
-	  { className: (0, _placeholders2.default)(_placeholders2.default.placeholder, 'rowLeft') },
+	  { className: (0, _placeholders2.default)(_placeholders2.default.placeholder, 'flb row jc_s') },
 	  snabbdom.html('div', { className: _placeholders2.default.square50 }),
 	  snabbdom.html(
 	    'div',
@@ -38096,7 +38096,7 @@
 	    { className: (0, _search2.default)('search', _search2.default.container) },
 	    snabbdom.html(
 	      'div',
-	      { className: (0, _search2.default)(_search2.default.inputContainer, 'rowSpaceAround', 'alignCenter') },
+	      { className: (0, _search2.default)(_search2.default.inputContainer, 'flb row jc_sa ai_c') },
 	      snabbdom.html('input', { type: 'text', className: _search2.default.input, placeholder: 'Search',
 	        value: value }),
 	      icon
