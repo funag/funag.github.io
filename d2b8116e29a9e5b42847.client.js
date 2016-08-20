@@ -33279,8 +33279,7 @@
 	  var transition = _ref.transition;
 	  return {
 	    transform: 'translateX(' + (100 * completion - 100) + '%)',
-	    transition: transition ? 'transform 100ms linear' : null,
-	    willChange: transition ? null : 'transform'
+	    transition: transition ? 'transform 100ms linear' : null
 	  };
 	};
 	var view = function view(_ref2) {
@@ -33617,7 +33616,8 @@
 	  scrobberTrack: {
 	    background: _Themes.Palette.bg__scrobberTrack,
 	    height: '100%',
-	    transformOrigin: 'left'
+	    transformOrigin: 'left',
+	    willChange: 'transform'
 	  },
 	  scrobberIcon: _extends({
 	    transform: 'translateY(-50%) translateX(50%)'
