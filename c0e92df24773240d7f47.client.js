@@ -36271,7 +36271,7 @@
 	};
 
 	var BlockHeight = exports.BlockHeight = 50;
-	var BlockSpace = exports.BlockSpace = 8;
+	var BlockSpace = exports.BlockSpace = 6;
 
 /***/ },
 /* 186 */
