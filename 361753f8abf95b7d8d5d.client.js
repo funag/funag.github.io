@@ -38081,7 +38081,7 @@
 
 	    var a = _ref4[0];
 	    var b = _ref4[1];
-	    return [a.value, b.value];
+	    return [a.value.preventDefault(), b.value.preventDefault()];
 	  });
 	};
 
