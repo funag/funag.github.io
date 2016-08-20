@@ -1,26 +1,1620 @@
-(function(b){function f(e){if(c[e])return c[e].exports;var h=c[e]={exports:{},id:e,loaded:!1};b[e].call(h.exports,h,h.exports,f);h.loaded=!0;return h.exports}var c={};f.m=b;f.c=c;f.p="";return f(0)})({0:function(b,f,c){b=(b=c(223))&&b.__esModule?b:{default:b};c={policy:"fastest"};f={policy:"fastest"};c&&(c=c.policy,b.default.router.get("/",b.default[c]),b.default.router.get(/.*bundle.*/,b.default[c]));f&&(f=f.policy,b.default.router.get(/^.*googleapis.*$/,b.default[f]),b.default.router.get(/^.*gstatic.*$/,
-b.default[f]),b.default.router.get(/^.*bootstrapcdn.*$/,b.default[f]),b.default.router.get(/^.*snd\.cdn.*$/,b.default[f]))},223:function(b,f,c){c(224);var e=c(225),h=c(226),l=c(230);f=c(232);l.debug("Service Worker Toolbox is loading");var a=function(a){return a.reduce(function(d,k){return d.concat(k)},[])},g=function(a){var d=Array.isArray(a);d&&a.forEach(function(a){"string"===typeof a||a instanceof Request||(d=!1)});if(!d)throw new TypeError("The precache method expects either an array of strings and/or Requests or a Promise that resolves to an array of strings and/or Requests.");
-return a};self.addEventListener("install",function(m){var d=e.cache.name+"$$$inactive$$$";l.debug("install event fired");l.debug("creating cache ["+d+"]");m.waitUntil(l.openCache({cache:{name:d}}).then(function(d){return Promise.all(e.preCacheItems).then(a).then(g).then(function(a){l.debug("preCache list: "+(a.join(", ")||"(none)"));return d.addAll(a)})}))});self.addEventListener("activate",function(a){l.debug("activate event fired");a.waitUntil(l.renameCache(e.cache.name+"$$$inactive$$$",e.cache.name))});
-self.addEventListener("fetch",function(a){var d=h.match(a.request);d?a.respondWith(d(a.request)):h.default&&"GET"===a.request.method&&a.respondWith(h.default(a.request))});b.exports={networkOnly:f.networkOnly,networkFirst:f.networkFirst,cacheOnly:f.cacheOnly,cacheFirst:f.cacheFirst,fastest:f.fastest,router:h,options:e,cache:function(a,d){return l.openCache(d).then(function(d){return d.add(a)})},uncache:function(a,d){return l.openCache(d).then(function(d){return d.delete(a)})},precache:function(a){a instanceof
-Promise||g(a);e.preCacheItems=e.preCacheItems.concat(a)}}},224:function(b,f){(function(){var c=Cache.prototype.addAll,b=navigator.userAgent.match(/(Firefox|Chrome)\/(\d+\.)/);if(b)var h=b[1],l=parseInt(b[2]);c&&(!b||"Firefox"===h&&46<=l||"Chrome"===h&&50<=l)||(Cache.prototype.addAll=function(a){function g(a){this.name="NetworkError";this.code=19;this.message=a}var b=this;g.prototype=Object.create(Error.prototype);return Promise.resolve().then(function(){if(1>arguments.length)throw new TypeError;a=
-a.map(function(a){return a instanceof Request?a:String(a)});return Promise.all(a.map(function(a){"string"===typeof a&&(a=new Request(a));var k=(new URL(a.url)).protocol;if("http:"!==k&&"https:"!==k)throw new g("Invalid scheme");return fetch(a.clone())}))}).then(function(d){if(d.some(function(a){return!a.ok}))throw new g("Incorrect response status");return Promise.all(d.map(function(d,g){return b.put(a[g],d)}))}).then(function(){})},Cache.prototype.add=function(a){return this.addAll([a])})})()},225:function(b,
-f){var c;c=self.registration?self.registration.scope:self.scope||(new URL("./",self.location)).href;b.exports={cache:{name:"$$$toolbox-cache$$$"+c+"$$$",maxAgeSeconds:null,maxEntries:null},debug:!1,networkTimeoutSeconds:null,preCacheItems:[],successResponses:/^0|([123]\d\d)|(40[14567])|410$/}},226:function(b,f,c){var e=c(227),h=function(a,g){for(var b=a.entries(),d=b.next(),k=[];!d.done;)(new RegExp(d.value[0])).test(g)&&k.push(d.value[1]),d=b.next();return k},l=function(){this.routes=new Map;this.routes.set(RegExp,
-new Map);this.default=null};"get post put delete head any".split(" ").forEach(function(a){l.prototype[a]=function(g,b,d){return this.add(a,g,b,d)}});l.prototype.add=function(a,g,b,d){d=d||{};var k;g instanceof RegExp?k=RegExp:(k=d.origin||self.location.origin,k=k instanceof RegExp?k.source:k.replace(/[-\/\\^$*+?.()|[\]{}]/g,"\\$&"));a=a.toLowerCase();g=new e(a,g,b,d);this.routes.has(k)||this.routes.set(k,new Map);k=this.routes.get(k);k.has(a)||k.set(a,new Map);k.get(a).set((g.regexp||g.fullUrlRegExp).source,
-g)};l.prototype.matchMethod=function(a,g){var b=new URL(g),d=b.pathname;return this._match(a,h(this.routes,b.origin),d)||this._match(a,[this.routes.get(RegExp)],g)};l.prototype._match=function(a,b,c){if(0===b.length)return null;for(var d=0;d<b.length;d++){var k=b[d];if(k=k&&k.get(a.toLowerCase()))if(k=h(k,c),0<k.length)return k[0].makeHandler(c)}return null};l.prototype.match=function(a){return this.matchMethod(a.method,a.url)||this.matchMethod("any",a.url)};b.exports=new l},227:function(b,f,c){var e=
-(new URL("./",self.location)).pathname,h=c(228);f=function(b,a,g,c){a instanceof RegExp?this.fullUrlRegExp=a:(0!==a.indexOf("/")&&(a=e+a),this.keys=[],this.regexp=h(a,this.keys));this.method=b;this.options=c;this.handler=g};f.prototype.makeHandler=function(b){var a;if(this.regexp){var g=this.regexp.exec(b);a={};this.keys.forEach(function(b,d){a[b.name]=g[d+1]})}return function(b){return this.handler(b,a,this.options)}.bind(this)};b.exports=f},228:function(b,f,c){function e(a){for(var d=[],b=0,k=0,
-g="",c;null!=(c=p.exec(a));){var e=c[0],h=c[1],l=c.index,g=g+a.slice(k,l),k=l+e.length;if(h)g+=h[1];else{var f=a[k],e=c[2],h=c[3],r=c[4],m=c[5],q=c[6],l=c[7];g&&(d.push(g),g="");var f=null!=e&&null!=f&&f!==e,v="+"===q||"*"===q,q="?"===q||"*"===q;c=c[2]||"/";r=r||m||(l?".*":"[^"+c+"]+?");d.push({name:h||b++,prefix:e||"",delimiter:c,optional:q,repeat:v,partial:f,asterisk:!!l,pattern:r.replace(/([=!:$\/()])/g,"\\$1")})}}k<a.length&&(g+=a.substr(k));g&&d.push(g);return d}function h(a){return encodeURI(a).replace(/[\/?#]/g,
-function(a){return"%"+a.charCodeAt(0).toString(16).toUpperCase()})}function l(a){return encodeURI(a).replace(/[?#]/g,function(a){return"%"+a.charCodeAt(0).toString(16).toUpperCase()})}function a(a){for(var d=Array(a.length),b=0;b<a.length;b++)"object"===typeof a[b]&&(d[b]=new RegExp("^(?:"+a[b].pattern+")$"));return function(b,g){for(var k="",c=b||{},e=(g||{}).pretty?h:encodeURIComponent,f=0;f<a.length;f++){var n=a[f];if("string"===typeof n)k+=n;else{var m=c[n.name],p;if(null==m)if(n.optional){n.partial&&
-(k+=n.prefix);continue}else throw new TypeError('Expected "'+n.name+'" to be defined');if(r(m)){if(!n.repeat)throw new TypeError('Expected "'+n.name+'" to not repeat, but received `'+JSON.stringify(m)+"`");if(0===m.length)if(n.optional)continue;else throw new TypeError('Expected "'+n.name+'" to not be empty');for(var q=0;q<m.length;q++){p=e(m[q]);if(!d[f].test(p))throw new TypeError('Expected all "'+n.name+'" to match "'+n.pattern+'", but received `'+JSON.stringify(p)+"`");k+=(0===q?n.prefix:n.delimiter)+
-p}}else{p=n.asterisk?l(m):e(m);if(!d[f].test(p))throw new TypeError('Expected "'+n.name+'" to match "'+n.pattern+'", but received "'+p+'"');k+=n.prefix+p}}}return k}}function g(a){return a.replace(/([.+*?=^!:${}()[\]|\/\\])/g,"\\$1")}function m(a,d){a.keys=d;return a}function d(a,d){d=d||{};for(var b=d.strict,k=!1!==d.end,c="",e=a[a.length-1],e="string"===typeof e&&/\/$/.test(e),f=0;f<a.length;f++){var h=a[f];if("string"===typeof h)c+=g(h);else{var l=g(h.prefix),m="(?:"+h.pattern+")";h.repeat&&(m+=
-"(?:"+l+m+")*");m=h.optional?h.partial?l+"("+m+")?":"(?:"+l+"("+m+"))?":l+"("+m+")";c+=m}}b||(c=(e?c.slice(0,-2):c)+"(?:\\/(?=$))?");return new RegExp("^"+(k?c+"$":c+(b&&e?"":"(?=\\/|$)")),d.sensitive?"":"i")}function k(a,b,c){b=b||[];r(b)?c||(c={}):(c=b,b=[]);if(a instanceof RegExp){if(c=a.source.match(/\((?!\?)/g))for(var g=0;g<c.length;g++)b.push({name:g,prefix:null,delimiter:null,optional:!1,repeat:!1,partial:!1,asterisk:!1,pattern:null});return m(a,b)}if(r(a)){for(var g=[],h=0;h<a.length;h++)g.push(k(a[h],
-b,c).source);a=new RegExp("(?:"+g.join("|")+")",c.sensitive?"":"i");return m(a,b)}a=e(a);c=d(a,c);for(g=0;g<a.length;g++)"string"!==typeof a[g]&&b.push(a[g]);return m(c,b)}var r=c(229);b.exports=k;b.exports.parse=e;b.exports.compile=function(b){return a(e(b))};b.exports.tokensToFunction=a;b.exports.tokensToRegExp=d;var p=/(\\.)|([\/.])?(?:(?:\:(\w+)(?:\(((?:\\.|[^\\()])+)\))?|\(((?:\\.|[^\\()])+)\))([+*?])?|(\*))/g},229:function(b,f){b.exports=Array.isArray||function(b){return"[object Array]"==Object.prototype.toString.call(b)}},
-230:function(b,f,c){function e(b,c){c=c||{};(c.debug||a.debug)&&console.log("[sw-toolbox] "+b)}function h(b){var c;b&&b.cache&&(c=b.cache.name);c=c||a.cache.name;return caches.open(c)}function l(a,b,c){var h=a.url,f=c.maxAgeSeconds,l=c.maxEntries;a=c.name;var m=Date.now();e("Updating LRU order for "+h+". Max entries is "+l+", max age is "+f);return g.getDb(a).then(function(a){return g.setTimestampForUrl(a,h,m)}).then(function(a){return g.expireEntries(a,l,f,m)}).then(function(a){e("Successfully updated IDB.");
-a=a.map(function(a){return b.delete(a)});return Promise.all(a).then(function(){e("Done with cache cleanup.")})}).catch(function(a){e(a)})}var a=c(225),g=c(231),m;b.exports={debug:e,fetchAndCache:function(b,c){c=c||{};var g=c.successResponses||a.successResponses;return fetch(b.clone()).then(function(e){"GET"===b.method&&g.test(e.status)&&h(c).then(function(g){g.put(b,e).then(function(){var e=c.cache||a.cache;(e.maxEntries||e.maxAgeSeconds)&&e.name&&(e=l.bind(null,b,g,e),m=m?m.then(e):e())})});return e.clone()})},
-openCache:h,renameCache:function(a,b,c){e("Renaming cache: ["+a+"] to ["+b+"]",c);return caches.delete(b).then(function(){return Promise.all([caches.open(a),caches.open(b)]).then(function(b){var c=b[0],g=b[1];return c.keys().then(function(a){return Promise.all(a.map(function(a){return c.match(a).then(function(b){return g.put(a,b)})}))}).then(function(){return caches.delete(a)})})})}}},231:function(b,f){function c(a){return new Promise(function(b,c){var d=indexedDB.open("sw-toolbox-"+a,1);d.onupgradeneeded=
-function(){d.result.createObjectStore("store",{keyPath:"url"}).createIndex("timestamp","timestamp",{unique:!1})};d.onsuccess=function(){b(d.result)};d.onerror=function(){c(d.error)}})}function e(a,b,c){return b?new Promise(function(d,e){var h=1E3*b,f=[],l=a.transaction("store","readwrite"),t=l.objectStore("store");t.index("timestamp").openCursor().onsuccess=function(a){if((a=a.target.result)&&c-h>a.value.timestamp){var b=a.value.url;f.push(b);t.delete(b);a.continue()}};l.oncomplete=function(){d(f)};
-l.onabort=e}):Promise.resolve([])}function h(a,b){return b?new Promise(function(c,d){var e=[],h=a.transaction("store","readwrite"),f=h.objectStore("store"),l=f.index("timestamp"),t=l.count();l.count().onsuccess=function(){var a=t.result;a>b&&(l.openCursor().onsuccess=function(c){if(c=c.target.result){var d=c.value.url;e.push(d);f.delete(d);a-e.length>b&&c.continue()}})};h.oncomplete=function(){c(e)};h.onabort=d}):Promise.resolve([])}var l={};b.exports={getDb:function(a){a in l||(l[a]=c(a));return l[a]},
-setTimestampForUrl:function(a,b,c){return new Promise(function(d,e){var h=a.transaction("store","readwrite");h.objectStore("store").put({url:b,timestamp:c});h.oncomplete=function(){d(a)};h.onabort=function(){e(h.error)}})},expireEntries:function(a,b,c,d){return e(a,c,d).then(function(c){return h(a,b).then(function(a){return c.concat(a)})})}}},232:function(b,f,c){b.exports={networkOnly:c(233),networkFirst:c(234),cacheOnly:c(235),cacheFirst:c(236),fastest:c(237)}},233:function(b,f,c){var e=c(230);b.exports=
-function(b,c,a){e.debug("Strategy: network only ["+b.url+"]",a);return fetch(b)}},234:function(b,f,c){var e=c(225),h=c(230);b.exports=function(b,a,c){c=c||{};var f=c.successResponses||e.successResponses,d=c.networkTimeoutSeconds||e.networkTimeoutSeconds;h.debug("Strategy: network first ["+b.url+"]",c);return h.openCache(c).then(function(a){var e,p=[],u;if(d){var t=new Promise(function(c){e=setTimeout(function(){a.match(b).then(function(a){a&&c(a)})},1E3*d)});p.push(t)}t=h.fetchAndCache(b,c).then(function(a){e&&
-clearTimeout(e);if(f.test(a.status))return a;h.debug("Response was an HTTP error: "+a.statusText,c);u=a;throw Error("Bad response");}).catch(function(d){h.debug("Network or response error, fallback to cache ["+b.url+"]",c);return a.match(b).then(function(a){if(a)return a;if(u)return u;throw d;})});p.push(t);return Promise.race(p)})}},235:function(b,f,c){var e=c(230);b.exports=function(b,c,a){e.debug("Strategy: cache only ["+b.url+"]",a);return e.openCache(a).then(function(a){return a.match(b)})}},
-236:function(b,f,c){var e=c(230);b.exports=function(b,c,a){e.debug("Strategy: cache first ["+b.url+"]",a);return e.openCache(a).then(function(c){return c.match(b).then(function(c){return c?c:e.fetchAndCache(b,a)})})}},237:function(b,f,c){var e=c(230),h=c(235);b.exports=function(b,a,c){e.debug("Strategy: fastest ["+b.url+"]",c);return new Promise(function(f,d){var k=!1,r=[],p=function(a){r.push(a.toString());k?d(Error('Both cache and network failed: "'+r.join('", "')+'"')):k=!0},u=function(a){a instanceof
-Response?f(a):p("No result returned")};e.fetchAndCache(b.clone(),c).then(u,p);h(b,a,c).then(u,p)})}}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 0:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by tushar.mathur on 24/04/16.
+	 */
+
+	'use strict';
+
+	var _swToolbox = __webpack_require__(223);
+
+	var _swToolbox2 = _interopRequireDefault(_swToolbox);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var swConfig = ({"env":"production","port":8081,"sw":{"debug":false,"preCache":true,"appCache":{"policy":"fastest"},"externalCache":{"policy":"fastest"}},"express":{"useGzipped":true},"webpack":{"devtool":false,"middleware":false,"optimizeJS":true,"compression":true},"baseURI":"https://api.soundcloud.com","proxy":false,"soundCloud":{"clientID":"1862b9bf02ed7c80d0f545f835ad8773"}}).sw;
+
+	if (swConfig.appCache) {
+	  var policy = swConfig.appCache.policy;
+
+	  _swToolbox2.default.router.get('/', _swToolbox2.default[policy]);
+	  _swToolbox2.default.router.get(/.*bundle.*/, _swToolbox2.default[policy]);
+	}
+
+	if (swConfig.externalCache) {
+	  var _policy = swConfig.externalCache.policy;
+
+	  _swToolbox2.default.router.get(/^.*googleapis.*$/, _swToolbox2.default[_policy]);
+	  _swToolbox2.default.router.get(/^.*gstatic.*$/, _swToolbox2.default[_policy]);
+	  _swToolbox2.default.router.get(/^.*bootstrapcdn.*$/, _swToolbox2.default[_policy]);
+	  _swToolbox2.default.router.get(/^.*snd\.cdn.*$/, _swToolbox2.default[_policy]);
+	}
+
+	if (swConfig.debug) {
+	  _swToolbox2.default.options.debug = true;
+	}
+
+/***/ },
+
+/***/ 223:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	  Copyright 2014 Google Inc. All Rights Reserved.
+
+	  Licensed under the Apache License, Version 2.0 (the "License");
+	  you may not use this file except in compliance with the License.
+	  You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+	  Unless required by applicable law or agreed to in writing, software
+	  distributed under the License is distributed on an "AS IS" BASIS,
+	  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	  See the License for the specific language governing permissions and
+	  limitations under the License.
+	*/
+	'use strict';
+
+	__webpack_require__(224);
+	var options = __webpack_require__(225);
+	var router = __webpack_require__(226);
+	var helpers = __webpack_require__(230);
+	var strategies = __webpack_require__(232);
+
+	helpers.debug('Service Worker Toolbox is loading');
+
+	// Install
+	var flatten = function(items) {
+	  return items.reduce(function(a, b) {
+	    return a.concat(b);
+	  }, []);
+	};
+
+	var validatePrecacheInput = function(items) {
+	  var isValid = Array.isArray(items);
+	  if (isValid) {
+	    items.forEach(function(item) {
+	      if (!(typeof item === 'string' || (item instanceof Request))) {
+	        isValid = false;
+	      }
+	    });
+	  }
+
+	  if (!isValid) {
+	    throw new TypeError('The precache method expects either an array of ' +
+	    'strings and/or Requests or a Promise that resolves to an array of ' +
+	    'strings and/or Requests.');
+	  }
+
+	  return items;
+	};
+
+	self.addEventListener('install', function(event) {
+	  var inactiveCache = options.cache.name + '$$$inactive$$$';
+	  helpers.debug('install event fired');
+	  helpers.debug('creating cache [' + inactiveCache + ']');
+	  event.waitUntil(
+	    helpers.openCache({cache: {name: inactiveCache}})
+	    .then(function(cache) {
+	      return Promise.all(options.preCacheItems)
+	      .then(flatten)
+	      .then(validatePrecacheInput)
+	      .then(function(preCacheItems) {
+	        helpers.debug('preCache list: ' +
+	            (preCacheItems.join(', ') || '(none)'));
+	        return cache.addAll(preCacheItems);
+	      });
+	    })
+	  );
+	});
+
+	// Activate
+
+	self.addEventListener('activate', function(event) {
+	  helpers.debug('activate event fired');
+	  var inactiveCache = options.cache.name + '$$$inactive$$$';
+	  event.waitUntil(helpers.renameCache(inactiveCache, options.cache.name));
+	});
+
+	// Fetch
+
+	self.addEventListener('fetch', function(event) {
+	  var handler = router.match(event.request);
+
+	  if (handler) {
+	    event.respondWith(handler(event.request));
+	  } else if (router.default && event.request.method === 'GET') {
+	    event.respondWith(router.default(event.request));
+	  }
+	});
+
+	// Caching
+
+	function cache(url, options) {
+	  return helpers.openCache(options).then(function(cache) {
+	    return cache.add(url);
+	  });
+	}
+
+	function uncache(url, options) {
+	  return helpers.openCache(options).then(function(cache) {
+	    return cache.delete(url);
+	  });
+	}
+
+	function precache(items) {
+	  if (!(items instanceof Promise)) {
+	    validatePrecacheInput(items);
+	  }
+
+	  options.preCacheItems = options.preCacheItems.concat(items);
+	}
+
+	module.exports = {
+	  networkOnly: strategies.networkOnly,
+	  networkFirst: strategies.networkFirst,
+	  cacheOnly: strategies.cacheOnly,
+	  cacheFirst: strategies.cacheFirst,
+	  fastest: strategies.fastest,
+	  router: router,
+	  options: options,
+	  cache: cache,
+	  uncache: uncache,
+	  precache: precache
+	};
+
+
+/***/ },
+
+/***/ 224:
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2015 Google Inc. All rights reserved.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 *     http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 */
+
+	(function() {
+	  var nativeAddAll = Cache.prototype.addAll;
+	  var userAgent = navigator.userAgent.match(/(Firefox|Chrome)\/(\d+\.)/);
+
+	  // Has nice behavior of `var` which everyone hates
+	  if (userAgent) {
+	    var agent = userAgent[1];
+	    var version = parseInt(userAgent[2]);
+	  }
+
+	  if (
+	    nativeAddAll && (!userAgent ||
+	      (agent === 'Firefox' && version >= 46) ||
+	      (agent === 'Chrome'  && version >= 50)
+	    )
+	  ) {
+	    return;
+	  }
+
+	  Cache.prototype.addAll = function addAll(requests) {
+	    var cache = this;
+
+	    // Since DOMExceptions are not constructable:
+	    function NetworkError(message) {
+	      this.name = 'NetworkError';
+	      this.code = 19;
+	      this.message = message;
+	    }
+
+	    NetworkError.prototype = Object.create(Error.prototype);
+
+	    return Promise.resolve().then(function() {
+	      if (arguments.length < 1) throw new TypeError();
+
+	      // Simulate sequence<(Request or USVString)> binding:
+	      var sequence = [];
+
+	      requests = requests.map(function(request) {
+	        if (request instanceof Request) {
+	          return request;
+	        }
+	        else {
+	          return String(request); // may throw TypeError
+	        }
+	      });
+
+	      return Promise.all(
+	        requests.map(function(request) {
+	          if (typeof request === 'string') {
+	            request = new Request(request);
+	          }
+
+	          var scheme = new URL(request.url).protocol;
+
+	          if (scheme !== 'http:' && scheme !== 'https:') {
+	            throw new NetworkError("Invalid scheme");
+	          }
+
+	          return fetch(request.clone());
+	        })
+	      );
+	    }).then(function(responses) {
+	      // If some of the responses has not OK-eish status,
+	      // then whole operation should reject
+	      if (responses.some(function(response) {
+	        return !response.ok;
+	      })) {
+	        throw new NetworkError('Incorrect response status');
+	      }
+
+	      // TODO: check that requests don't overwrite one another
+	      // (don't think this is possible to polyfill due to opaque responses)
+	      return Promise.all(
+	        responses.map(function(response, i) {
+	          return cache.put(requests[i], response);
+	        })
+	      );
+	    }).then(function() {
+	      return undefined;
+	    });
+	  };
+
+	  Cache.prototype.add = function add(request) {
+	    return this.addAll([request]);
+	  };
+	}());
+
+/***/ },
+
+/***/ 225:
+/***/ function(module, exports) {
+
+	/*
+		Copyright 2015 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	'use strict';
+
+	// TODO: This is necessary to handle different implementations in the wild
+	// The spec defines self.registration, but it was not implemented in Chrome 40.
+	var scope;
+	if (self.registration) {
+	  scope = self.registration.scope;
+	} else {
+	  scope = self.scope || new URL('./', self.location).href;
+	}
+
+	module.exports = {
+	  cache: {
+	    name: '$$$toolbox-cache$$$' + scope + '$$$',
+	    maxAgeSeconds: null,
+	    maxEntries: null
+	  },
+	  debug: false,
+	  networkTimeoutSeconds: null,
+	  preCacheItems: [],
+	  // A regular expression to apply to HTTP response codes. Codes that match
+	  // will be considered successes, while others will not, and will not be
+	  // cached.
+	  successResponses: /^0|([123]\d\d)|(40[14567])|410$/
+	};
+
+
+/***/ },
+
+/***/ 226:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	  Copyright 2014 Google Inc. All Rights Reserved.
+
+	  Licensed under the Apache License, Version 2.0 (the "License");
+	  you may not use this file except in compliance with the License.
+	  You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+	  Unless required by applicable law or agreed to in writing, software
+	  distributed under the License is distributed on an "AS IS" BASIS,
+	  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	  See the License for the specific language governing permissions and
+	  limitations under the License.
+	*/
+	'use strict';
+
+	var Route = __webpack_require__(227);
+
+	function regexEscape(s) {
+	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+	}
+
+	var keyMatch = function(map, string) {
+	  // This would be better written as a for..of loop, but that would break the
+	  // minifyify process in the build.
+	  var entriesIterator = map.entries();
+	  var item = entriesIterator.next();
+	  var matches = [];
+	  while (!item.done) {
+	    var pattern = new RegExp(item.value[0]);
+	    if (pattern.test(string)) {
+	      matches.push(item.value[1]);
+	    }
+	    item = entriesIterator.next();
+	  }
+	  return matches;
+	};
+
+	var Router = function() {
+	  this.routes = new Map();
+	  // Create the dummy origin for RegExp-based routes
+	  this.routes.set(RegExp, new Map());
+	  this.default = null;
+	};
+
+	['get', 'post', 'put', 'delete', 'head', 'any'].forEach(function(method) {
+	  Router.prototype[method] = function(path, handler, options) {
+	    return this.add(method, path, handler, options);
+	  };
+	});
+
+	Router.prototype.add = function(method, path, handler, options) {
+	  options = options || {};
+	  var origin;
+
+	  if (path instanceof RegExp) {
+	    // We need a unique key to use in the Map to distinguish RegExp paths
+	    // from Express-style paths + origins. Since we can use any object as the
+	    // key in a Map, let's use the RegExp constructor!
+	    origin = RegExp;
+	  } else {
+	    origin = options.origin || self.location.origin;
+	    if (origin instanceof RegExp) {
+	      origin = origin.source;
+	    } else {
+	      origin = regexEscape(origin);
+	    }
+	  }
+
+	  method = method.toLowerCase();
+
+	  var route = new Route(method, path, handler, options);
+
+	  if (!this.routes.has(origin)) {
+	    this.routes.set(origin, new Map());
+	  }
+
+	  var methodMap = this.routes.get(origin);
+	  if (!methodMap.has(method)) {
+	    methodMap.set(method, new Map());
+	  }
+
+	  var routeMap = methodMap.get(method);
+	  var regExp = route.regexp || route.fullUrlRegExp;
+	  routeMap.set(regExp.source, route);
+	};
+
+	Router.prototype.matchMethod = function(method, url) {
+	  var urlObject = new URL(url);
+	  var origin = urlObject.origin;
+	  var path = urlObject.pathname;
+
+	  // We want to first check to see if there's a match against any
+	  // "Express-style" routes (string for the path, RegExp for the origin).
+	  // Checking for Express-style matches first maintains the legacy behavior.
+	  // If there's no match, we next check for a match against any RegExp routes,
+	  // where the RegExp in question matches the full URL (both origin and path).
+	  return this._match(method, keyMatch(this.routes, origin), path) ||
+	    this._match(method, [this.routes.get(RegExp)], url);
+	};
+
+	Router.prototype._match = function(method, methodMaps, pathOrUrl) {
+	  if (methodMaps.length === 0) {
+	    return null;
+	  }
+
+	  for (var i = 0; i < methodMaps.length; i++) {
+	    var methodMap = methodMaps[i];
+	    var routeMap = methodMap && methodMap.get(method.toLowerCase());
+	    if (routeMap) {
+	      var routes = keyMatch(routeMap, pathOrUrl);
+	      if (routes.length > 0) {
+	        return routes[0].makeHandler(pathOrUrl);
+	      }
+	    }
+	  }
+
+	  return null;
+	};
+
+	Router.prototype.match = function(request) {
+	  return this.matchMethod(request.method, request.url) ||
+	      this.matchMethod('any', request.url);
+	};
+
+	module.exports = new Router();
+
+
+/***/ },
+
+/***/ 227:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	  Copyright 2014 Google Inc. All Rights Reserved.
+
+	  Licensed under the Apache License, Version 2.0 (the "License");
+	  you may not use this file except in compliance with the License.
+	  You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+	  Unless required by applicable law or agreed to in writing, software
+	  distributed under the License is distributed on an "AS IS" BASIS,
+	  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	  See the License for the specific language governing permissions and
+	  limitations under the License.
+	*/
+	'use strict';
+
+	// TODO: Use self.registration.scope instead of self.location
+	var url = new URL('./', self.location);
+	var basePath = url.pathname;
+	var pathRegexp = __webpack_require__(228);
+
+	var Route = function(method, path, handler, options) {
+	  if (path instanceof RegExp) {
+	    this.fullUrlRegExp = path;
+	  } else {
+	    // The URL() constructor can't parse express-style routes as they are not
+	    // valid urls. This means we have to manually manipulate relative urls into
+	    // absolute ones. This check is extremely naive but implementing a tweaked
+	    // version of the full algorithm seems like overkill
+	    // (https://url.spec.whatwg.org/#concept-basic-url-parser)
+	    if (path.indexOf('/') !== 0) {
+	      path = basePath + path;
+	    }
+
+	    this.keys = [];
+	    this.regexp = pathRegexp(path, this.keys);
+	  }
+
+	  this.method = method;
+	  this.options = options;
+	  this.handler = handler;
+	};
+
+	Route.prototype.makeHandler = function(url) {
+	  var values;
+	  if (this.regexp) {
+	    var match = this.regexp.exec(url);
+	    values = {};
+	    this.keys.forEach(function(key, index) {
+	      values[key.name] = match[index + 1];
+	    });
+	  }
+
+	  return function(request) {
+	    return this.handler(request, values, this.options);
+	  }.bind(this);
+	};
+
+	module.exports = Route;
+
+
+/***/ },
+
+/***/ 228:
+/***/ function(module, exports, __webpack_require__) {
+
+	var isarray = __webpack_require__(229)
+
+	/**
+	 * Expose `pathToRegexp`.
+	 */
+	module.exports = pathToRegexp
+	module.exports.parse = parse
+	module.exports.compile = compile
+	module.exports.tokensToFunction = tokensToFunction
+	module.exports.tokensToRegExp = tokensToRegExp
+
+	/**
+	 * The main path matching regexp utility.
+	 *
+	 * @type {RegExp}
+	 */
+	var PATH_REGEXP = new RegExp([
+	  // Match escaped characters that would otherwise appear in future matches.
+	  // This allows the user to escape special characters that won't transform.
+	  '(\\\\.)',
+	  // Match Express-style parameters and un-named parameters with a prefix
+	  // and optional suffixes. Matches appear as:
+	  //
+	  // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?", undefined]
+	  // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined, undefined]
+	  // "/*"            => ["/", undefined, undefined, undefined, undefined, "*"]
+	  '([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))'
+	].join('|'), 'g')
+
+	/**
+	 * Parse a string for the raw tokens.
+	 *
+	 * @param  {string} str
+	 * @return {!Array}
+	 */
+	function parse (str) {
+	  var tokens = []
+	  var key = 0
+	  var index = 0
+	  var path = ''
+	  var res
+
+	  while ((res = PATH_REGEXP.exec(str)) != null) {
+	    var m = res[0]
+	    var escaped = res[1]
+	    var offset = res.index
+	    path += str.slice(index, offset)
+	    index = offset + m.length
+
+	    // Ignore already escaped sequences.
+	    if (escaped) {
+	      path += escaped[1]
+	      continue
+	    }
+
+	    var next = str[index]
+	    var prefix = res[2]
+	    var name = res[3]
+	    var capture = res[4]
+	    var group = res[5]
+	    var modifier = res[6]
+	    var asterisk = res[7]
+
+	    // Push the current path onto the tokens.
+	    if (path) {
+	      tokens.push(path)
+	      path = ''
+	    }
+
+	    var partial = prefix != null && next != null && next !== prefix
+	    var repeat = modifier === '+' || modifier === '*'
+	    var optional = modifier === '?' || modifier === '*'
+	    var delimiter = res[2] || '/'
+	    var pattern = capture || group || (asterisk ? '.*' : '[^' + delimiter + ']+?')
+
+	    tokens.push({
+	      name: name || key++,
+	      prefix: prefix || '',
+	      delimiter: delimiter,
+	      optional: optional,
+	      repeat: repeat,
+	      partial: partial,
+	      asterisk: !!asterisk,
+	      pattern: escapeGroup(pattern)
+	    })
+	  }
+
+	  // Match any characters still remaining.
+	  if (index < str.length) {
+	    path += str.substr(index)
+	  }
+
+	  // If the path exists, push it onto the end.
+	  if (path) {
+	    tokens.push(path)
+	  }
+
+	  return tokens
+	}
+
+	/**
+	 * Compile a string to a template function for the path.
+	 *
+	 * @param  {string}             str
+	 * @return {!function(Object=, Object=)}
+	 */
+	function compile (str) {
+	  return tokensToFunction(parse(str))
+	}
+
+	/**
+	 * Prettier encoding of URI path segments.
+	 *
+	 * @param  {string}
+	 * @return {string}
+	 */
+	function encodeURIComponentPretty (str) {
+	  return encodeURI(str).replace(/[\/?#]/g, function (c) {
+	    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+	  })
+	}
+
+	/**
+	 * Encode the asterisk parameter. Similar to `pretty`, but allows slashes.
+	 *
+	 * @param  {string}
+	 * @return {string}
+	 */
+	function encodeAsterisk (str) {
+	  return encodeURI(str).replace(/[?#]/g, function (c) {
+	    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+	  })
+	}
+
+	/**
+	 * Expose a method for transforming tokens into the path function.
+	 */
+	function tokensToFunction (tokens) {
+	  // Compile all the tokens into regexps.
+	  var matches = new Array(tokens.length)
+
+	  // Compile all the patterns before compilation.
+	  for (var i = 0; i < tokens.length; i++) {
+	    if (typeof tokens[i] === 'object') {
+	      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$')
+	    }
+	  }
+
+	  return function (obj, opts) {
+	    var path = ''
+	    var data = obj || {}
+	    var options = opts || {}
+	    var encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent
+
+	    for (var i = 0; i < tokens.length; i++) {
+	      var token = tokens[i]
+
+	      if (typeof token === 'string') {
+	        path += token
+
+	        continue
+	      }
+
+	      var value = data[token.name]
+	      var segment
+
+	      if (value == null) {
+	        if (token.optional) {
+	          // Prepend partial segment prefixes.
+	          if (token.partial) {
+	            path += token.prefix
+	          }
+
+	          continue
+	        } else {
+	          throw new TypeError('Expected "' + token.name + '" to be defined')
+	        }
+	      }
+
+	      if (isarray(value)) {
+	        if (!token.repeat) {
+	          throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
+	        }
+
+	        if (value.length === 0) {
+	          if (token.optional) {
+	            continue
+	          } else {
+	            throw new TypeError('Expected "' + token.name + '" to not be empty')
+	          }
+	        }
+
+	        for (var j = 0; j < value.length; j++) {
+	          segment = encode(value[j])
+
+	          if (!matches[i].test(segment)) {
+	            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '", but received `' + JSON.stringify(segment) + '`')
+	          }
+
+	          path += (j === 0 ? token.prefix : token.delimiter) + segment
+	        }
+
+	        continue
+	      }
+
+	      segment = token.asterisk ? encodeAsterisk(value) : encode(value)
+
+	      if (!matches[i].test(segment)) {
+	        throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but received "' + segment + '"')
+	      }
+
+	      path += token.prefix + segment
+	    }
+
+	    return path
+	  }
+	}
+
+	/**
+	 * Escape a regular expression string.
+	 *
+	 * @param  {string} str
+	 * @return {string}
+	 */
+	function escapeString (str) {
+	  return str.replace(/([.+*?=^!:${}()[\]|\/\\])/g, '\\$1')
+	}
+
+	/**
+	 * Escape the capturing group by escaping special characters and meaning.
+	 *
+	 * @param  {string} group
+	 * @return {string}
+	 */
+	function escapeGroup (group) {
+	  return group.replace(/([=!:$\/()])/g, '\\$1')
+	}
+
+	/**
+	 * Attach the keys as a property of the regexp.
+	 *
+	 * @param  {!RegExp} re
+	 * @param  {Array}   keys
+	 * @return {!RegExp}
+	 */
+	function attachKeys (re, keys) {
+	  re.keys = keys
+	  return re
+	}
+
+	/**
+	 * Get the flags for a regexp from the options.
+	 *
+	 * @param  {Object} options
+	 * @return {string}
+	 */
+	function flags (options) {
+	  return options.sensitive ? '' : 'i'
+	}
+
+	/**
+	 * Pull out keys from a regexp.
+	 *
+	 * @param  {!RegExp} path
+	 * @param  {!Array}  keys
+	 * @return {!RegExp}
+	 */
+	function regexpToRegexp (path, keys) {
+	  // Use a negative lookahead to match only capturing groups.
+	  var groups = path.source.match(/\((?!\?)/g)
+
+	  if (groups) {
+	    for (var i = 0; i < groups.length; i++) {
+	      keys.push({
+	        name: i,
+	        prefix: null,
+	        delimiter: null,
+	        optional: false,
+	        repeat: false,
+	        partial: false,
+	        asterisk: false,
+	        pattern: null
+	      })
+	    }
+	  }
+
+	  return attachKeys(path, keys)
+	}
+
+	/**
+	 * Transform an array into a regexp.
+	 *
+	 * @param  {!Array}  path
+	 * @param  {Array}   keys
+	 * @param  {!Object} options
+	 * @return {!RegExp}
+	 */
+	function arrayToRegexp (path, keys, options) {
+	  var parts = []
+
+	  for (var i = 0; i < path.length; i++) {
+	    parts.push(pathToRegexp(path[i], keys, options).source)
+	  }
+
+	  var regexp = new RegExp('(?:' + parts.join('|') + ')', flags(options))
+
+	  return attachKeys(regexp, keys)
+	}
+
+	/**
+	 * Create a path regexp from string input.
+	 *
+	 * @param  {string}  path
+	 * @param  {!Array}  keys
+	 * @param  {!Object} options
+	 * @return {!RegExp}
+	 */
+	function stringToRegexp (path, keys, options) {
+	  var tokens = parse(path)
+	  var re = tokensToRegExp(tokens, options)
+
+	  // Attach keys back to the regexp.
+	  for (var i = 0; i < tokens.length; i++) {
+	    if (typeof tokens[i] !== 'string') {
+	      keys.push(tokens[i])
+	    }
+	  }
+
+	  return attachKeys(re, keys)
+	}
+
+	/**
+	 * Expose a function for taking tokens and returning a RegExp.
+	 *
+	 * @param  {!Array}  tokens
+	 * @param  {Object=} options
+	 * @return {!RegExp}
+	 */
+	function tokensToRegExp (tokens, options) {
+	  options = options || {}
+
+	  var strict = options.strict
+	  var end = options.end !== false
+	  var route = ''
+	  var lastToken = tokens[tokens.length - 1]
+	  var endsWithSlash = typeof lastToken === 'string' && /\/$/.test(lastToken)
+
+	  // Iterate over the tokens and create our regexp string.
+	  for (var i = 0; i < tokens.length; i++) {
+	    var token = tokens[i]
+
+	    if (typeof token === 'string') {
+	      route += escapeString(token)
+	    } else {
+	      var prefix = escapeString(token.prefix)
+	      var capture = '(?:' + token.pattern + ')'
+
+	      if (token.repeat) {
+	        capture += '(?:' + prefix + capture + ')*'
+	      }
+
+	      if (token.optional) {
+	        if (!token.partial) {
+	          capture = '(?:' + prefix + '(' + capture + '))?'
+	        } else {
+	          capture = prefix + '(' + capture + ')?'
+	        }
+	      } else {
+	        capture = prefix + '(' + capture + ')'
+	      }
+
+	      route += capture
+	    }
+	  }
+
+	  // In non-strict mode we allow a slash at the end of match. If the path to
+	  // match already ends with a slash, we remove it for consistency. The slash
+	  // is valid at the end of a path match, not in the middle. This is important
+	  // in non-ending mode, where "/test/" shouldn't match "/test//route".
+	  if (!strict) {
+	    route = (endsWithSlash ? route.slice(0, -2) : route) + '(?:\\/(?=$))?'
+	  }
+
+	  if (end) {
+	    route += '$'
+	  } else {
+	    // In non-ending mode, we need the capturing groups to match as much as
+	    // possible by using a positive lookahead to the end or next path segment.
+	    route += strict && endsWithSlash ? '' : '(?=\\/|$)'
+	  }
+
+	  return new RegExp('^' + route, flags(options))
+	}
+
+	/**
+	 * Normalize the given path string, returning a regular expression.
+	 *
+	 * An empty array can be passed in for the keys, which will hold the
+	 * placeholder key descriptions. For example, using `/user/:id`, `keys` will
+	 * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
+	 *
+	 * @param  {(string|RegExp|Array)} path
+	 * @param  {(Array|Object)=}       keys
+	 * @param  {Object=}               options
+	 * @return {!RegExp}
+	 */
+	function pathToRegexp (path, keys, options) {
+	  keys = keys || []
+
+	  if (!isarray(keys)) {
+	    options = /** @type {!Object} */ (keys)
+	    keys = []
+	  } else if (!options) {
+	    options = {}
+	  }
+
+	  if (path instanceof RegExp) {
+	    return regexpToRegexp(path, /** @type {!Array} */ (keys))
+	  }
+
+	  if (isarray(path)) {
+	    return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
+	  }
+
+	  return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
+	}
+
+
+/***/ },
+
+/***/ 229:
+/***/ function(module, exports) {
+
+	module.exports = Array.isArray || function (arr) {
+	  return Object.prototype.toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ },
+
+/***/ 230:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	  Copyright 2014 Google Inc. All Rights Reserved.
+
+	  Licensed under the Apache License, Version 2.0 (the "License");
+	  you may not use this file except in compliance with the License.
+	  You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+	  Unless required by applicable law or agreed to in writing, software
+	  distributed under the License is distributed on an "AS IS" BASIS,
+	  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	  See the License for the specific language governing permissions and
+	  limitations under the License.
+	*/
+	'use strict';
+
+	var globalOptions = __webpack_require__(225);
+	var idbCacheExpiration = __webpack_require__(231);
+
+	function debug(message, options) {
+	  options = options || {};
+	  var flag = options.debug || globalOptions.debug;
+	  if (flag) {
+	    console.log('[sw-toolbox] ' + message);
+	  }
+	}
+
+	function openCache(options) {
+	  var cacheName;
+	  if (options && options.cache) {
+	    cacheName = options.cache.name;
+	  }
+	  cacheName = cacheName || globalOptions.cache.name;
+
+	  return caches.open(cacheName);
+	}
+
+	function fetchAndCache(request, options) {
+	  options = options || {};
+	  var successResponses = options.successResponses ||
+	      globalOptions.successResponses;
+
+	  return fetch(request.clone()).then(function(response) {
+	    // Only cache GET requests with successful responses.
+	    // Since this is not part of the promise chain, it will be done
+	    // asynchronously and will not block the response from being returned to the
+	    // page.
+	    if (request.method === 'GET' && successResponses.test(response.status)) {
+	      openCache(options).then(function(cache) {
+	        cache.put(request, response).then(function() {
+	          // If any of the options are provided in options.cache then use them.
+	          // Do not fallback to the global options for any that are missing
+	          // unless they are all missing.
+	          var cacheOptions = options.cache || globalOptions.cache;
+
+	          // Only run the cache expiration logic if at least one of the maximums
+	          // is set, and if we have a name for the cache that the options are
+	          // being applied to.
+	          if ((cacheOptions.maxEntries || cacheOptions.maxAgeSeconds) &&
+	              cacheOptions.name) {
+	            queueCacheExpiration(request, cache, cacheOptions);
+	          }
+	        });
+	      });
+	    }
+
+	    return response.clone();
+	  });
+	}
+
+	var cleanupQueue;
+	function queueCacheExpiration(request, cache, cacheOptions) {
+	  var cleanup = cleanupCache.bind(null, request, cache, cacheOptions);
+
+	  if (cleanupQueue) {
+	    cleanupQueue = cleanupQueue.then(cleanup);
+	  } else {
+	    cleanupQueue = cleanup();
+	  }
+	}
+
+	function cleanupCache(request, cache, cacheOptions) {
+	  var requestUrl = request.url;
+	  var maxAgeSeconds = cacheOptions.maxAgeSeconds;
+	  var maxEntries = cacheOptions.maxEntries;
+	  var cacheName = cacheOptions.name;
+
+	  var now = Date.now();
+	  debug('Updating LRU order for ' + requestUrl + '. Max entries is ' +
+	    maxEntries + ', max age is ' + maxAgeSeconds);
+
+	  return idbCacheExpiration.getDb(cacheName).then(function(db) {
+	    return idbCacheExpiration.setTimestampForUrl(db, requestUrl, now);
+	  }).then(function(db) {
+	    return idbCacheExpiration.expireEntries(db, maxEntries, maxAgeSeconds, now);
+	  }).then(function(urlsToDelete) {
+	    debug('Successfully updated IDB.');
+
+	    var deletionPromises = urlsToDelete.map(function(urlToDelete) {
+	      return cache.delete(urlToDelete);
+	    });
+
+	    return Promise.all(deletionPromises).then(function() {
+	      debug('Done with cache cleanup.');
+	    });
+	  }).catch(function(error) {
+	    debug(error);
+	  });
+	}
+
+	function renameCache(source, destination, options) {
+	  debug('Renaming cache: [' + source + '] to [' + destination + ']', options);
+	  return caches.delete(destination).then(function() {
+	    return Promise.all([
+	      caches.open(source),
+	      caches.open(destination)
+	    ]).then(function(results) {
+	      var sourceCache = results[0];
+	      var destCache = results[1];
+
+	      return sourceCache.keys().then(function(requests) {
+	        return Promise.all(requests.map(function(request) {
+	          return sourceCache.match(request).then(function(response) {
+	            return destCache.put(request, response);
+	          });
+	        }));
+	      }).then(function() {
+	        return caches.delete(source);
+	      });
+	    });
+	  });
+	}
+
+	module.exports = {
+	  debug: debug,
+	  fetchAndCache: fetchAndCache,
+	  openCache: openCache,
+	  renameCache: renameCache
+	};
+
+
+/***/ },
+
+/***/ 231:
+/***/ function(module, exports) {
+
+	/*
+	 Copyright 2015 Google Inc. All Rights Reserved.
+
+	 Licensed under the Apache License, Version 2.0 (the "License");
+	 you may not use this file except in compliance with the License.
+	 You may obtain a copy of the License at
+
+	     http://www.apache.org/licenses/LICENSE-2.0
+
+	 Unless required by applicable law or agreed to in writing, software
+	 distributed under the License is distributed on an "AS IS" BASIS,
+	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 See the License for the specific language governing permissions and
+	 limitations under the License.
+	*/
+	'use strict';
+
+	var DB_PREFIX = 'sw-toolbox-';
+	var DB_VERSION = 1;
+	var STORE_NAME = 'store';
+	var URL_PROPERTY = 'url';
+	var TIMESTAMP_PROPERTY = 'timestamp';
+	var cacheNameToDbPromise = {};
+
+	function openDb(cacheName) {
+	  return new Promise(function(resolve, reject) {
+	    var request = indexedDB.open(DB_PREFIX + cacheName, DB_VERSION);
+
+	    request.onupgradeneeded = function() {
+	      var objectStore = request.result.createObjectStore(STORE_NAME,
+	          {keyPath: URL_PROPERTY});
+	      objectStore.createIndex(TIMESTAMP_PROPERTY, TIMESTAMP_PROPERTY,
+	          {unique: false});
+	    };
+
+	    request.onsuccess = function() {
+	      resolve(request.result);
+	    };
+
+	    request.onerror = function() {
+	      reject(request.error);
+	    };
+	  });
+	}
+
+	function getDb(cacheName) {
+	  if (!(cacheName in cacheNameToDbPromise)) {
+	    cacheNameToDbPromise[cacheName] = openDb(cacheName);
+	  }
+
+	  return cacheNameToDbPromise[cacheName];
+	}
+
+	function setTimestampForUrl(db, url, now) {
+	  return new Promise(function(resolve, reject) {
+	    var transaction = db.transaction(STORE_NAME, 'readwrite');
+	    var objectStore = transaction.objectStore(STORE_NAME);
+	    objectStore.put({url: url, timestamp: now});
+
+	    transaction.oncomplete = function() {
+	      resolve(db);
+	    };
+
+	    transaction.onabort = function() {
+	      reject(transaction.error);
+	    };
+	  });
+	}
+
+	function expireOldEntries(db, maxAgeSeconds, now) {
+	  // Bail out early by resolving with an empty array if we're not using
+	  // maxAgeSeconds.
+	  if (!maxAgeSeconds) {
+	    return Promise.resolve([]);
+	  }
+
+	  return new Promise(function(resolve, reject) {
+	    var maxAgeMillis = maxAgeSeconds * 1000;
+	    var urls = [];
+
+	    var transaction = db.transaction(STORE_NAME, 'readwrite');
+	    var objectStore = transaction.objectStore(STORE_NAME);
+	    var index = objectStore.index(TIMESTAMP_PROPERTY);
+
+	    index.openCursor().onsuccess = function(cursorEvent) {
+	      var cursor = cursorEvent.target.result;
+	      if (cursor) {
+	        if (now - maxAgeMillis > cursor.value[TIMESTAMP_PROPERTY]) {
+	          var url = cursor.value[URL_PROPERTY];
+	          urls.push(url);
+	          objectStore.delete(url);
+	          cursor.continue();
+	        }
+	      }
+	    };
+
+	    transaction.oncomplete = function() {
+	      resolve(urls);
+	    };
+
+	    transaction.onabort = reject;
+	  });
+	}
+
+	function expireExtraEntries(db, maxEntries) {
+	  // Bail out early by resolving with an empty array if we're not using
+	  // maxEntries.
+	  if (!maxEntries) {
+	    return Promise.resolve([]);
+	  }
+
+	  return new Promise(function(resolve, reject) {
+	    var urls = [];
+
+	    var transaction = db.transaction(STORE_NAME, 'readwrite');
+	    var objectStore = transaction.objectStore(STORE_NAME);
+	    var index = objectStore.index(TIMESTAMP_PROPERTY);
+
+	    var countRequest = index.count();
+	    index.count().onsuccess = function() {
+	      var initialCount = countRequest.result;
+
+	      if (initialCount > maxEntries) {
+	        index.openCursor().onsuccess = function(cursorEvent) {
+	          var cursor = cursorEvent.target.result;
+	          if (cursor) {
+	            var url = cursor.value[URL_PROPERTY];
+	            urls.push(url);
+	            objectStore.delete(url);
+	            if (initialCount - urls.length > maxEntries) {
+	              cursor.continue();
+	            }
+	          }
+	        };
+	      }
+	    };
+
+	    transaction.oncomplete = function() {
+	      resolve(urls);
+	    };
+
+	    transaction.onabort = reject;
+	  });
+	}
+
+	function expireEntries(db, maxEntries, maxAgeSeconds, now) {
+	  return expireOldEntries(db, maxAgeSeconds, now).then(function(oldUrls) {
+	    return expireExtraEntries(db, maxEntries).then(function(extraUrls) {
+	      return oldUrls.concat(extraUrls);
+	    });
+	  });
+	}
+
+	module.exports = {
+	  getDb: getDb,
+	  setTimestampForUrl: setTimestampForUrl,
+	  expireEntries: expireEntries
+	};
+
+
+/***/ },
+
+/***/ 232:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	module.exports = {
+	  networkOnly: __webpack_require__(233),
+	  networkFirst: __webpack_require__(234),
+	  cacheOnly: __webpack_require__(235),
+	  cacheFirst: __webpack_require__(236),
+	  fastest: __webpack_require__(237)
+	};
+
+
+/***/ },
+
+/***/ 233:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	'use strict';
+	var helpers = __webpack_require__(230);
+
+	function networkOnly(request, values, options) {
+	  helpers.debug('Strategy: network only [' + request.url + ']', options);
+	  return fetch(request);
+	}
+
+	module.exports = networkOnly;
+
+
+/***/ },
+
+/***/ 234:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 Copyright 2015 Google Inc. All Rights Reserved.
+
+	 Licensed under the Apache License, Version 2.0 (the "License");
+	 you may not use this file except in compliance with the License.
+	 You may obtain a copy of the License at
+
+	     http://www.apache.org/licenses/LICENSE-2.0
+
+	 Unless required by applicable law or agreed to in writing, software
+	 distributed under the License is distributed on an "AS IS" BASIS,
+	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 See the License for the specific language governing permissions and
+	 limitations under the License.
+	*/
+	'use strict';
+	var globalOptions = __webpack_require__(225);
+	var helpers = __webpack_require__(230);
+
+	function networkFirst(request, values, options) {
+	  options = options || {};
+	  var successResponses = options.successResponses ||
+	      globalOptions.successResponses;
+	  // This will bypass options.networkTimeout if it's set to a false-y value like
+	  // 0, but that's the sane thing to do anyway.
+	  var networkTimeoutSeconds = options.networkTimeoutSeconds ||
+	      globalOptions.networkTimeoutSeconds;
+	  helpers.debug('Strategy: network first [' + request.url + ']', options);
+
+	  return helpers.openCache(options).then(function(cache) {
+	    var timeoutId;
+	    var promises = [];
+	    var originalResponse;
+
+	    if (networkTimeoutSeconds) {
+	      var cacheWhenTimedOutPromise = new Promise(function(resolve) {
+	        timeoutId = setTimeout(function() {
+	          cache.match(request).then(function(response) {
+	            if (response) {
+	              // Only resolve this promise if there's a valid response in the
+	              // cache. This ensures that we won't time out a network request
+	              // unless there's a cached entry to fallback on, which is arguably
+	              // the preferable behavior.
+	              resolve(response);
+	            }
+	          });
+	        }, networkTimeoutSeconds * 1000);
+	      });
+	      promises.push(cacheWhenTimedOutPromise);
+	    }
+
+	    var networkPromise = helpers.fetchAndCache(request, options)
+	      .then(function(response) {
+	        // We've got a response, so clear the network timeout if there is one.
+	        if (timeoutId) {
+	          clearTimeout(timeoutId);
+	        }
+
+	        if (successResponses.test(response.status)) {
+	          return response;
+	        }
+
+	        helpers.debug('Response was an HTTP error: ' + response.statusText,
+	            options);
+	        originalResponse = response;
+	        throw new Error('Bad response');
+	      }).catch(function(error) {
+	        helpers.debug('Network or response error, fallback to cache [' +
+	            request.url + ']', options);
+	        return cache.match(request).then(function(response) {
+	          // If there's a match in the cache, resolve with that.
+	          if (response) {
+	            return response;
+	          }
+
+	          // If we have a Response object from the previous fetch, then resolve
+	          // with that, even though it corresponds to an error status code.
+	          if (originalResponse) {
+	            return originalResponse;
+	          }
+
+	          // If we don't have a Response object from the previous fetch, likely
+	          // due to a network failure, then reject with the failure error.
+	          throw error;
+	        });
+	      });
+
+	    promises.push(networkPromise);
+
+	    return Promise.race(promises);
+	  });
+	}
+
+	module.exports = networkFirst;
+
+
+/***/ },
+
+/***/ 235:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	'use strict';
+	var helpers = __webpack_require__(230);
+
+	function cacheOnly(request, values, options) {
+	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
+	  return helpers.openCache(options).then(function(cache) {
+	    return cache.match(request);
+	  });
+	}
+
+	module.exports = cacheOnly;
+
+
+/***/ },
+
+/***/ 236:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	'use strict';
+	var helpers = __webpack_require__(230);
+
+	function cacheFirst(request, values, options) {
+	  helpers.debug('Strategy: cache first [' + request.url + ']', options);
+	  return helpers.openCache(options).then(function(cache) {
+	    return cache.match(request).then(function(response) {
+	      if (response) {
+	        return response;
+	      }
+
+	      return helpers.fetchAndCache(request, options);
+	    });
+	  });
+	}
+
+	module.exports = cacheFirst;
+
+
+/***/ },
+
+/***/ 237:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	  Copyright 2014 Google Inc. All Rights Reserved.
+
+	  Licensed under the Apache License, Version 2.0 (the "License");
+	  you may not use this file except in compliance with the License.
+	  You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+	  Unless required by applicable law or agreed to in writing, software
+	  distributed under the License is distributed on an "AS IS" BASIS,
+	  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	  See the License for the specific language governing permissions and
+	  limitations under the License.
+	*/
+	'use strict';
+	var helpers = __webpack_require__(230);
+	var cacheOnly = __webpack_require__(235);
+
+	function fastest(request, values, options) {
+	  helpers.debug('Strategy: fastest [' + request.url + ']', options);
+
+	  return new Promise(function(resolve, reject) {
+	    var rejected = false;
+	    var reasons = [];
+
+	    var maybeReject = function(reason) {
+	      reasons.push(reason.toString());
+	      if (rejected) {
+	        reject(new Error('Both cache and network failed: "' +
+	            reasons.join('", "') + '"'));
+	      } else {
+	        rejected = true;
+	      }
+	    };
+
+	    var maybeResolve = function(result) {
+	      if (result instanceof Response) {
+	        resolve(result);
+	      } else {
+	        maybeReject('No result returned');
+	      }
+	    };
+
+	    helpers.fetchAndCache(request.clone(), options)
+	      .then(maybeResolve, maybeReject);
+
+	    cacheOnly(request, values, options)
+	      .then(maybeResolve, maybeReject);
+	  });
+	}
+
+	module.exports = fastest;
+
+
+/***/ }
+
+/******/ });
