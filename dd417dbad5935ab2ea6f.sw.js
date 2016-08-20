@@ -51,7 +51,7 @@
 
 	'use strict';
 
-	var _swToolbox = __webpack_require__(223);
+	var _swToolbox = __webpack_require__(224);
 
 	var _swToolbox2 = _interopRequireDefault(_swToolbox);
 
@@ -81,7 +81,7 @@
 
 /***/ },
 
-/***/ 223:
+/***/ 224:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -101,11 +101,11 @@
 	*/
 	'use strict';
 
-	__webpack_require__(224);
-	var options = __webpack_require__(225);
-	var router = __webpack_require__(226);
-	var helpers = __webpack_require__(230);
-	var strategies = __webpack_require__(232);
+	__webpack_require__(225);
+	var options = __webpack_require__(226);
+	var router = __webpack_require__(227);
+	var helpers = __webpack_require__(231);
+	var strategies = __webpack_require__(233);
 
 	helpers.debug('Service Worker Toolbox is loading');
 
@@ -212,7 +212,7 @@
 
 /***/ },
 
-/***/ 224:
+/***/ 225:
 /***/ function(module, exports) {
 
 	/**
@@ -321,7 +321,7 @@
 
 /***/ },
 
-/***/ 225:
+/***/ 226:
 /***/ function(module, exports) {
 
 	/*
@@ -368,7 +368,7 @@
 
 /***/ },
 
-/***/ 226:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -388,7 +388,7 @@
 	*/
 	'use strict';
 
-	var Route = __webpack_require__(227);
+	var Route = __webpack_require__(228);
 
 	function regexEscape(s) {
 	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -502,7 +502,7 @@
 
 /***/ },
 
-/***/ 227:
+/***/ 228:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -525,7 +525,7 @@
 	// TODO: Use self.registration.scope instead of self.location
 	var url = new URL('./', self.location);
 	var basePath = url.pathname;
-	var pathRegexp = __webpack_require__(228);
+	var pathRegexp = __webpack_require__(229);
 
 	var Route = function(method, path, handler, options) {
 	  if (path instanceof RegExp) {
@@ -569,10 +569,10 @@
 
 /***/ },
 
-/***/ 228:
+/***/ 229:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(229)
+	var isarray = __webpack_require__(230)
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -1002,7 +1002,7 @@
 
 /***/ },
 
-/***/ 229:
+/***/ 230:
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -1012,7 +1012,7 @@
 
 /***/ },
 
-/***/ 230:
+/***/ 231:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1032,8 +1032,8 @@
 	*/
 	'use strict';
 
-	var globalOptions = __webpack_require__(225);
-	var idbCacheExpiration = __webpack_require__(231);
+	var globalOptions = __webpack_require__(226);
+	var idbCacheExpiration = __webpack_require__(232);
 
 	function debug(message, options) {
 	  options = options || {};
@@ -1159,7 +1159,7 @@
 
 /***/ },
 
-/***/ 231:
+/***/ 232:
 /***/ function(module, exports) {
 
 	/*
@@ -1324,35 +1324,6 @@
 
 /***/ },
 
-/***/ 232:
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		Copyright 2014 Google Inc. All Rights Reserved.
-
-		Licensed under the Apache License, Version 2.0 (the "License");
-		you may not use this file except in compliance with the License.
-		You may obtain a copy of the License at
-
-	      http://www.apache.org/licenses/LICENSE-2.0
-
-		Unless required by applicable law or agreed to in writing, software
-		distributed under the License is distributed on an "AS IS" BASIS,
-		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-		See the License for the specific language governing permissions and
-		limitations under the License.
-	*/
-	module.exports = {
-	  networkOnly: __webpack_require__(233),
-	  networkFirst: __webpack_require__(234),
-	  cacheOnly: __webpack_require__(235),
-	  cacheFirst: __webpack_require__(236),
-	  fastest: __webpack_require__(237)
-	};
-
-
-/***/ },
-
 /***/ 233:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1371,8 +1342,37 @@
 		See the License for the specific language governing permissions and
 		limitations under the License.
 	*/
+	module.exports = {
+	  networkOnly: __webpack_require__(234),
+	  networkFirst: __webpack_require__(235),
+	  cacheOnly: __webpack_require__(236),
+	  cacheFirst: __webpack_require__(237),
+	  fastest: __webpack_require__(238)
+	};
+
+
+/***/ },
+
+/***/ 234:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
 	'use strict';
-	var helpers = __webpack_require__(230);
+	var helpers = __webpack_require__(231);
 
 	function networkOnly(request, values, options) {
 	  helpers.debug('Strategy: network only [' + request.url + ']', options);
@@ -1384,7 +1384,7 @@
 
 /***/ },
 
-/***/ 234:
+/***/ 235:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1403,8 +1403,8 @@
 	 limitations under the License.
 	*/
 	'use strict';
-	var globalOptions = __webpack_require__(225);
-	var helpers = __webpack_require__(230);
+	var globalOptions = __webpack_require__(226);
+	var helpers = __webpack_require__(231);
 
 	function networkFirst(request, values, options) {
 	  options = options || {};
@@ -1485,39 +1485,6 @@
 
 /***/ },
 
-/***/ 235:
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		Copyright 2014 Google Inc. All Rights Reserved.
-
-		Licensed under the Apache License, Version 2.0 (the "License");
-		you may not use this file except in compliance with the License.
-		You may obtain a copy of the License at
-
-	      http://www.apache.org/licenses/LICENSE-2.0
-
-		Unless required by applicable law or agreed to in writing, software
-		distributed under the License is distributed on an "AS IS" BASIS,
-		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-		See the License for the specific language governing permissions and
-		limitations under the License.
-	*/
-	'use strict';
-	var helpers = __webpack_require__(230);
-
-	function cacheOnly(request, values, options) {
-	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
-	  return helpers.openCache(options).then(function(cache) {
-	    return cache.match(request);
-	  });
-	}
-
-	module.exports = cacheOnly;
-
-
-/***/ },
-
 /***/ 236:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1537,7 +1504,40 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(230);
+	var helpers = __webpack_require__(231);
+
+	function cacheOnly(request, values, options) {
+	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
+	  return helpers.openCache(options).then(function(cache) {
+	    return cache.match(request);
+	  });
+	}
+
+	module.exports = cacheOnly;
+
+
+/***/ },
+
+/***/ 237:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	'use strict';
+	var helpers = __webpack_require__(231);
 
 	function cacheFirst(request, values, options) {
 	  helpers.debug('Strategy: cache first [' + request.url + ']', options);
@@ -1557,7 +1557,7 @@
 
 /***/ },
 
-/***/ 237:
+/***/ 238:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1576,8 +1576,8 @@
 	  limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(230);
-	var cacheOnly = __webpack_require__(235);
+	var helpers = __webpack_require__(231);
+	var cacheOnly = __webpack_require__(236);
 
 	function fastest(request, values, options) {
 	  helpers.debug('Strategy: fastest [' + request.url + ']', options);

@@ -64,13 +64,13 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _audio = __webpack_require__(220);
+	var _audio = __webpack_require__(221);
 
-	var _eventDriver = __webpack_require__(217);
+	var _eventDriver = __webpack_require__(218);
 
-	var _documentTitle = __webpack_require__(221);
+	var _documentTitle = __webpack_require__(222);
 
-	var _quickUpdateDOM = __webpack_require__(222);
+	var _quickUpdateDOM = __webpack_require__(223);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24046,11 +24046,11 @@
 
 	var _playlist2 = _interopRequireDefault(_playlist);
 
-	var _search = __webpack_require__(213);
+	var _search = __webpack_require__(214);
 
 	var _search2 = _interopRequireDefault(_search);
 
-	var _RxProxy = __webpack_require__(215);
+	var _RxProxy = __webpack_require__(216);
 
 	var _RxProxy2 = _interopRequireDefault(_RxProxy);
 
@@ -24058,7 +24058,7 @@
 
 	var SC = _interopRequireWildcard(_SoundCloud);
 
-	var _main = __webpack_require__(219);
+	var _main = __webpack_require__(220);
 
 	var _main2 = _interopRequireDefault(_main);
 
@@ -37201,13 +37201,13 @@
 
 	var SC = _interopRequireWildcard(_SoundCloud);
 
-	var _placeholders = __webpack_require__(210);
+	var _placeholders = __webpack_require__(211);
 
 	var P = _interopRequireWildcard(_placeholders);
 
-	var _OverlayStatus = __webpack_require__(207);
+	var _OverlayStatus = __webpack_require__(208);
 
-	var _playlist = __webpack_require__(212);
+	var _playlist = __webpack_require__(213);
 
 	var _playlist2 = _interopRequireDefault(_playlist);
 
@@ -37335,17 +37335,17 @@
 
 	var _trackDetails2 = _interopRequireDefault(_trackDetails);
 
-	var _isolate = __webpack_require__(206);
+	var _isolate = __webpack_require__(207);
 
 	var _isolate2 = _interopRequireDefault(_isolate);
 
-	var _OverlayStatus = __webpack_require__(207);
+	var _OverlayStatus = __webpack_require__(208);
 
-	var _playlistItem = __webpack_require__(208);
+	var _playlistItem = __webpack_require__(209);
 
 	var _playlistItem2 = _interopRequireDefault(_playlistItem);
 
-	var _DoubleClick = __webpack_require__(209);
+	var _DoubleClick = __webpack_require__(210);
 
 	var _DoubleClick2 = _interopRequireDefault(_DoubleClick);
 
@@ -37687,6 +37687,8 @@
 
 	var S = _interopRequireWildcard(_StyleUtils);
 
+	var _flexJss = __webpack_require__(206);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	exports.default = (0, _CreateStyle.create)({
@@ -37696,7 +37698,8 @@
 	    marginRight: _Themes.BlockSpace + 'px'
 	  },
 	  trackDetail: {
-	    overflow: 'hidden', marginRight: _Themes.BlockSpace + 'px'
+	    overflow: 'hidden', marginRight: _Themes.BlockSpace + 'px',
+	    extend: _flexJss.spread
 	  },
 	  title: _extends({}, S.overflowEllipsisSTY),
 	  artist: _extends({
@@ -37707,6 +37710,157 @@
 
 /***/ },
 /* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by tushar.mathur on 15/08/16.
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.asHtmlStyleString = exports.css = exports.wrap = exports.spread = exports.ai_fe = exports.ai_fs = exports.ai_c = exports.jc_fe = exports.jc_fs = exports.jc_c = exports.jc_sa = exports.jc_sb = exports.col = exports.row = exports.prefixCSS = undefined;
+
+	var _jss = __webpack_require__(156);
+
+	var _jssPresetDefault = __webpack_require__(172);
+
+	var _jssPresetDefault2 = _interopRequireDefault(_jssPresetDefault);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * @private
+	 */
+	const prefixCSS = exports.prefixCSS = (base, css) => {
+	  function reducer(m, k) {
+	    m[[base, k].join('.')] = css[k];
+	    return m;
+	  }
+
+	  return Object.keys(css).reduce(reducer, {});
+	};
+
+	/**
+	 * sets display to `flex` and flexDirection as `row`
+	 * @example
+	 * <div className='flb row' />
+	 */
+	const row = exports.row = { display: 'flex', flexDirection: 'row' };
+
+	/**
+	 * sets display to `flex` and flexDirection as `column`
+	 * @example
+	 * <div className='flb col' />
+	 */
+	const col = exports.col = { display: 'flex', flexDirection: 'column' };
+
+	/**
+	 * sets justifyContent to `space-between`
+	 * @example
+	 * <div className='flb col jc_sb' />
+	 */
+	const jc_sb = exports.jc_sb = { justifyContent: 'space-between' };
+
+	/**
+	 * sets justifyContent to `space-around`
+	 * @example
+	 * <div className='flb row jc_sa' />
+	 */
+	const jc_sa = exports.jc_sa = { justifyContent: 'space-around' };
+
+	/**
+	 * sets justifyContent to `center`
+	 * @example
+	 * <div className='flb col jc_c' />
+	 */
+	const jc_c = exports.jc_c = { justifyContent: 'center' };
+
+	/**
+	 * sets justifyContent to `flex-start`
+	 * @example
+	 * <div className='flb row jc_fs' />
+	 */
+	const jc_fs = exports.jc_fs = { justifyContent: 'flex-start' };
+
+	/**
+	 * sets justifyContent to `flex-end`
+	 * @example
+	 * <div className='flb row jc_fe' />
+	 */
+	const jc_fe = exports.jc_fe = { justifyContent: 'flex-end' };
+
+	/**
+	 * sets alignItems to `center`
+	 * @example
+	 * <div className='flb row jc_c ai_c' />
+	 */
+	const ai_c = exports.ai_c = { alignItems: 'center' };
+
+	/**
+	 * sets alignItems to `flex-start`
+	 * @example
+	 * <div className='flb row jc_c ai_fs' />
+	 */
+	const ai_fs = exports.ai_fs = { alignItems: 'flex-start' };
+
+	/**
+	 * sets alignItems to `flex-end`
+	 * @example
+	 * <div className='flb row jc_c ai_fe' />
+	 */
+	const ai_fe = exports.ai_fe = { alignItems: 'flex-end' };
+
+	/**
+	 * sets flex to `1 0 0`
+	 * @example
+	 * <div className='flb spread' />
+	 */
+	const spread = exports.spread = { flex: '1 0 0' };
+
+	/**
+	 * sets flexWrap to `wrap`
+	 * @example
+	 * <div className='flb wrap' />
+	 */
+	const wrap = exports.wrap = { flexWrap: 'wrap' };
+
+	/**
+	 * @private
+	 */
+	const css = exports.css = {
+	  row,
+	  col,
+	  jc_sb,
+	  jc_sa,
+	  jc_c,
+	  jc_fs,
+	  jc_fe,
+	  ai_c,
+	  ai_fs,
+	  ai_fe,
+	  spread,
+	  wrap
+	};
+
+	/**
+	 * Creates a stylesheet of all the classes which can directly be inserted into a
+	 * HTML <style> tag
+	 * By default all the css classes get prefixed with `.flb`.
+	 * @function
+	 * @returns {string}
+	 */
+	const asHtmlStyleString = exports.asHtmlStyleString = () => {
+	  const jss = new _jss.Jss((0, _jssPresetDefault2.default)());
+	  const options = { named: false };
+	  return jss.createStyleSheet(prefixCSS('.flb', css), options).toString();
+	};
+	//# sourceMappingURL=flex-jss.js.map
+
+/***/ },
+/* 207 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -37801,7 +37955,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37865,7 +38019,7 @@
 	};
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37898,7 +38052,7 @@
 	});
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports) {
 
 	/**
@@ -37932,7 +38086,7 @@
 	};
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(snabbdom) {/**
@@ -37946,7 +38100,7 @@
 	});
 	exports.PlaylistItem = undefined;
 
-	var _placeholders = __webpack_require__(211);
+	var _placeholders = __webpack_require__(212);
 
 	var _placeholders2 = _interopRequireDefault(_placeholders);
 
@@ -37966,7 +38120,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(143)))
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38021,7 +38175,7 @@
 	});
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38044,7 +38198,7 @@
 	});
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(snabbdom) {/**
@@ -38061,7 +38215,7 @@
 
 	var _rx = __webpack_require__(4);
 
-	var _DOMUtils = __webpack_require__(214);
+	var _DOMUtils = __webpack_require__(215);
 
 	var U = _interopRequireWildcard(_DOMUtils);
 
@@ -38069,17 +38223,17 @@
 
 	var SC = _interopRequireWildcard(_SoundCloud);
 
-	var _RxProxy = __webpack_require__(215);
+	var _RxProxy = __webpack_require__(216);
 
 	var _RxProxy2 = _interopRequireDefault(_RxProxy);
 
-	var _searchIcon = __webpack_require__(216);
+	var _searchIcon = __webpack_require__(217);
 
 	var _searchIcon2 = _interopRequireDefault(_searchIcon);
 
-	var _eventDriver = __webpack_require__(217);
+	var _eventDriver = __webpack_require__(218);
 
-	var _search = __webpack_require__(218);
+	var _search = __webpack_require__(219);
 
 	var _search2 = _interopRequireDefault(_search);
 
@@ -38170,7 +38324,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(143)))
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports) {
 
 	/**
@@ -38189,7 +38343,7 @@
 	};
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38214,7 +38368,7 @@
 	};
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38286,7 +38440,7 @@
 	};
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38340,7 +38494,7 @@
 	};
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38385,7 +38539,7 @@
 	});
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38407,7 +38561,7 @@
 	});
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38489,7 +38643,7 @@
 	};
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports) {
 
 	/**
@@ -38508,7 +38662,7 @@
 	};
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports) {
 
 	/**
