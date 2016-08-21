@@ -14579,6 +14579,7 @@
 	        this._err = err;
 	        var a = this._ils;
 	        var L = a.length;
+	        this._x();
 	        if (L == 1)
 	            a[0]._e(err);
 	        else {
@@ -14586,11 +14587,11 @@
 	            for (var i = 0; i < L; i++)
 	                b[i]._e(err);
 	        }
-	        this._x();
 	    };
 	    Stream.prototype._c = function () {
 	        var a = this._ils;
 	        var L = a.length;
+	        this._x();
 	        if (L == 1)
 	            a[0]._c();
 	        else {
@@ -14598,7 +14599,6 @@
 	            for (var i = 0; i < L; i++)
 	                b[i]._c();
 	        }
-	        this._x();
 	    };
 	    Stream.prototype._x = function () {
 	        if (this._ils.length === 0)
@@ -14621,11 +14621,13 @@
 	            return ta._add(il);
 	        var a = this._ils;
 	        a.push(il);
-	        if (a.length === 1) {
-	            if (this._stopID !== NO) {
-	                clearTimeout(this._stopID);
-	                this._stopID = NO;
-	            }
+	        if (a.length > 1)
+	            return;
+	        if (this._stopID !== NO) {
+	            clearTimeout(this._stopID);
+	            this._stopID = NO;
+	        }
+	        else {
 	            var p = this._prod;
 	            if (p !== NO)
 	                p._start(this);
