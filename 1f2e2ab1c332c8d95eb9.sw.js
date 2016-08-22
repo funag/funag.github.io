@@ -51,7 +51,7 @@
 
 	'use strict';
 
-	var _swToolbox = __webpack_require__(224);
+	var _swToolbox = __webpack_require__(227);
 
 	var _swToolbox2 = _interopRequireDefault(_swToolbox);
 
@@ -63,7 +63,7 @@
 	  var policy = swConfig.appCache.policy;
 
 	  _swToolbox2.default.router.get('/', _swToolbox2.default[policy]);
-	  _swToolbox2.default.router.get(/.*bundle.*/, _swToolbox2.default[policy]);
+	  _swToolbox2.default.router.get(/.*client.*/, _swToolbox2.default[policy]);
 	}
 
 	if (swConfig.externalCache) {
@@ -81,7 +81,7 @@
 
 /***/ },
 
-/***/ 224:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -101,11 +101,11 @@
 	*/
 	'use strict';
 
-	__webpack_require__(225);
-	var options = __webpack_require__(226);
-	var router = __webpack_require__(227);
-	var helpers = __webpack_require__(231);
-	var strategies = __webpack_require__(233);
+	__webpack_require__(228);
+	var options = __webpack_require__(229);
+	var router = __webpack_require__(230);
+	var helpers = __webpack_require__(234);
+	var strategies = __webpack_require__(236);
 
 	helpers.debug('Service Worker Toolbox is loading');
 
@@ -212,7 +212,7 @@
 
 /***/ },
 
-/***/ 225:
+/***/ 228:
 /***/ function(module, exports) {
 
 	/**
@@ -321,7 +321,7 @@
 
 /***/ },
 
-/***/ 226:
+/***/ 229:
 /***/ function(module, exports) {
 
 	/*
@@ -368,7 +368,7 @@
 
 /***/ },
 
-/***/ 227:
+/***/ 230:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -388,7 +388,7 @@
 	*/
 	'use strict';
 
-	var Route = __webpack_require__(228);
+	var Route = __webpack_require__(231);
 
 	function regexEscape(s) {
 	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -502,7 +502,7 @@
 
 /***/ },
 
-/***/ 228:
+/***/ 231:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -525,7 +525,7 @@
 	// TODO: Use self.registration.scope instead of self.location
 	var url = new URL('./', self.location);
 	var basePath = url.pathname;
-	var pathRegexp = __webpack_require__(229);
+	var pathRegexp = __webpack_require__(232);
 
 	var Route = function(method, path, handler, options) {
 	  if (path instanceof RegExp) {
@@ -569,10 +569,10 @@
 
 /***/ },
 
-/***/ 229:
+/***/ 232:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(230)
+	var isarray = __webpack_require__(233)
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -1002,7 +1002,7 @@
 
 /***/ },
 
-/***/ 230:
+/***/ 233:
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -1012,7 +1012,7 @@
 
 /***/ },
 
-/***/ 231:
+/***/ 234:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1032,8 +1032,8 @@
 	*/
 	'use strict';
 
-	var globalOptions = __webpack_require__(226);
-	var idbCacheExpiration = __webpack_require__(232);
+	var globalOptions = __webpack_require__(229);
+	var idbCacheExpiration = __webpack_require__(235);
 
 	function debug(message, options) {
 	  options = options || {};
@@ -1159,7 +1159,7 @@
 
 /***/ },
 
-/***/ 232:
+/***/ 235:
 /***/ function(module, exports) {
 
 	/*
@@ -1324,7 +1324,7 @@
 
 /***/ },
 
-/***/ 233:
+/***/ 236:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1343,17 +1343,17 @@
 		limitations under the License.
 	*/
 	module.exports = {
-	  networkOnly: __webpack_require__(234),
-	  networkFirst: __webpack_require__(235),
-	  cacheOnly: __webpack_require__(236),
-	  cacheFirst: __webpack_require__(237),
-	  fastest: __webpack_require__(238)
+	  networkOnly: __webpack_require__(237),
+	  networkFirst: __webpack_require__(238),
+	  cacheOnly: __webpack_require__(239),
+	  cacheFirst: __webpack_require__(240),
+	  fastest: __webpack_require__(241)
 	};
 
 
 /***/ },
 
-/***/ 234:
+/***/ 237:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1372,7 +1372,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(231);
+	var helpers = __webpack_require__(234);
 
 	function networkOnly(request, values, options) {
 	  helpers.debug('Strategy: network only [' + request.url + ']', options);
@@ -1384,7 +1384,7 @@
 
 /***/ },
 
-/***/ 235:
+/***/ 238:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1403,8 +1403,8 @@
 	 limitations under the License.
 	*/
 	'use strict';
-	var globalOptions = __webpack_require__(226);
-	var helpers = __webpack_require__(231);
+	var globalOptions = __webpack_require__(229);
+	var helpers = __webpack_require__(234);
 
 	function networkFirst(request, values, options) {
 	  options = options || {};
@@ -1485,7 +1485,7 @@
 
 /***/ },
 
-/***/ 236:
+/***/ 239:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1504,7 +1504,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(231);
+	var helpers = __webpack_require__(234);
 
 	function cacheOnly(request, values, options) {
 	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
@@ -1518,7 +1518,7 @@
 
 /***/ },
 
-/***/ 237:
+/***/ 240:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1537,7 +1537,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(231);
+	var helpers = __webpack_require__(234);
 
 	function cacheFirst(request, values, options) {
 	  helpers.debug('Strategy: cache first [' + request.url + ']', options);
@@ -1557,7 +1557,7 @@
 
 /***/ },
 
-/***/ 238:
+/***/ 241:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1576,8 +1576,8 @@
 	  limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(231);
-	var cacheOnly = __webpack_require__(236);
+	var helpers = __webpack_require__(234);
+	var cacheOnly = __webpack_require__(239);
 
 	function fastest(request, values, options) {
 	  helpers.debug('Strategy: fastest [' + request.url + ']', options);
