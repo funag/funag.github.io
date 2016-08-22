@@ -38614,7 +38614,7 @@
 	  var tracks$ = _ref.tracks$;
 	  var DOM = _ref.DOM;
 
-	  var clear$ = DOM.select('.fa-times-circle').events('click').map('');
+	  var clear$ = DOM.select('.material-icons').events('click').map('');
 	  var isLoading$ = _rx.Observable.merge(value$.map(true), tracks$.map(false)).startWith(true).distinctUntilChanged();
 
 	  var loaderIconVTree$ = isLoading$.filter(function (x) {
