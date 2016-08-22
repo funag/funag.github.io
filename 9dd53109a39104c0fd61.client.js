@@ -38661,6 +38661,7 @@
 	  title$.subscribe(function (title) {
 	    document.title = title;
 	  });
+	  return {};
 	};
 
 /***/ },
