@@ -198,6 +198,9 @@
 	            else {
 	                sources[name_2] = driverOutput;
 	            }
+	            if (sources[name_2] && typeof sources[name_2] === 'object') {
+	                sources[name_2]._isCycleSource = name_2;
+	            }
 	        }
 	    }
 	    return sources;
@@ -13340,7 +13343,7 @@
 	    var vnodeWrapper = new VNodeWrapper_1.VNodeWrapper(rootElement);
 	    var delegators = new MapPolyfill();
 	    makeDOMDriverInputGuard(modules);
-	    function DOMDriver(vnode$, runStreamAdapter) {
+	    function DOMDriver(vnode$, runStreamAdapter, name) {
 	        domDriverInputGuard(vnode$);
 	        var transposeVNode = transposition_1.makeTransposeVNode(runStreamAdapter);
 	        var preprocessedVNode$ = (transposition ? vnode$.map(transposeVNode).flatten() : vnode$);
@@ -13354,7 +13357,7 @@
 	        /* tslint:disable:no-empty */
 	        rootElement$.addListener({ next: function () { }, error: function () { }, complete: function () { } });
 	        /* tslint:enable:no-empty */
-	        return new MainDOMSource_1.MainDOMSource(rootElement$, runStreamAdapter, [], isolateModule, delegators);
+	        return new MainDOMSource_1.MainDOMSource(rootElement$, runStreamAdapter, [], isolateModule, delegators, name);
 	    }
 	    ;
 	    DOMDriver.streamAdapter = xstream_adapter_1.default;
@@ -14558,12 +14561,16 @@
 	        this._prod = producer || NO;
 	        this._ils = [];
 	        this._stopID = NO;
+	        this._dl = NO;
+	        this._d = false;
 	        this._target = NO;
 	        this._err = NO;
 	    }
 	    Stream.prototype._n = function (t) {
 	        var a = this._ils;
 	        var L = a.length;
+	        if (this._d)
+	            this._dl._n(t);
 	        if (L == 1)
 	            a[0]._n(t);
 	        else {
@@ -14579,6 +14586,8 @@
 	        var a = this._ils;
 	        var L = a.length;
 	        this._x();
+	        if (this._d)
+	            this._dl._e(err);
 	        if (L == 1)
 	            a[0]._e(err);
 	        else {
@@ -14591,6 +14600,8 @@
 	        var a = this._ils;
 	        var L = a.length;
 	        this._x();
+	        if (this._d)
+	            this._dl._c();
 	        if (L == 1)
 	            a[0]._c();
 	        else {
@@ -15318,6 +15329,39 @@
 	        this._c();
 	    };
 	    /**
+	     * Adds a "debug" listener to the stream. There can only be one debug
+	     * listener, that's why this is 'setDebugListener'. To remove the debug
+	     * listener, just call setDebugListener(null).
+	     *
+	     * A debug listener is like any other listener. The only difference is that a
+	     * debug listener is "stealthy": its presence/absence does not trigger the
+	     * start/stop of the stream (or the producer inside the stream). This is
+	     * useful so you can inspect what is going on without changing the behavior
+	     * of the program. If you have an idle stream and you add a normal listener to
+	     * it, the stream will start executing. But if you set a debug listener on an
+	     * idle stream, it won't start executing (not until the first normal listener
+	     * is added).
+	     *
+	     * As the name indicates, we don't recommend using this method to build app
+	     * logic. In fact, in most cases the debug operator works just fine. Only use
+	     * this one if you know what you're doing.
+	     *
+	     * @param {Listener<T>} listener
+	     */
+	    Stream.prototype.setDebugListener = function (listener) {
+	        if (!listener) {
+	            this._d = false;
+	            this._dl = NO;
+	        }
+	        else {
+	            this._d = true;
+	            listener._n = listener.next;
+	            listener._e = listener.error;
+	            listener._c = listener.complete;
+	            this._dl = listener;
+	        }
+	    };
+	    /**
 	     * Blends multiple streams together, emitting events from all of them
 	     * concurrently.
 	     *
@@ -15496,13 +15540,14 @@
 	    return result;
 	}
 	var MainDOMSource = (function () {
-	    function MainDOMSource(_rootElement$, _runStreamAdapter, _namespace, _isolateModule, _delegators) {
+	    function MainDOMSource(_rootElement$, _runStreamAdapter, _namespace, _isolateModule, _delegators, _name) {
 	        if (_namespace === void 0) { _namespace = []; }
 	        this._rootElement$ = _rootElement$;
 	        this._runStreamAdapter = _runStreamAdapter;
 	        this._namespace = _namespace;
 	        this._isolateModule = _isolateModule;
 	        this._delegators = _delegators;
+	        this._name = _name;
 	        this.isolateSource = isolate_1.isolateSource;
 	        this.isolateSink = isolate_1.isolateSink;
 	    }
@@ -15516,7 +15561,9 @@
 	            output$ = this._rootElement$.map(function (el) { return elementFinder_1.call(el); });
 	        }
 	        var runSA = this._runStreamAdapter;
-	        return runSA.remember(runSA.adapt(output$, xstream_adapter_1.default.streamSubscribe));
+	        var out = runSA.remember(runSA.adapt(output$, xstream_adapter_1.default.streamSubscribe));
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    Object.defineProperty(MainDOMSource.prototype, "namespace", {
 	        get: function () {
@@ -15531,16 +15578,16 @@
 	                "string as a CSS selector");
 	        }
 	        if (selector === 'document') {
-	            return new DocumentDOMSource_1.DocumentDOMSource(this._runStreamAdapter);
+	            return new DocumentDOMSource_1.DocumentDOMSource(this._runStreamAdapter, this._name);
 	        }
 	        if (selector === 'body') {
-	            return new BodyDOMSource_1.BodyDOMSource(this._runStreamAdapter);
+	            return new BodyDOMSource_1.BodyDOMSource(this._runStreamAdapter, this._name);
 	        }
 	        var trimmedSelector = selector.trim();
 	        var childNamespace = trimmedSelector === ":root" ?
 	            this._namespace :
 	            this._namespace.concat(trimmedSelector);
-	        return new MainDOMSource(this._rootElement$, this._runStreamAdapter, childNamespace, this._isolateModule, this._delegators);
+	        return new MainDOMSource(this._rootElement$, this._runStreamAdapter, childNamespace, this._isolateModule, this._delegators, this._name);
 	    };
 	    MainDOMSource.prototype.events = function (eventType, options) {
 	        if (options === void 0) { options = {}; }
@@ -15612,7 +15659,9 @@
 	            return subject;
 	        })
 	            .flatten();
-	        return this._runStreamAdapter.adapt(event$, xstream_adapter_1.default.streamSubscribe);
+	        var out = this._runStreamAdapter.adapt(event$, xstream_adapter_1.default.streamSubscribe);
+	        out._isCycleSource = domSource._name;
+	        return out;
 	    };
 	    MainDOMSource.prototype.dispose = function () {
 	        this._isolateModule.reset();
@@ -15681,8 +15730,9 @@
 	var xstream_adapter_1 = __webpack_require__(18);
 	var fromEvent_1 = __webpack_require__(20);
 	var DocumentDOMSource = (function () {
-	    function DocumentDOMSource(_runStreamAdapter) {
+	    function DocumentDOMSource(_runStreamAdapter, _name) {
 	        this._runStreamAdapter = _runStreamAdapter;
+	        this._name = _name;
 	    }
 	    DocumentDOMSource.prototype.select = function (selector) {
 	        // This functionality is still undefined/undecided.
@@ -15690,7 +15740,9 @@
 	    };
 	    DocumentDOMSource.prototype.elements = function () {
 	        var runSA = this._runStreamAdapter;
-	        return runSA.remember(runSA.adapt(xstream_1.default.of(document), xstream_adapter_1.default.streamSubscribe));
+	        var out = runSA.remember(runSA.adapt(xstream_1.default.of(document), xstream_adapter_1.default.streamSubscribe));
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    DocumentDOMSource.prototype.events = function (eventType, options) {
 	        if (options === void 0) { options = {}; }
@@ -15701,7 +15753,9 @@
 	        else {
 	            stream = fromEvent_1.fromEvent(document, eventType);
 	        }
-	        return this._runStreamAdapter.adapt(stream, xstream_adapter_1.default.streamSubscribe);
+	        var out = this._runStreamAdapter.adapt(stream, xstream_adapter_1.default.streamSubscribe);
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    return DocumentDOMSource;
 	}());
@@ -15740,8 +15794,9 @@
 	var xstream_adapter_1 = __webpack_require__(18);
 	var fromEvent_1 = __webpack_require__(20);
 	var BodyDOMSource = (function () {
-	    function BodyDOMSource(_runStreamAdapter) {
+	    function BodyDOMSource(_runStreamAdapter, _name) {
 	        this._runStreamAdapter = _runStreamAdapter;
+	        this._name = _name;
 	    }
 	    BodyDOMSource.prototype.select = function (selector) {
 	        // This functionality is still undefined/undecided.
@@ -15749,7 +15804,9 @@
 	    };
 	    BodyDOMSource.prototype.elements = function () {
 	        var runSA = this._runStreamAdapter;
-	        return runSA.remember(runSA.adapt(xstream_1.default.of(document.body), xstream_adapter_1.default.streamSubscribe));
+	        var out = runSA.remember(runSA.adapt(xstream_1.default.of(document.body), xstream_adapter_1.default.streamSubscribe));
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    BodyDOMSource.prototype.events = function (eventType, options) {
 	        if (options === void 0) { options = {}; }
@@ -15760,7 +15817,9 @@
 	        else {
 	            stream = fromEvent_1.fromEvent(document.body, eventType);
 	        }
-	        return this._runStreamAdapter.adapt(stream, xstream_adapter_1.default.streamSubscribe);
+	        var out = this._runStreamAdapter.adapt(stream, xstream_adapter_1.default.streamSubscribe);
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    return BodyDOMSource;
 	}());
@@ -18536,7 +18595,7 @@
 	        options = {};
 	    }
 	    var transposition = options.transposition || false;
-	    function htmlDriver(vnode$, runStreamAdapter) {
+	    function htmlDriver(vnode$, runStreamAdapter, name) {
 	        var transposeVNode = transposition_1.makeTransposeVNode(runStreamAdapter);
 	        var preprocessedVNode$ = (transposition ? vnode$.map(transposeVNode).flatten() : vnode$);
 	        var html$ = preprocessedVNode$.map(toHTML);
@@ -18545,7 +18604,7 @@
 	            error: noop,
 	            complete: noop,
 	        });
-	        return new HTMLSource_1.HTMLSource(html$, runStreamAdapter);
+	        return new HTMLSource_1.HTMLSource(html$, runStreamAdapter, name);
 	    }
 	    ;
 	    htmlDriver.streamAdapter = xstream_adapter_1.default;
@@ -18562,19 +18621,24 @@
 	var xstream_1 = __webpack_require__(15);
 	var xstream_adapter_1 = __webpack_require__(18);
 	var HTMLSource = (function () {
-	    function HTMLSource(html$, runSA) {
+	    function HTMLSource(html$, runSA, _name) {
 	        this.runSA = runSA;
+	        this._name = _name;
 	        this._html$ = html$;
 	        this._empty$ = runSA.adapt(xstream_1.default.empty(), xstream_adapter_1.default.streamSubscribe);
 	    }
 	    HTMLSource.prototype.elements = function () {
-	        return this.runSA.adapt(this._html$, xstream_adapter_1.default.streamSubscribe);
+	        var out = this.runSA.adapt(this._html$, xstream_adapter_1.default.streamSubscribe);
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    HTMLSource.prototype.select = function (selector) {
-	        return new HTMLSource(xstream_1.default.empty(), this.runSA);
+	        return new HTMLSource(xstream_1.default.empty(), this.runSA, this._name);
 	    };
 	    HTMLSource.prototype.events = function (eventType, options) {
-	        return this._empty$;
+	        var out = this._empty$;
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    return HTMLSource;
 	}());
@@ -21961,7 +22025,9 @@
 	        }
 	    }
 	    MockedDOMSource.prototype.elements = function () {
-	        return this._elements;
+	        var out = this._elements;
+	        out._isCycleSource = 'MockedDOM';
+	        return out;
 	    };
 	    MockedDOMSource.prototype.events = function (eventType, options) {
 	        var mockConfig = this._mockConfig;
@@ -21970,10 +22036,14 @@
 	        for (var i = 0; i < keysLen; i++) {
 	            var key = keys[i];
 	            if (key === eventType) {
-	                return mockConfig[key];
+	                var out_1 = mockConfig[key];
+	                out_1._isCycleSource = 'MockedDOM';
+	                return out_1;
 	            }
 	        }
-	        return this._streamAdapter.adapt(xstream_1.default.empty(), xstream_adapter_1.default.streamSubscribe);
+	        var out = this._streamAdapter.adapt(xstream_1.default.empty(), xstream_adapter_1.default.streamSubscribe);
+	        out._isCycleSource = 'MockedDOM';
+	        return out;
 	    };
 	    MockedDOMSource.prototype.select = function (selector) {
 	        var mockConfig = this._mockConfig;
@@ -22295,11 +22365,11 @@
 	    };
 	}
 	function makeHTTPDriver() {
-	    function httpDriver(request$, runSA) {
+	    function httpDriver(request$, runSA, name) {
 	        var response$$ = request$
 	            .map(makeRequestInputToResponse$(runSA))
 	            .remember();
-	        var httpSource = new MainHTTPSource_1.MainHTTPSource(response$$, runSA, []);
+	        var httpSource = new MainHTTPSource_1.MainHTTPSource(response$$, runSA, name, []);
 	        /* tslint:disable:no-empty */
 	        response$$.addListener({ next: function () { }, error: function () { }, complete: function () { } });
 	        /* tslint:enable:no-empty */
@@ -22319,31 +22389,36 @@
 	var isolate_1 = __webpack_require__(134);
 	var xstream_adapter_1 = __webpack_require__(135);
 	var MainHTTPSource = (function () {
-	    function MainHTTPSource(_res$$, runStreamAdapter, _namespace) {
+	    function MainHTTPSource(_res$$, runStreamAdapter, _name, _namespace) {
 	        if (_namespace === void 0) { _namespace = []; }
 	        this._res$$ = _res$$;
 	        this.runStreamAdapter = runStreamAdapter;
+	        this._name = _name;
 	        this._namespace = _namespace;
 	        this.isolateSource = isolate_1.isolateSource;
 	        this.isolateSink = isolate_1.isolateSink;
 	    }
 	    Object.defineProperty(MainHTTPSource.prototype, "response$$", {
 	        get: function () {
-	            return this.runStreamAdapter.adapt(this._res$$, xstream_adapter_1.default.streamSubscribe);
+	            var out = this.runStreamAdapter.adapt(this._res$$, xstream_adapter_1.default.streamSubscribe);
+	            out._isCycleSource = this._name;
+	            return out;
 	        },
 	        enumerable: true,
 	        configurable: true
 	    });
 	    MainHTTPSource.prototype.filter = function (predicate) {
 	        var filteredResponse$$ = this._res$$.filter(predicate);
-	        return new MainHTTPSource(filteredResponse$$, this.runStreamAdapter, this._namespace);
+	        return new MainHTTPSource(filteredResponse$$, this.runStreamAdapter, this._name, this._namespace);
 	    };
 	    MainHTTPSource.prototype.select = function (category) {
 	        var res$$ = this._res$$;
 	        if (category) {
 	            res$$ = this._res$$.filter(function (res$) { return res$.request && res$.request.category === category; });
 	        }
-	        return this.runStreamAdapter.adapt(res$$, xstream_adapter_1.default.streamSubscribe);
+	        var out = this.runStreamAdapter.adapt(res$$, xstream_adapter_1.default.streamSubscribe);
+	        out._isCycleSource = this._name;
+	        return out;
 	    };
 	    return MainHTTPSource;
 	}());
