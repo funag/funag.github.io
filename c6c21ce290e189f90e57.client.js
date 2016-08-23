@@ -39126,6 +39126,7 @@
 	    var src = _ref2.src;
 
 	    if (audio.src !== src) {
+	      audio.pause();
 	      audio.src = src;
 	      audio.load();
 	    }
