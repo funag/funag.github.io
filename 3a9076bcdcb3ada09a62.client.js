@@ -38433,7 +38433,7 @@
 	exports.default = function (element) {
 	  var timeout = arguments.length <= 1 || arguments[1] === undefined ? 600 : arguments[1];
 	  var sh = arguments[2];
-	  return element.events('click').timeInterval(sh).bufferWithCount(2).filter(function (_ref) {
+	  return element.events('click').timeInterval(sh).bufferWithCount(2, 1).filter(function (_ref) {
 	    var _ref2 = _slicedToArray(_ref, 2);
 
 	    var a = _ref2[0];
