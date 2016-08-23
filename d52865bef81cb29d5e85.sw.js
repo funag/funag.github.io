@@ -51,7 +51,7 @@
 
 	'use strict';
 
-	var _swToolbox = __webpack_require__(253);
+	var _swToolbox = __webpack_require__(252);
 
 	var _swToolbox2 = _interopRequireDefault(_swToolbox);
 
@@ -81,7 +81,7 @@
 
 /***/ },
 
-/***/ 253:
+/***/ 252:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -101,11 +101,11 @@
 	*/
 	'use strict';
 
-	__webpack_require__(254);
-	var options = __webpack_require__(255);
-	var router = __webpack_require__(256);
-	var helpers = __webpack_require__(260);
-	var strategies = __webpack_require__(262);
+	__webpack_require__(253);
+	var options = __webpack_require__(254);
+	var router = __webpack_require__(255);
+	var helpers = __webpack_require__(259);
+	var strategies = __webpack_require__(261);
 
 	helpers.debug('Service Worker Toolbox is loading');
 
@@ -212,7 +212,7 @@
 
 /***/ },
 
-/***/ 254:
+/***/ 253:
 /***/ function(module, exports) {
 
 	/**
@@ -321,7 +321,7 @@
 
 /***/ },
 
-/***/ 255:
+/***/ 254:
 /***/ function(module, exports) {
 
 	/*
@@ -368,7 +368,7 @@
 
 /***/ },
 
-/***/ 256:
+/***/ 255:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -388,7 +388,7 @@
 	*/
 	'use strict';
 
-	var Route = __webpack_require__(257);
+	var Route = __webpack_require__(256);
 
 	function regexEscape(s) {
 	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -502,7 +502,7 @@
 
 /***/ },
 
-/***/ 257:
+/***/ 256:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -525,7 +525,7 @@
 	// TODO: Use self.registration.scope instead of self.location
 	var url = new URL('./', self.location);
 	var basePath = url.pathname;
-	var pathRegexp = __webpack_require__(258);
+	var pathRegexp = __webpack_require__(257);
 
 	var Route = function(method, path, handler, options) {
 	  if (path instanceof RegExp) {
@@ -569,10 +569,10 @@
 
 /***/ },
 
-/***/ 258:
+/***/ 257:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(259)
+	var isarray = __webpack_require__(258)
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -1002,7 +1002,7 @@
 
 /***/ },
 
-/***/ 259:
+/***/ 258:
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -1012,7 +1012,7 @@
 
 /***/ },
 
-/***/ 260:
+/***/ 259:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1032,8 +1032,8 @@
 	*/
 	'use strict';
 
-	var globalOptions = __webpack_require__(255);
-	var idbCacheExpiration = __webpack_require__(261);
+	var globalOptions = __webpack_require__(254);
+	var idbCacheExpiration = __webpack_require__(260);
 
 	function debug(message, options) {
 	  options = options || {};
@@ -1159,7 +1159,7 @@
 
 /***/ },
 
-/***/ 261:
+/***/ 260:
 /***/ function(module, exports) {
 
 	/*
@@ -1324,7 +1324,7 @@
 
 /***/ },
 
-/***/ 262:
+/***/ 261:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1343,17 +1343,17 @@
 		limitations under the License.
 	*/
 	module.exports = {
-	  networkOnly: __webpack_require__(263),
-	  networkFirst: __webpack_require__(264),
-	  cacheOnly: __webpack_require__(265),
-	  cacheFirst: __webpack_require__(266),
-	  fastest: __webpack_require__(267)
+	  networkOnly: __webpack_require__(262),
+	  networkFirst: __webpack_require__(263),
+	  cacheOnly: __webpack_require__(264),
+	  cacheFirst: __webpack_require__(265),
+	  fastest: __webpack_require__(266)
 	};
 
 
 /***/ },
 
-/***/ 263:
+/***/ 262:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1372,7 +1372,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(260);
+	var helpers = __webpack_require__(259);
 
 	function networkOnly(request, values, options) {
 	  helpers.debug('Strategy: network only [' + request.url + ']', options);
@@ -1384,7 +1384,7 @@
 
 /***/ },
 
-/***/ 264:
+/***/ 263:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1403,8 +1403,8 @@
 	 limitations under the License.
 	*/
 	'use strict';
-	var globalOptions = __webpack_require__(255);
-	var helpers = __webpack_require__(260);
+	var globalOptions = __webpack_require__(254);
+	var helpers = __webpack_require__(259);
 
 	function networkFirst(request, values, options) {
 	  options = options || {};
@@ -1485,6 +1485,39 @@
 
 /***/ },
 
+/***/ 264:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	'use strict';
+	var helpers = __webpack_require__(259);
+
+	function cacheOnly(request, values, options) {
+	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
+	  return helpers.openCache(options).then(function(cache) {
+	    return cache.match(request);
+	  });
+	}
+
+	module.exports = cacheOnly;
+
+
+/***/ },
+
 /***/ 265:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1504,40 +1537,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(260);
-
-	function cacheOnly(request, values, options) {
-	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
-	  return helpers.openCache(options).then(function(cache) {
-	    return cache.match(request);
-	  });
-	}
-
-	module.exports = cacheOnly;
-
-
-/***/ },
-
-/***/ 266:
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		Copyright 2014 Google Inc. All Rights Reserved.
-
-		Licensed under the Apache License, Version 2.0 (the "License");
-		you may not use this file except in compliance with the License.
-		You may obtain a copy of the License at
-
-	      http://www.apache.org/licenses/LICENSE-2.0
-
-		Unless required by applicable law or agreed to in writing, software
-		distributed under the License is distributed on an "AS IS" BASIS,
-		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-		See the License for the specific language governing permissions and
-		limitations under the License.
-	*/
-	'use strict';
-	var helpers = __webpack_require__(260);
+	var helpers = __webpack_require__(259);
 
 	function cacheFirst(request, values, options) {
 	  helpers.debug('Strategy: cache first [' + request.url + ']', options);
@@ -1557,7 +1557,7 @@
 
 /***/ },
 
-/***/ 267:
+/***/ 266:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1576,8 +1576,8 @@
 	  limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(260);
-	var cacheOnly = __webpack_require__(265);
+	var helpers = __webpack_require__(259);
+	var cacheOnly = __webpack_require__(264);
 
 	function fastest(request, values, options) {
 	  helpers.debug('Strategy: fastest [' + request.url + ']', options);
