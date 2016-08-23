@@ -24097,8 +24097,8 @@
 	  var selectedTrack$ = STORE.select('track.selected');
 	  var searchBox = (0, _search2.default)({ DOM: DOM, HTTP: HTTP, STORE: STORE });
 	  var tracks$ = searchBox.tracks$;
-	  var playlist = (0, _playlist2.default)({ tracks$: tracks$, DOM: DOM, AUDIO: AUDIO, STORE: STORE });
 	  var controls = (0, _controls2.default)({ AUDIO: AUDIO, selectedTrack$: selectedTrack$, DOM: DOM, EVENTS: EVENTS });
+	  var playlist = (0, _playlist2.default)({ tracks$: tracks$, DOM: DOM, AUDIO: AUDIO, STORE: STORE, isSeeking$: controls.isSeeking$ });
 	  var action$ = actions({
 	    tracks$: tracks$,
 	    selectTrack$: playlist.selectTrack$,
@@ -33208,7 +33208,8 @@
 	  var scrobber = (0, _scrobber2.default)({ completion$: completion$, DOM: DOM });
 	  return {
 	    audio$: _rx.Observable.merge(playback.audio$, scrobber.audio$),
-	    DOM: view({ playback: playback, scrobber: scrobber, show$: show$, height$: height$ })
+	    DOM: view({ playback: playback, scrobber: scrobber, show$: show$, height$: height$ }),
+	    isSeeking$: scrobber.isSeeking$
 	  };
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(143)))
@@ -33227,6 +33228,8 @@
 	  value: true
 	});
 
+	var _rx = __webpack_require__(4);
+
 	var _muxer = __webpack_require__(147);
 
 	var _scrobber = __webpack_require__(148);
@@ -33239,16 +33242,32 @@
 	  });
 	};
 
-	exports.default = function (_ref2) {
-	  var completion$ = _ref2.completion$;
+	var model = function model(_ref2) {
 	  var DOM = _ref2.DOM;
 
+	  var scrobber = DOM.select(_scrobber.ScrobberUIModel.tagName);
+	  var dragEnd$ = scrobber.events('changeEnd');
+	  var dragStart$ = scrobber.events('changeStart');
+	  var seek$ = dragEnd$.pluck('detail', 'completion');
+	  var isSeeking$ = _rx.Observable.merge(dragStart$.map(true), dragEnd$.map(false));
+	  return { seek$: seek$, isSeeking$: isSeeking$ };
+	};
+
+	exports.default = function (_ref3) {
+	  var completion$ = _ref3.completion$;
+	  var DOM = _ref3.DOM;
+
 	  var ui = new _scrobber.ScrobberUIModel('x-scrobber');
-	  var seek$ = DOM.select(_scrobber.ScrobberUIModel.tagName).events('changeEnd').pluck('detail', 'completion');
+
+	  var _model = model({ DOM: DOM });
+
+	  var seek$ = _model.seek$;
+	  var isSeeking$ = _model.isSeeking$;
+
 	  var vTree$ = view({ completion$: completion$, ui: ui });
 	  var audio$ = (0, _muxer.mux)({ seek: seek$ });
 	  return {
-	    DOM: vTree$, audio$: audio$
+	    DOM: vTree$, audio$: audio$, isSeeking$: isSeeking$
 	  };
 	};
 
@@ -37428,6 +37447,8 @@
 	});
 	exports.Audio = undefined;
 
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 	var _ramda = __webpack_require__(144);
 
 	var _ramda2 = _interopRequireDefault(_ramda);
@@ -37478,19 +37499,27 @@
 	    return { src: src, type: 'PAUSE' };
 	  }, null);
 	};
+
 	var view = function view(_ref5) {
 	  var playlistDOM$ = _ref5.playlistDOM$;
+	  var isSeeking$ = _ref5.isSeeking$;
 
-	  return playlistDOM$.startWith(snabbdom.html(
+	  return _rx.Observable.combineLatest(playlistDOM$.startWith(snabbdom.html(
 	    'div',
 	    null,
 	    P.PlaylistItem,
 	    P.PlaylistItem,
 	    P.PlaylistItem
-	  )).map(function (view) {
+	  )), isSeeking$.map(function (x) {
+	    return x ? _playlist2.default.disableScroll : '';
+	  }).startWith('')).map(function (_ref6) {
+	    var _ref7 = _slicedToArray(_ref6, 2);
+
+	    var view = _ref7[0];
+	    var disableScroll = _ref7[1];
 	    return snabbdom.html(
 	      'div',
-	      { className: _playlist2.default.playlist },
+	      { classNames: [_playlist2.default.playlist, disableScroll] },
 	      view
 	    );
 	  });
@@ -37508,11 +37537,11 @@
 	  };
 	  return _rx.Observable.merge(AUDIO.events('pause').map(_('pause')), AUDIO.events('ended').map(_('ended')), reallyPlaying(AUDIO).map(_('reallyPlaying')), _rx.Observable.merge(AUDIO.events('loadStart'), AUDIO.events('seeking')).map(_('loadStart')));
 	};
-	var model = function model(_ref6) {
-	  var tracks$ = _ref6.tracks$;
-	  var DOM = _ref6.DOM;
-	  var STORE = _ref6.STORE;
-	  var AUDIO = _ref6.AUDIO;
+	var model = function model(_ref8) {
+	  var tracks$ = _ref8.tracks$;
+	  var DOM = _ref8.DOM;
+	  var STORE = _ref8.STORE;
+	  var AUDIO = _ref8.AUDIO;
 
 	  var audio$ = getAudioEvents(AUDIO);
 	  var selectedTrackId$ = STORE.select('track.selected').pluck('id');
@@ -37532,11 +37561,12 @@
 	  };
 	};
 
-	exports.default = function (_ref7) {
-	  var tracks$ = _ref7.tracks$;
-	  var DOM = _ref7.DOM;
-	  var STORE = _ref7.STORE;
-	  var AUDIO = _ref7.AUDIO;
+	exports.default = function (_ref9) {
+	  var tracks$ = _ref9.tracks$;
+	  var DOM = _ref9.DOM;
+	  var STORE = _ref9.STORE;
+	  var AUDIO = _ref9.AUDIO;
+	  var isSeeking$ = _ref9.isSeeking$;
 
 	  var sources = { AUDIO: AUDIO, tracks$: tracks$, DOM: DOM, STORE: STORE };
 
@@ -37546,7 +37576,7 @@
 	  var selectTrack$ = _model.selectTrack$;
 	  var playlistDOM$ = _model.playlistDOM$;
 
-	  var vTree$ = view({ playlistDOM$: playlistDOM$ });
+	  var vTree$ = view({ playlistDOM$: playlistDOM$, isSeeking$: isSeeking$ });
 	  return {
 	    DOM: vTree$, audio$: audio$, selectTrack$: selectTrack$
 	  };
@@ -38435,6 +38465,9 @@
 	  playlist: {
 	    height: '100%',
 	    overflow: 'auto'
+	  },
+	  'disableScroll': {
+	    overflow: 'hidden'
 	  }
 	});
 
