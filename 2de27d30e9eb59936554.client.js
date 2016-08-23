@@ -33404,6 +33404,10 @@
 
 	var _scrobber2 = _interopRequireDefault(_scrobber);
 
+	var _ramda = __webpack_require__(144);
+
+	var _ramda2 = _interopRequireDefault(_ramda);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33421,6 +33425,7 @@
 	var translateX = function translateX(el, completion) {
 	  return el.style.transform = 'translateX(' + 100 * (completion - 1) + '%)';
 	};
+	var completionEvent = _ramda2.default.useWith(_customEvent2.default, [_ramda2.default.identity, _ramda2.default.objOf('completion')]);
 
 	var ScrobberUIModel = exports.ScrobberUIModel = function (_NativeComponent) {
 	  _inherits(ScrobberUIModel, _NativeComponent);
@@ -33462,7 +33467,7 @@
 	  }, {
 	    key: '__getCompletion',
 	    value: function __getCompletion(e) {
-	      return { completion: (0, _getClientX2.default)(e) / this.dimensions.width };
+	      return (0, _getClientX2.default)(e) / this.dimensions.width;
 	    }
 	  }, {
 	    key: '__onTouchStart',
@@ -33473,7 +33478,7 @@
 	      (0, _BatchUpdates.mutate)(function () {
 	        return disableTransition(_this3.scrobberTrackEL);
 	      });
-	      this.dispatchEvent((0, _customEvent2.default)('changeStart', this.__getCompletion(e)));
+	      this.dispatchEvent(completionEvent('changeStart', this.__getCompletion(e)));
 	    }
 	  }, {
 	    key: '__onTouchMove',
@@ -33489,7 +33494,7 @@
 	      (0, _BatchUpdates.mutate)(function () {
 	        return clearTransition(_this4.scrobberTrackEL);
 	      });
-	      this.dispatchEvent((0, _customEvent2.default)('changeEnd', this.__getCompletion(e)));
+	      this.dispatchEvent(completionEvent('changeEnd', this.__getCompletion(e)));
 	    }
 	  }]);
 
