@@ -40744,7 +40744,7 @@
 	    justifyContent: 'flex-end'
 	  },
 	  '.scrobberIcon': {
-	    height: _Themes.BlockHeight,
+	    height: _Themes.BlockHeight / 2,
 	    width: _Themes.BlockHeight,
 	    transform: 'translateY(-50%) translateX(50%)'
 	  }
