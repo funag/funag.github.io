@@ -37016,6 +37016,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	var Audio = exports.Audio = function Audio(_ref) {
 	  var url$ = _ref.url$;
 	  return url$.scan(function (last, src) {
@@ -37035,26 +37037,27 @@
 	  }, null);
 	};
 
+	var PLACEHOLDER = snabbdom.html(
+	  'div',
+	  null,
+	  P.PlaylistItem,
+	  P.PlaylistItem,
+	  P.PlaylistItem
+	);
+
 	var view = function view(_ref5) {
 	  var playlistDOM$ = _ref5.playlistDOM$;
 	  var isSeeking$ = _ref5.isSeeking$;
 
-	  return _rx.Observable.combineLatest(playlistDOM$.startWith(snabbdom.html(
-	    'div',
-	    null,
-	    P.PlaylistItem,
-	    P.PlaylistItem,
-	    P.PlaylistItem
-	  )), isSeeking$.map(function (x) {
-	    return x ? _playlist2.default.disableScroll : '';
-	  }).startWith('')).map(function (_ref6) {
+	  return _rx.Observable.combineLatest(playlistDOM$.startWith(PLACEHOLDER), isSeeking$.startWith(false)).map(function (_ref6) {
 	    var _ref7 = _slicedToArray(_ref6, 2);
 
 	    var view = _ref7[0];
 	    var disableScroll = _ref7[1];
 	    return snabbdom.html(
 	      'div',
-	      { classNames: [_playlist2.default.playlist, disableScroll] },
+	      { 'class': _defineProperty({}, _playlist2.default.disableScroll, disableScroll),
+	        classNames: [_playlist2.default.playlist] },
 	      view
 	    );
 	  });
@@ -37072,11 +37075,11 @@
 	  };
 	  return _rx.Observable.merge(AUDIO.events('pause').map(_('pause')), AUDIO.events('ended').map(_('ended')), reallyPlaying(AUDIO).map(_('reallyPlaying')), _rx.Observable.merge(AUDIO.events('loadStart'), AUDIO.events('seeking')).map(_('loadStart')));
 	};
-	var model = function model(_ref8) {
-	  var tracks$ = _ref8.tracks$;
-	  var DOM = _ref8.DOM;
-	  var STORE = _ref8.STORE;
-	  var AUDIO = _ref8.AUDIO;
+	var model = function model(_ref9) {
+	  var tracks$ = _ref9.tracks$;
+	  var DOM = _ref9.DOM;
+	  var STORE = _ref9.STORE;
+	  var AUDIO = _ref9.AUDIO;
 
 	  var audio$ = getAudioEvents(AUDIO);
 	  var selectedTrackId$ = STORE.select('track.selected').pluck('id');
@@ -37096,12 +37099,12 @@
 	  };
 	};
 
-	exports.default = function (_ref9) {
-	  var tracks$ = _ref9.tracks$;
-	  var DOM = _ref9.DOM;
-	  var STORE = _ref9.STORE;
-	  var AUDIO = _ref9.AUDIO;
-	  var isSeeking$ = _ref9.isSeeking$;
+	exports.default = function (_ref10) {
+	  var tracks$ = _ref10.tracks$;
+	  var DOM = _ref10.DOM;
+	  var STORE = _ref10.STORE;
+	  var AUDIO = _ref10.AUDIO;
+	  var isSeeking$ = _ref10.isSeeking$;
 
 	  var sources = { AUDIO: AUDIO, tracks$: tracks$, DOM: DOM, STORE: STORE };
 
@@ -37180,18 +37183,12 @@
 	var model = function model(_ref2) {
 	  var _OverlayMap;
 
-	  var _ref2$track = _ref2.track;
-	  var artwork_url = _ref2$track.artwork_url;
-	  var id = _ref2$track.id;
+	  var artwork_url = _ref2.track.artwork_url;
 	  var status = _ref2.status;
 
 	  var OverlayMap = (_OverlayMap = {}, _defineProperty(_OverlayMap, _OverlayStatus.DEFAULT, (0, _artwork.DefaultArtwork)(artwork_url)), _defineProperty(_OverlayMap, _OverlayStatus.PAUSED, (0, _artwork.PausedArtwork)()), _defineProperty(_OverlayMap, _OverlayStatus.PLAYING, (0, _artwork.PlayingArtwork)()), _OverlayMap);
 
-	  var icon$ = _rx.Observable.just(snabbdom.html(
-	    'div',
-	    { key: id },
-	    OverlayMap[status]
-	  ));
+	  var icon$ = _rx.Observable.just(OverlayMap[status]);
 	  return { icon$: icon$ };
 	};
 
