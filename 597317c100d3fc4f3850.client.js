@@ -33928,11 +33928,11 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
 	var _Themes = __webpack_require__(191);
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  'scrobber': {
 	    width: '100%'
 	  },
@@ -33967,7 +33967,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.createStyleSheet = exports.sheets = exports.createGlobal = exports.create = undefined;
+	exports.createStyleSheet = exports.globalSheet = exports.attachStyleSheet = undefined;
 
 	var _jss = __webpack_require__(162);
 
@@ -33987,15 +33987,12 @@
 
 	_jss2.default.setup((0, _jssPresetDefault2.default)());
 
-	var create = exports.create = function create(styles, options) {
+	var attachStyleSheet = exports.attachStyleSheet = function attachStyleSheet(styles, options) {
 	  var css = R.unapply(R.join(' '));
 	  Object.assign(css, _jss2.default.createStyleSheet(styles, options).classes);
 	  return css;
 	};
-	var createGlobal = exports.createGlobal = function createGlobal(styles) {
-	  return create(styles, { named: false });
-	};
-	var sheets = exports.sheets = _jss2.default.sheets;
+	var globalSheet = exports.globalSheet = _jss2.default.sheets;
 	var createStyleSheet = exports.createStyleSheet = function createStyleSheet(styles) {
 	  var jss = new _jss.Jss((0, _jssPresetDefault2.default)());
 	  return jss.createStyleSheet(styles, { named: false });
@@ -37442,11 +37439,11 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
 	var _Themes = __webpack_require__(191);
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  loaderContainer: {
 	    display: 'flex',
 	    alignItems: 'center',
@@ -37522,11 +37519,11 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
 	var _Themes = __webpack_require__(191);
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  container: {
 	    transform: 'translateZ(0)',
 	    boxShadow: _Themes.Palette.zDepth__1,
@@ -37880,7 +37877,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
 	var _StyleUtils = __webpack_require__(194);
 
@@ -37901,7 +37898,7 @@
 	var animation = function animation(time) {
 	  return { animation: 'playing-animation ' + time + 'ms infinite' };
 	};
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  container: _extends({}, S.block(_Themes.BlockHeight), {
 	    margin: _Themes.BlockSpace,
 	    backgroundColor: _Themes.Palette.bg__artwork
@@ -38194,9 +38191,9 @@
 
 	var _Themes = __webpack_require__(191);
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  trackDuration: {
 	    fontSize: '0.8rem',
 	    color: _Themes.Palette.fg__trackDetail__light
@@ -38219,7 +38216,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
 	var _Themes = __webpack_require__(191);
 
@@ -38231,7 +38228,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  trackDetailContainer: {
 	    flex: '1 0 0',
 	    overflow: 'hidden',
@@ -38423,7 +38420,7 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
 	var _Themes = __webpack_require__(191);
 
@@ -38431,7 +38428,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  playlistItem: {
 	    fontSize: '1rem',
 	    overflow: 'hidden'
@@ -38524,9 +38521,9 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  animatedBG: {
 	    background: 'linear-gradient(to right , rgb(245, 245, 245), #fff)',
 	    animation: 'horizontal-motion 1000ms linear infinite',
@@ -38579,9 +38576,9 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  playlist: {
 	    height: '100%',
 	    overflow: 'auto'
@@ -39012,7 +39009,7 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
 	var _Themes = __webpack_require__(191);
 
@@ -39020,7 +39017,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  input: {
 	    border: 'none',
 	    flex: '1 0 0',
@@ -39113,9 +39110,9 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
-	exports.default = (0, _CreateStyle.create)({
+	exports.default = (0, _JSSHelpers.attachStyleSheet)({
 	  main: {
 	    height: '100%'
 	  }
@@ -40538,9 +40535,9 @@
 	  value: true
 	});
 
-	var _CreateStyle = __webpack_require__(161);
+	var _JSSHelpers = __webpack_require__(161);
 
-	exports.default = (0, _CreateStyle.createStyleSheet)({
+	exports.default = (0, _JSSHelpers.createStyleSheet)({
 	  ':host': {
 	    height: '50px',
 	    width: '50px',
