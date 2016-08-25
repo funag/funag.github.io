@@ -24138,7 +24138,9 @@
 	  var header = _ref.header;
 	  var controls = _ref.controls;
 
-	  return _rx.Observable.merge(header.STORE, playlist.STORE, controls.STORE, STORE.select('track.data').map(_ramda2.default.head).take(1).map(_actions.SELECT_TRACK));
+	  return _rx.Observable.merge(header.STORE, playlist.STORE, controls.STORE, STORE.select('track.data').filter(function (x) {
+	    return x.length > 0;
+	  }).map(_ramda2.default.head).take(1).map(_actions.SELECT_TRACK));
 	};
 	var title = function title(STORE) {
 	  return STORE.select('track.selected').filter(Boolean).pluck('title');
@@ -38201,7 +38203,7 @@
 	  var HTTP = _ref2.HTTP;
 	  var STORE = _ref2.STORE;
 
-	  var filter$ = STORE.select('track.filter').startWith('').distinctUntilChanged();
+	  var filter$ = STORE.select('track.filter');
 
 	  var _intent = intent({ HTTP: HTTP, DOM: DOM, filter$: filter$ });
 
@@ -38643,7 +38645,7 @@
 	function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 	var isMoving = function isMoving(STORE) {
-	  return STORE.select('animationState.touchStarted').startWith(false);
+	  return STORE.select('animationState.touchStarted');
 	};
 
 	exports.default = function (_ref) {
@@ -38830,7 +38832,7 @@
 	    });
 	  }, function (dispose) {
 	    return dispose();
-	  });
+	  }).startWith(store.getState()).shareReplay(1);
 	  return function (actions) {
 	    actions.subscribe(function (action) {
 	      return store.dispatch(action);
