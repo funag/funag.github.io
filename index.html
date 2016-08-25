@@ -13,9 +13,6 @@
   animation: load8 1s infinite linear;
   border-left-color: rgba(0, 0, 0, 0.1);
 }
-.loader-714654009, .loader-714654009:after {
-  border-radius: 50%;
-}
 @keyframes load8 {
   0% {
     transform: rotate(0deg);
@@ -23,6 +20,9 @@
   100% {
     transform: rotate(360deg);
   }
+}
+.loader-714654009, .loader-714654009:after {
+  border-radius: 50%;
 }
 .controlsContainer-3720213122 {
   color: rgb(34, 34, 34);
@@ -56,28 +56,6 @@
   flex-direction: row;
   justify-content: space-between;
 }
-.playingAnimation-3204540200 li {
-  display: block;
-  flex-grow: 1;
-  margin-right: 1px;
-  background-color: rgb(34, 34, 34);
-  transform-origin: 0 100%;
-}
-.playingAnimation-3204540200 li:last-child {
-  margin-right: 0;
-}
-.playingAnimation-3204540200 li:nth-child(1) {
-  animation: playing-animation 1250ms infinite;
-}
-.playingAnimation-3204540200 li:nth-child(2) {
-  animation: playing-animation 1000ms infinite;
-}
-.playingAnimation-3204540200 li:nth-child(3) {
-  animation: playing-animation 750ms infinite;
-}
-.playingAnimation-3204540200.pause-animation li {
-  animation-play-state: paused;
-}
 @keyframes playing-animation {
   0% {
     transform: scaleY(0.1);
@@ -107,6 +85,28 @@
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: 50%;
+}
+.playingAnimation-3204540200 li {
+  display: block;
+  flex-grow: 1;
+  margin-right: 1px;
+  background-color: rgb(34, 34, 34);
+  transform-origin: 0 100%;
+}
+.playingAnimation-3204540200 li:last-child {
+  margin-right: 0;
+}
+.playingAnimation-3204540200 li:nth-child(1) {
+  animation: playing-animation 1250ms infinite;
+}
+.playingAnimation-3204540200 li:nth-child(2) {
+  animation: playing-animation 1000ms infinite;
+}
+.playingAnimation-3204540200 li:nth-child(3) {
+  animation: playing-animation 750ms infinite;
+}
+.playingAnimation-3204540200.pause-animation li {
+  animation-play-state: paused;
 }
 .trackDuration-826315269 {
   color: rgb(172, 172, 172);
@@ -141,6 +141,13 @@
 .trackInfo-2816264288 {
   color: rgb(34, 34, 34);
   border-bottom: 1px solid rgb(249, 246, 246);
+}
+.playlist-796534786 {
+  height: 100%;
+  overflow: auto;
+}
+.disableScroll-772068234 {
+  overflow: hidden;
 }
 .animatedBG-814673597 {
   animation: horizontal-motion 1000ms linear infinite;
@@ -193,13 +200,6 @@
     background-position: 0% 50%;
   }
 }
-.playlist-796534786 {
-  height: 100%;
-  overflow: auto;
-}
-.disableScroll-772068234 {
-  overflow: hidden;
-}
 .input-1163643174 {
   flex: 1 0 0;
   color: rgb(34, 34, 34);
@@ -222,6 +222,9 @@
 }
 .main-1651175958 {
   height: 100%;
+}
+.touchStarted-1039677531 .playlist-796534786 {
+  overflow: hidden;
 }
 body, html {
   width: 100%;
@@ -299,6 +302,6 @@ div, form {
   flex-wrap: wrap;
 }</style><script>
    if ('navigator' in window) {
-      navigator.serviceWorker.register('0f24f4cc8e9cc0864025.sw.js', {scope: '/'})
+      navigator.serviceWorker.register('f5a7f32cd6d78e6a8044.sw.js', {scope: '/'})
       .catch(err => console.error(err))
-   }</script><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="manifest" href="5dedb5aad89c8e7942788723f6a4985c.manifest.json"><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></head><body><div id="container"><div class="main-1651175958 flb col"><form class="search searchContainer-4039628537"><div class="inputContainer-1276098108 flb row jc_sa ai_c"><input type="text" class="input-1163643174" placeholder="Search"><div class="loaderContainer-321408580"><div class="loader-714654009"></div></div></div></form><div class="playlist-796534786"><div><div class="placeholder-2321705659 flb row jc_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-2321705659 flb row jc_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-2321705659 flb row jc_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div></div></div><div class="controlsContainer-3720213122 translateUp-4109177917 controls" style="height: nullpx"><x-slider completion="0"></x-slider><div class="flb row jc_s ai_c"><div><div class="loaderContainer-321408580"><div class="loader-714654009"></div></div></div><div></div></div></div></div></div><script src="1c31dc7cdddc7c0e30e2.client.js"></script></body></html>
+   }</script><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="manifest" href="5dedb5aad89c8e7942788723f6a4985c.manifest.json"><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></head><body><div id="container"><div class=""><form class="search searchContainer-4039628537"><div class="inputContainer-1276098108 flb row jc_sa ai_c"><input type="text" class="input-1163643174" placeholder="Search"><div class="loaderContainer-321408580"><div class="loader-714654009"></div></div></div></form><div class="playlist-796534786"><div><div class="placeholder-2321705659 flb row jc_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-2321705659 flb row jc_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-2321705659 flb row jc_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div></div></div><div class="controlsContainer-3720213122 translateUp-4109177917 controls" style="height: nullpx"><x-slider completion="0"></x-slider><div class="flb row jc_s ai_c"><div><div class="loaderContainer-321408580"><div class="loader-714654009"></div></div></div><div></div></div></div></div></div><script src="76b28a5e5eb8c481a45a.client.js"></script></body></html>
