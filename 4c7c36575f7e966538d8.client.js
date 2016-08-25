@@ -33161,7 +33161,7 @@
 	    var height = _ref3[3];
 	    return snabbdom.html(
 	      'div',
-	      { className: (0, _controls2.default)(_controls2.default.container, translate(show), 'controls'),
+	      { className: (0, _controls2.default)(_controls2.default.controlsContainer, translate(show), 'controls'),
 	        style: { height: show ? height + 'px' : null } },
 	      scrobber,
 	      playback
@@ -34246,7 +34246,7 @@
 
 	var _Themes = __webpack_require__(151);
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	exports.default = (0, _JSSHelpers.addRules)({
 	  loaderContainer: {
 	    display: 'flex',
 	    alignItems: 'center',
@@ -34284,7 +34284,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.createStyleSheet = exports.globalSheet = exports.attachStyleSheet = undefined;
+	exports.createStyleSheet = exports.globalSheet = exports.addRules = exports.addUnnamedRules = undefined;
 
 	var _jss = __webpack_require__(161);
 
@@ -34304,10 +34304,17 @@
 
 	_jss2.default.setup((0, _jssPresetDefault2.default)());
 
-	var attachStyleSheet = exports.attachStyleSheet = function attachStyleSheet(styles, options) {
-	  var css = R.unapply(R.join(' '));
-	  Object.assign(css, _jss2.default.createStyleSheet(styles, options).classes);
-	  return css;
+	var namedStyleSheet = _jss2.default.createStyleSheet({});
+	var unnamedStyleSheet = _jss2.default.createStyleSheet({}, { named: false });
+
+	var addUnnamedRules = exports.addUnnamedRules = function addUnnamedRules(rules) {
+	  unnamedStyleSheet.addRules(rules);
+	};
+	var addRules = exports.addRules = function addRules(rules) {
+	  var _css = R.unapply(R.join(' '));
+	  namedStyleSheet.addRules(rules);
+	  Object.assign(_css, namedStyleSheet.classes);
+	  return _css;
 	};
 	var globalSheet = exports.globalSheet = _jss2.default.sheets;
 	var createStyleSheet = exports.createStyleSheet = function createStyleSheet(styles) {
@@ -36906,8 +36913,8 @@
 
 	var _Themes = __webpack_require__(151);
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
-	  container: {
+	exports.default = (0, _JSSHelpers.addRules)({
+	  controlsContainer: {
 	    transform: 'translateZ(0)',
 	    boxShadow: _Themes.Palette.zDepth__1,
 	    backgroundColor: _Themes.Palette.bg__control,
@@ -37230,14 +37237,14 @@
 	var Placeholder = exports.Placeholder = function Placeholder() {
 	  return snabbdom.html(
 	    'div',
-	    { className: _artwork2.default.placeholder },
+	    { className: _artwork2.default.artworkPlaceholder },
 	    snabbdom.html('x-square-icon', { 'attrs-icon': 'music_note' })
 	  );
 	};
 	var ArtworkOverlay = exports.ArtworkOverlay = function ArtworkOverlay(isAnimated) {
 	  return snabbdom.html(
 	    'div',
-	    { className: S.css('fade-in', _artwork2.default.container) },
+	    { className: S.css('fade-in', _artwork2.default.artworkContainer) },
 	    snabbdom.html(
 	      'ul',
 	      { className: S.css(_artwork2.default.playingAnimation, isAnimated) },
@@ -37296,8 +37303,8 @@
 	var animation = function animation(time) {
 	  return { animation: 'playing-animation ' + time + 'ms infinite' };
 	};
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
-	  container: _extends({}, S.block(_Themes.BlockHeight), {
+	exports.default = (0, _JSSHelpers.addRules)({
+	  artworkContainer: _extends({}, S.block(_Themes.BlockHeight), {
 	    margin: _Themes.BlockSpace,
 	    backgroundColor: _Themes.Palette.bg__artwork
 	  }),
@@ -37323,7 +37330,7 @@
 	    '50%': { transform: 'scaleY(1)' },
 	    '100%': { transform: 'scaleY(0.1)' }
 	  },
-	  placeholder: _extends({}, S.block(50), {
+	  artworkPlaceholder: _extends({}, S.block(50), {
 	    margin: _Themes.BlockSpace,
 	    color: _Themes.Palette.fg__artwork,
 	    backgroundColor: _Themes.Palette.bg__artwork
@@ -37591,7 +37598,7 @@
 
 	var _JSSHelpers = __webpack_require__(160);
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	exports.default = (0, _JSSHelpers.addRules)({
 	  trackDuration: {
 	    fontSize: '0.8rem',
 	    color: _Themes.Palette.fg__trackDetail__light
@@ -37626,7 +37633,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	exports.default = (0, _JSSHelpers.addRules)({
 	  trackDetailContainer: {
 	    flex: '1 0 0',
 	    overflow: 'hidden',
@@ -37827,7 +37834,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	exports.default = (0, _JSSHelpers.addRules)({
 	  playlistItem: {
 	    fontSize: '1rem',
 	    overflow: 'hidden'
@@ -37922,7 +37929,9 @@
 
 	var _JSSHelpers = __webpack_require__(160);
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	var _Themes = __webpack_require__(151);
+
+	exports.default = (0, _JSSHelpers.addRules)({
 	  animatedBG: {
 	    background: 'linear-gradient(to right , rgb(245, 245, 245), #fff)',
 	    animation: 'horizontal-motion 1000ms linear infinite',
@@ -37930,8 +37939,8 @@
 	  },
 	  square50: {
 	    extend: 'animatedBG',
-	    height: '50px',
-	    width: '50px'
+	    height: _Themes.BlockHeight,
+	    width: _Themes.BlockHeight
 	  },
 	  line100: {
 	    extend: 'animatedBG',
@@ -37952,7 +37961,7 @@
 	    justifyContent: 'space-around'
 	  },
 	  placeholder: {
-	    padding: '10px',
+	    padding: _Themes.BlockSpace,
 	    alignItems: 'center',
 	    borderBottom: '1px solid rgb(249, 246, 246)',
 	    borderRadius: '2px'
@@ -37980,7 +37989,7 @@
 
 	var _JSSHelpers = __webpack_require__(160);
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	exports.default = (0, _JSSHelpers.addRules)({
 	  playlist: {
 	    height: '100%',
 	    overflow: 'auto'
@@ -38377,7 +38386,7 @@
 	var Form = _ramda2.default.curry(function (reset, icon) {
 	  return snabbdom.html(
 	    'form',
-	    { className: (0, _search2.default)('search', _search2.default.container) },
+	    { className: (0, _search2.default)('search', _search2.default.searchContainer) },
 	    snabbdom.html(
 	      'div',
 	      { className: (0, _search2.default)(_search2.default.inputContainer, 'flb row jc_sa ai_c') },
@@ -38417,7 +38426,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	exports.default = (0, _JSSHelpers.addRules)({
 	  input: {
 	    border: 'none',
 	    flex: '1 0 0',
@@ -38427,7 +38436,7 @@
 	    outline: 'none',
 	    backgroundColor: 'transparent'
 	  },
-	  container: {
+	  searchContainer: {
 	    paddingLeft: T.BlockSpace + 'px',
 	    boxShadow: T.Palette.zDepth__1,
 	    transform: 'translateZ(0)',
@@ -38512,7 +38521,7 @@
 
 	var _JSSHelpers = __webpack_require__(160);
 
-	exports.default = (0, _JSSHelpers.attachStyleSheet)({
+	exports.default = (0, _JSSHelpers.addRules)({
 	  main: {
 	    height: '100%'
 	  }
