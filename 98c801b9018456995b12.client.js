@@ -40055,7 +40055,10 @@
 
 	var split = __webpack_require__(250)
 	var ClassList = __webpack_require__(251)
-	__webpack_require__(253)
+
+	var w = typeof window === 'undefined' ? __webpack_require__(253) : window
+	var document = w.document
+	var Text = w.Text
 
 	function context () {
 
@@ -40143,10 +40146,20 @@
 	                    e.style.setProperty(s, val)
 	                  }))
 	                } else
-	                  e.style.setProperty(s, l[k][s])
+	                  var match = l[k][s].match(/(.*)\W+!important\W*$/);
+	                  if (match) {
+	                    e.style.setProperty(s, match[1], 'important')
+	                  } else {
+	                    e.style.setProperty(s, l[k][s])
+	                  }
 	              })(s, l[k][s])
 	            }
-	          } else if (k.substr(0, 5) === "data-") {
+	          } else if(k === 'attrs') {
+	            for (var v in l[k]) {
+	              e.setAttribute(v, l[k][v])
+	            }
+	          }
+	          else if (k.substr(0, 5) === "data-") {
 	            e.setAttribute(k, l[k])
 	          } else {
 	            e[k] = l[k]
@@ -40190,10 +40203,6 @@
 	  return el && el.nodeName && el.nodeType
 	}
 
-	function isText (el) {
-	  return el && el.nodeName === '#text' && el.nodeType == 3
-	}
-
 	function forEach (arr, fn) {
 	  if (arr.forEach) return arr.forEach(fn)
 	  for (var i = 0; i < arr.length; i++) fn(arr[i], i)
@@ -40202,6 +40211,8 @@
 	function isArray (arr) {
 	  return Object.prototype.toString.call(arr) == '[object Array]'
 	}
+
+
 
 
 /***/ },
