@@ -39958,7 +39958,10 @@
 
 	var split = __webpack_require__(248)
 	var ClassList = __webpack_require__(249)
-	__webpack_require__(251)
+	var htmlElement = __webpack_require__(251);
+
+	var document = htmlElement.document;
+	var Text = htmlElement.Text;
 
 	function context () {
 
@@ -40091,10 +40094,6 @@
 
 	function isNode (el) {
 	  return el && el.nodeName && el.nodeType
-	}
-
-	function isText (el) {
-	  return el && el.nodeName === '#text' && el.nodeType == 3
 	}
 
 	function forEach (arr, fn) {
