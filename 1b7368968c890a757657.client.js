@@ -37222,7 +37222,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = ({ title, user, duration }) => (0, _dom.h)(`div.${ _trackDetails2.default.trackDetailContainer }.flb.row.js_sb.ai_c`, [(0, _dom.h)(`div.${ _trackDetails2.default.trackDetail }`, [(0, _dom.h)(`div.${ _trackDetails2.default.title }`, [title]), (0, _dom.h)(`div.${ _trackDetails2.default.artist }`, [user.username]), (0, _trackDuration2.default)(duration)])]);
+	exports.default = ({ title, user, duration }) => (0, _dom.h)(`div.${ _trackDetails2.default.trackDetailContainer }.flb.row.js_sb.ai_c`, [(0, _dom.h)(`div.${ _trackDetails2.default.trackDetail }`, [(0, _dom.h)(`div.${ _trackDetails2.default.title }`, [title]), (0, _dom.h)(`div.${ _trackDetails2.default.artist }`, [user.username])]), (0, _trackDuration2.default)(duration)]);
 
 /***/ },
 /* 201 */
