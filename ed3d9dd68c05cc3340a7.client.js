@@ -64,19 +64,19 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _audio = __webpack_require__(227);
+	var _audio = __webpack_require__(228);
 
 	var _eventDriver = __webpack_require__(218);
 
-	var _reduxDriver = __webpack_require__(228);
+	var _reduxDriver = __webpack_require__(229);
 
-	var _documentTitle = __webpack_require__(244);
+	var _documentTitle = __webpack_require__(245);
 
-	var _reducers = __webpack_require__(245);
+	var _reducers = __webpack_require__(246);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	__webpack_require__(249);
+	__webpack_require__(250);
 
 	var _modules = __webpack_require__(33);
 
@@ -24098,13 +24098,11 @@
 	    HTTP: header.HTTP.map(_ramda2.default.merge({ accept: 'application/json' })),
 	    title: title(sources.STORE),
 	    EVENTS: header.EVENTS,
-	    AUDIO: audio({ playlist, controls }),
+	    AUDIO: (0, _mergePropStream2.default)('AUDIO', playlist, controls),
 	    DOM: (0, _main2.default)(_ramda2.default.merge(sources, { playlist, controls, header })),
-	    STORE: store({ STORE: sources.STORE, playlist, header, controls })
+	    STORE: (0, _mergePropStream2.default)('STORE', playlist, header, controls)
 	  };
 	};
-
-	var _rx = __webpack_require__(4);
 
 	var _ramda = __webpack_require__(143);
 
@@ -24118,8 +24116,6 @@
 
 	var _playlist2 = _interopRequireDefault(_playlist);
 
-	var _actions = __webpack_require__(147);
-
 	var _header = __webpack_require__(213);
 
 	var _header2 = _interopRequireDefault(_header);
@@ -24128,16 +24124,14 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
+	var _mergePropStream = __webpack_require__(227);
+
+	var _mergePropStream2 = _interopRequireDefault(_mergePropStream);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	const store = ({ STORE, playlist, header, controls }) => {
-	  return _rx.Observable.merge(header.STORE, playlist.STORE, controls.STORE, STORE.select('track.data').filter(x => x.length > 0).map(_ramda2.default.head).take(1).map(_actions.SELECT_TRACK));
-	};
 	const title = STORE => {
 	  return STORE.select('track.selected').filter(Boolean).pluck('title');
-	};
-	const audio = ({ playlist, controls }) => {
-	  return _rx.Observable.merge(playlist.AUDIO, controls.AUDIO);
 	};
 
 /***/ },
@@ -37578,7 +37572,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	const PLACEHOLDER = (0, _dom.h)('div', _ramda2.default.repeat(_placeholders.PlaylistItem, 3));
+	const PLACEHOLDER = [(0, _dom.h)('div', _ramda2.default.repeat(_placeholders.PlaylistItem, 3))];
 
 	exports.default = ({ playlistDOM$ }) => {
 	  return playlistDOM$.startWith(PLACEHOLDER).map(view => (0, _dom.h)(`div.${ _playlist2.default.playlist }`, view));
@@ -37633,7 +37627,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	const PlaylistItem = exports.PlaylistItem = (0, _dom.h)(`div.${ _placeholders2.default.placeholder }.flb.row.js_s`, [(0, _dom.h)(`div.${ _placeholders2.default.square50 }`, [(0, _dom.h)(`div.${ _placeholders2.default.lineCol }`, [(0, _dom.h)(`div.${ _placeholders2.default.line100 }`), (0, _dom.h)(`div.${ _placeholders2.default.line75 }`)])])]);
+	const PlaylistItem = exports.PlaylistItem = (0, _dom.h)(`div.${ _placeholders2.default.placeholder }.flb.row.js_s`, [(0, _dom.h)(`div.${ _placeholders2.default.square50 }`), (0, _dom.h)(`div.${ _placeholders2.default.lineCol }`, [(0, _dom.h)(`div.${ _placeholders2.default.line100 }`), (0, _dom.h)(`div.${ _placeholders2.default.line75 }`)])]);
 
 /***/ },
 /* 212 */
@@ -38194,6 +38188,30 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Created by tushar.mathur on 26/08/16.
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _ramda = __webpack_require__(143);
+
+	var _ramda2 = _interopRequireDefault(_ramda);
+
+	var _rx = __webpack_require__(4);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (prop, ...el) => _rx.Observable.merge(_ramda2.default.filter(Boolean, _ramda2.default.pluck(prop, el)));
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Created by tushar.mathur on 26/04/16.
 	 */
 	/* global Audio */
@@ -38256,7 +38274,7 @@
 	};
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38270,9 +38288,9 @@
 	});
 	exports.createReduxDriver = undefined;
 
-	var _redux = __webpack_require__(229);
+	var _redux = __webpack_require__(230);
 
-	var _reduxLogger = __webpack_require__(243);
+	var _reduxLogger = __webpack_require__(244);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
@@ -38299,7 +38317,7 @@
 	};
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -38307,27 +38325,27 @@
 	exports.__esModule = true;
 	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
 
-	var _createStore = __webpack_require__(230);
+	var _createStore = __webpack_require__(231);
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _combineReducers = __webpack_require__(238);
+	var _combineReducers = __webpack_require__(239);
 
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 
-	var _bindActionCreators = __webpack_require__(240);
+	var _bindActionCreators = __webpack_require__(241);
 
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 
-	var _applyMiddleware = __webpack_require__(241);
+	var _applyMiddleware = __webpack_require__(242);
 
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 
-	var _compose = __webpack_require__(242);
+	var _compose = __webpack_require__(243);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
-	var _warning = __webpack_require__(239);
+	var _warning = __webpack_require__(240);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -38351,7 +38369,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38360,11 +38378,11 @@
 	exports.ActionTypes = undefined;
 	exports["default"] = createStore;
 
-	var _isPlainObject = __webpack_require__(231);
+	var _isPlainObject = __webpack_require__(232);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _symbolObservable = __webpack_require__(236);
+	var _symbolObservable = __webpack_require__(237);
 
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
@@ -38618,12 +38636,12 @@
 	}
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(232),
-	    isHostObject = __webpack_require__(234),
-	    isObjectLike = __webpack_require__(235);
+	var getPrototype = __webpack_require__(233),
+	    isHostObject = __webpack_require__(235),
+	    isObjectLike = __webpack_require__(236);
 
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -38694,10 +38712,10 @@
 
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(233);
+	var overArg = __webpack_require__(234);
 
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -38706,7 +38724,7 @@
 
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports) {
 
 	/**
@@ -38727,7 +38745,7 @@
 
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports) {
 
 	/**
@@ -38753,7 +38771,7 @@
 
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports) {
 
 	/**
@@ -38788,18 +38806,18 @@
 
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
 	'use strict';
 
-	module.exports = __webpack_require__(237)(global || window || this);
+	module.exports = __webpack_require__(238)(global || window || this);
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38824,7 +38842,7 @@
 
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -38832,13 +38850,13 @@
 	exports.__esModule = true;
 	exports["default"] = combineReducers;
 
-	var _createStore = __webpack_require__(230);
+	var _createStore = __webpack_require__(231);
 
-	var _isPlainObject = __webpack_require__(231);
+	var _isPlainObject = __webpack_require__(232);
 
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-	var _warning = __webpack_require__(239);
+	var _warning = __webpack_require__(240);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -38957,7 +38975,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38987,7 +39005,7 @@
 	}
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39043,7 +39061,7 @@
 	}
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39054,7 +39072,7 @@
 
 	exports["default"] = applyMiddleware;
 
-	var _compose = __webpack_require__(242);
+	var _compose = __webpack_require__(243);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -39106,7 +39124,7 @@
 	}
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -39151,7 +39169,7 @@
 	}
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -39384,7 +39402,7 @@
 	module.exports = createLogger;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports) {
 
 	/**
@@ -39404,7 +39422,7 @@
 	};
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39417,17 +39435,17 @@
 	  value: true
 	});
 
-	var _redux = __webpack_require__(229);
+	var _redux = __webpack_require__(230);
 
-	var _trackReducers = __webpack_require__(246);
+	var _trackReducers = __webpack_require__(247);
 
 	var _trackReducers2 = _interopRequireDefault(_trackReducers);
 
-	var _animationStateReducers = __webpack_require__(247);
+	var _animationStateReducers = __webpack_require__(248);
 
 	var _animationStateReducers2 = _interopRequireDefault(_animationStateReducers);
 
-	var _viewReducers = __webpack_require__(248);
+	var _viewReducers = __webpack_require__(249);
 
 	var _viewReducers2 = _interopRequireDefault(_viewReducers);
 
@@ -39438,7 +39456,7 @@
 	});
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39460,6 +39478,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	const initialState = { selected: null, filter: '', data: [] };
+	const updateTrackData = (params, state) => {
+	  const state0 = _ramda2.default.assoc('data', params, state);
+	  if (state0.selected === null) {
+	    return _ramda2.default.assoc('selected', state0.data[0], state0);
+	  } else {
+	    return state0;
+	  }
+	};
 
 	exports.default = (state = initialState, { type, params }) => {
 	  switch (type) {
@@ -39470,14 +39496,14 @@
 	    case _actions.CLEAR_FILTER:
 	      return _ramda2.default.assoc('filter', '', state);
 	    case _actions.SET_TRACKS:
-	      return _ramda2.default.assoc('data', params, state);
+	      return updateTrackData(params, state);
 	    default:
 	      return state;
 	  }
 	};
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39512,7 +39538,7 @@
 	};
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39547,20 +39573,6 @@
 	};
 
 /***/ },
-/* 249 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by tushar.mathur on 23/08/16.
-	 */
-
-	'use strict';
-
-	__webpack_require__(250);
-
-	__webpack_require__(258);
-
-/***/ },
 /* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -39570,15 +39582,29 @@
 
 	'use strict';
 
-	var _registerWC = __webpack_require__(251);
+	__webpack_require__(251);
+
+	__webpack_require__(259);
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by tushar.mathur on 23/08/16.
+	 */
+
+	'use strict';
+
+	var _registerWC = __webpack_require__(252);
 
 	var _registerWC2 = _interopRequireDefault(_registerWC);
 
-	var _squareIcon = __webpack_require__(252);
+	var _squareIcon = __webpack_require__(253);
 
 	var _squareIcon2 = _interopRequireDefault(_squareIcon);
 
-	var _hyperscript = __webpack_require__(253);
+	var _hyperscript = __webpack_require__(254);
 
 	var _hyperscript2 = _interopRequireDefault(_hyperscript);
 
@@ -39603,7 +39629,7 @@
 	});
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports) {
 
 	/**
@@ -39623,7 +39649,7 @@
 	};
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39651,13 +39677,13 @@
 	});
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var split = __webpack_require__(254)
-	var ClassList = __webpack_require__(255)
+	var split = __webpack_require__(255)
+	var ClassList = __webpack_require__(256)
 
-	var w = typeof window === 'undefined' ? __webpack_require__(257) : window
+	var w = typeof window === 'undefined' ? __webpack_require__(258) : window
 	var document = w.document
 	var Text = w.Text
 
@@ -39817,7 +39843,7 @@
 
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports) {
 
 	/*!
@@ -39929,11 +39955,11 @@
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// contains, add, remove, toggle
-	var indexof = __webpack_require__(256)
+	var indexof = __webpack_require__(257)
 
 	module.exports = ClassList
 
@@ -40034,7 +40060,7 @@
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports) {
 
 	
@@ -40049,13 +40075,13 @@
 	};
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40064,33 +40090,33 @@
 
 	'use strict';
 
-	var _hyperscript = __webpack_require__(253);
+	var _hyperscript = __webpack_require__(254);
 
 	var _hyperscript2 = _interopRequireDefault(_hyperscript);
 
-	var _BoundingClientRect = __webpack_require__(259);
+	var _BoundingClientRect = __webpack_require__(260);
 
 	var _BoundingClientRect2 = _interopRequireDefault(_BoundingClientRect);
 
-	var _BatchUpdates = __webpack_require__(260);
+	var _BatchUpdates = __webpack_require__(261);
 
-	var _getClientX = __webpack_require__(263);
+	var _getClientX = __webpack_require__(264);
 
 	var _getClientX2 = _interopRequireDefault(_getClientX);
 
-	var _customEvent = __webpack_require__(264);
+	var _customEvent = __webpack_require__(265);
 
 	var _customEvent2 = _interopRequireDefault(_customEvent);
 
-	var _slider = __webpack_require__(265);
+	var _slider = __webpack_require__(266);
 
 	var _slider2 = _interopRequireDefault(_slider);
 
-	var _registerWC = __webpack_require__(251);
+	var _registerWC = __webpack_require__(252);
 
 	var _registerWC2 = _interopRequireDefault(_registerWC);
 
-	var _slider3 = __webpack_require__(266);
+	var _slider3 = __webpack_require__(267);
 
 	var _slider4 = _interopRequireDefault(_slider3);
 
@@ -40153,7 +40179,7 @@
 	});
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	/**
@@ -40169,7 +40195,7 @@
 	exports.default = el => el.getBoundingClientRect();
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40183,7 +40209,7 @@
 	});
 	exports.mutateLatest = exports.remove = exports.destroy = exports.mutate = exports.scheduleExecution = exports.executeTasks = undefined;
 
-	var _raf = __webpack_require__(261);
+	var _raf = __webpack_require__(262);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
@@ -40234,10 +40260,10 @@
 	};
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(262)
+	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(263)
 	  , root = typeof window === 'undefined' ? global : window
 	  , vendors = ['moz', 'webkit']
 	  , suffix = 'AnimationFrame'
@@ -40313,7 +40339,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.7.1
@@ -40352,7 +40378,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40374,7 +40400,7 @@
 	exports.default = _ramda2.default.compose(_ramda2.default.prop('clientX'), _ramda2.default.nth(0), _ramda2.default.prop('changedTouches'));
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports) {
 
 	/**
@@ -40395,7 +40421,7 @@
 	});
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40408,7 +40434,7 @@
 	  value: true
 	});
 
-	var _hyperscript = __webpack_require__(253);
+	var _hyperscript = __webpack_require__(254);
 
 	var _hyperscript2 = _interopRequireDefault(_hyperscript);
 
@@ -40421,7 +40447,7 @@
 	})));
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
