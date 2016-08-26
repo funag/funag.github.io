@@ -51,28 +51,26 @@
 
 	'use strict';
 
-	var _swToolbox = __webpack_require__(268);
+	var _swToolbox = __webpack_require__(267);
 
 	var _swToolbox2 = _interopRequireDefault(_swToolbox);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var swConfig = ({"env":"production","port":8081,"sw":{"debug":false,"preCache":true,"appCache":{"policy":"fastest"},"externalCache":{"policy":"fastest"}},"express":{"useGzipped":true},"webpack":{"devtool":false,"middleware":false,"optimizeJS":true,"compression":true},"baseURI":"https://api.soundcloud.com","proxy":false,"soundCloud":{"clientID":"1862b9bf02ed7c80d0f545f835ad8773"},"reduxLogger":false}).sw;
+	const swConfig = ({"env":"production","port":8081,"sw":{"debug":false,"preCache":true,"appCache":{"policy":"fastest"},"externalCache":{"policy":"fastest"}},"express":{"useGzipped":true},"webpack":{"devtool":false,"middleware":false,"optimizeJS":true,"compression":true},"baseURI":"https://api.soundcloud.com","proxy":false,"soundCloud":{"clientID":"1862b9bf02ed7c80d0f545f835ad8773"},"reduxLogger":false}).sw;
 
 	if (swConfig.appCache) {
-	  var policy = swConfig.appCache.policy;
-
+	  const { policy } = swConfig.appCache;
 	  _swToolbox2.default.router.get('/', _swToolbox2.default[policy]);
 	  _swToolbox2.default.router.get(/.*client.*/, _swToolbox2.default[policy]);
 	}
 
 	if (swConfig.externalCache) {
-	  var _policy = swConfig.externalCache.policy;
-
-	  _swToolbox2.default.router.get(/^.*googleapis.*$/, _swToolbox2.default[_policy]);
-	  _swToolbox2.default.router.get(/^.*gstatic.*$/, _swToolbox2.default[_policy]);
-	  _swToolbox2.default.router.get(/^.*bootstrapcdn.*$/, _swToolbox2.default[_policy]);
-	  _swToolbox2.default.router.get(/^.*snd\.cdn.*$/, _swToolbox2.default[_policy]);
+	  const { policy } = swConfig.externalCache;
+	  _swToolbox2.default.router.get(/^.*googleapis.*$/, _swToolbox2.default[policy]);
+	  _swToolbox2.default.router.get(/^.*gstatic.*$/, _swToolbox2.default[policy]);
+	  _swToolbox2.default.router.get(/^.*bootstrapcdn.*$/, _swToolbox2.default[policy]);
+	  _swToolbox2.default.router.get(/^.*snd\.cdn.*$/, _swToolbox2.default[policy]);
 	}
 
 	if (swConfig.debug) {
@@ -81,7 +79,7 @@
 
 /***/ },
 
-/***/ 268:
+/***/ 267:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -101,11 +99,11 @@
 	*/
 	'use strict';
 
-	__webpack_require__(269);
-	var options = __webpack_require__(270);
-	var router = __webpack_require__(271);
-	var helpers = __webpack_require__(275);
-	var strategies = __webpack_require__(277);
+	__webpack_require__(268);
+	var options = __webpack_require__(269);
+	var router = __webpack_require__(270);
+	var helpers = __webpack_require__(274);
+	var strategies = __webpack_require__(276);
 
 	helpers.debug('Service Worker Toolbox is loading');
 
@@ -212,7 +210,7 @@
 
 /***/ },
 
-/***/ 269:
+/***/ 268:
 /***/ function(module, exports) {
 
 	/**
@@ -321,7 +319,7 @@
 
 /***/ },
 
-/***/ 270:
+/***/ 269:
 /***/ function(module, exports) {
 
 	/*
@@ -368,7 +366,7 @@
 
 /***/ },
 
-/***/ 271:
+/***/ 270:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -388,7 +386,7 @@
 	*/
 	'use strict';
 
-	var Route = __webpack_require__(272);
+	var Route = __webpack_require__(271);
 
 	function regexEscape(s) {
 	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -502,7 +500,7 @@
 
 /***/ },
 
-/***/ 272:
+/***/ 271:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -525,7 +523,7 @@
 	// TODO: Use self.registration.scope instead of self.location
 	var url = new URL('./', self.location);
 	var basePath = url.pathname;
-	var pathRegexp = __webpack_require__(273);
+	var pathRegexp = __webpack_require__(272);
 
 	var Route = function(method, path, handler, options) {
 	  if (path instanceof RegExp) {
@@ -569,10 +567,10 @@
 
 /***/ },
 
-/***/ 273:
+/***/ 272:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(274)
+	var isarray = __webpack_require__(273)
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -1002,7 +1000,7 @@
 
 /***/ },
 
-/***/ 274:
+/***/ 273:
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -1012,7 +1010,7 @@
 
 /***/ },
 
-/***/ 275:
+/***/ 274:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1032,8 +1030,8 @@
 	*/
 	'use strict';
 
-	var globalOptions = __webpack_require__(270);
-	var idbCacheExpiration = __webpack_require__(276);
+	var globalOptions = __webpack_require__(269);
+	var idbCacheExpiration = __webpack_require__(275);
 
 	function debug(message, options) {
 	  options = options || {};
@@ -1159,7 +1157,7 @@
 
 /***/ },
 
-/***/ 276:
+/***/ 275:
 /***/ function(module, exports) {
 
 	/*
@@ -1324,7 +1322,7 @@
 
 /***/ },
 
-/***/ 277:
+/***/ 276:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1343,17 +1341,17 @@
 		limitations under the License.
 	*/
 	module.exports = {
-	  networkOnly: __webpack_require__(278),
-	  networkFirst: __webpack_require__(279),
-	  cacheOnly: __webpack_require__(280),
-	  cacheFirst: __webpack_require__(281),
-	  fastest: __webpack_require__(282)
+	  networkOnly: __webpack_require__(277),
+	  networkFirst: __webpack_require__(278),
+	  cacheOnly: __webpack_require__(279),
+	  cacheFirst: __webpack_require__(280),
+	  fastest: __webpack_require__(281)
 	};
 
 
 /***/ },
 
-/***/ 278:
+/***/ 277:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1372,7 +1370,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(275);
+	var helpers = __webpack_require__(274);
 
 	function networkOnly(request, values, options) {
 	  helpers.debug('Strategy: network only [' + request.url + ']', options);
@@ -1384,7 +1382,7 @@
 
 /***/ },
 
-/***/ 279:
+/***/ 278:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1403,8 +1401,8 @@
 	 limitations under the License.
 	*/
 	'use strict';
-	var globalOptions = __webpack_require__(270);
-	var helpers = __webpack_require__(275);
+	var globalOptions = __webpack_require__(269);
+	var helpers = __webpack_require__(274);
 
 	function networkFirst(request, values, options) {
 	  options = options || {};
@@ -1485,6 +1483,39 @@
 
 /***/ },
 
+/***/ 279:
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		Copyright 2014 Google Inc. All Rights Reserved.
+
+		Licensed under the Apache License, Version 2.0 (the "License");
+		you may not use this file except in compliance with the License.
+		You may obtain a copy of the License at
+
+	      http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.
+	*/
+	'use strict';
+	var helpers = __webpack_require__(274);
+
+	function cacheOnly(request, values, options) {
+	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
+	  return helpers.openCache(options).then(function(cache) {
+	    return cache.match(request);
+	  });
+	}
+
+	module.exports = cacheOnly;
+
+
+/***/ },
+
 /***/ 280:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1504,40 +1535,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(275);
-
-	function cacheOnly(request, values, options) {
-	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
-	  return helpers.openCache(options).then(function(cache) {
-	    return cache.match(request);
-	  });
-	}
-
-	module.exports = cacheOnly;
-
-
-/***/ },
-
-/***/ 281:
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		Copyright 2014 Google Inc. All Rights Reserved.
-
-		Licensed under the Apache License, Version 2.0 (the "License");
-		you may not use this file except in compliance with the License.
-		You may obtain a copy of the License at
-
-	      http://www.apache.org/licenses/LICENSE-2.0
-
-		Unless required by applicable law or agreed to in writing, software
-		distributed under the License is distributed on an "AS IS" BASIS,
-		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-		See the License for the specific language governing permissions and
-		limitations under the License.
-	*/
-	'use strict';
-	var helpers = __webpack_require__(275);
+	var helpers = __webpack_require__(274);
 
 	function cacheFirst(request, values, options) {
 	  helpers.debug('Strategy: cache first [' + request.url + ']', options);
@@ -1557,7 +1555,7 @@
 
 /***/ },
 
-/***/ 282:
+/***/ 281:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1576,8 +1574,8 @@
 	  limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(275);
-	var cacheOnly = __webpack_require__(280);
+	var helpers = __webpack_require__(274);
+	var cacheOnly = __webpack_require__(279);
 
 	function fastest(request, values, options) {
 	  helpers.debug('Strategy: fastest [' + request.url + ']', options);
