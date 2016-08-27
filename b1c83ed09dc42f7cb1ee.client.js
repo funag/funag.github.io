@@ -66,7 +66,7 @@
 
 	var _audio = __webpack_require__(228);
 
-	var _eventDriver = __webpack_require__(218);
+	var _eventDriver = __webpack_require__(217);
 
 	var _reduxDriver = __webpack_require__(229);
 
@@ -37739,31 +37739,29 @@
 
 	var _rx = __webpack_require__(4);
 
-	var _DOMUtils = __webpack_require__(215);
-
-	var U = _interopRequireWildcard(_DOMUtils);
-
-	var _searchIcon = __webpack_require__(216);
+	var _searchIcon = __webpack_require__(215);
 
 	var _searchIcon2 = _interopRequireDefault(_searchIcon);
 
-	var _eventDriver = __webpack_require__(218);
+	var _eventDriver = __webpack_require__(217);
 
 	var _actions = __webpack_require__(147);
 
-	var _search = __webpack_require__(219);
+	var _search = __webpack_require__(218);
 
 	var _search2 = _interopRequireDefault(_search);
 
-	var _httpSelectBody = __webpack_require__(221);
+	var _httpSelectBody = __webpack_require__(220);
 
 	var _httpSelectBody2 = _interopRequireDefault(_httpSelectBody);
 
-	var _search3 = __webpack_require__(222);
+	var _search3 = __webpack_require__(221);
+
+	var _inputValue = __webpack_require__(222);
+
+	var _inputValue2 = _interopRequireDefault(_inputValue);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	const event = (searchEl, inputEl) => _rx.Observable.merge(searchEl.events('submit').map(_eventDriver.PREVENT_DEFAULT), searchEl.events('submit').withLatestFrom(inputEl.elements(), (_, a) => a[0]).map(_eventDriver.BLUR));
 
@@ -37779,7 +37777,7 @@
 	  const tracks$ = (0, _httpSelectBody2.default)(HTTP, 'tracks');
 	  const searchEl = DOM.select('.search');
 	  const inputEl = DOM.select('.search input');
-	  const value$ = U.inputVal(searchEl).debounce(300);
+	  const value$ = (0, _inputValue2.default)(searchEl).debounce(300);
 	  const request$ = (0, _search3.requestTracks)(filter$);
 	  const events$ = event(searchEl, inputEl);
 	  const isLoading$ = isLoading(request$, tracks$);
@@ -37804,21 +37802,6 @@
 
 /***/ },
 /* 215 */
-/***/ function(module, exports) {
-
-	/**
-	 * Created by tushar.mathur on 26/04/16.
-	 */
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	const inputVal = exports.inputVal = $el => $el.events('keyup').map(x => x.target.value).distinctUntilChanged();
-
-/***/ },
-/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37831,7 +37814,7 @@
 	  value: true
 	});
 
-	var _searchIcon = __webpack_require__(217);
+	var _searchIcon = __webpack_require__(216);
 
 	exports.default = ({ hasValue$, isLoading$, DOM }) => {
 	  const clear$ = DOM.select('x-square-icon[icon="close"]').events('click');
@@ -37841,7 +37824,7 @@
 	};
 
 /***/ },
-/* 217 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37886,7 +37869,7 @@
 	})[icon];
 
 /***/ },
-/* 218 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37923,7 +37906,7 @@
 	};
 
 /***/ },
-/* 219 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37944,7 +37927,7 @@
 
 	var _dom = __webpack_require__(7);
 
-	var _search = __webpack_require__(220);
+	var _search = __webpack_require__(219);
 
 	var _search2 = _interopRequireDefault(_search);
 
@@ -37962,7 +37945,7 @@
 	};
 
 /***/ },
-/* 220 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38005,7 +37988,7 @@
 	});
 
 /***/ },
-/* 221 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38027,7 +38010,7 @@
 	exports.default = _ramda2.default.curry((HTTP, name) => HTTP.select(name).switch().pluck('body').share());
 
 /***/ },
-/* 222 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38053,6 +38036,22 @@
 	    category: 'tracks'
 	  }));
 	};
+
+/***/ },
+/* 222 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by tushar.mathur on 26/04/16.
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = $el => $el.events('keyup').map(x => x.target.value).distinctUntilChanged();
 
 /***/ },
 /* 223 */
@@ -40094,9 +40093,9 @@
 
 	var _hyperscript2 = _interopRequireDefault(_hyperscript);
 
-	var _BoundingClientRect = __webpack_require__(260);
+	var _boundingClientRect = __webpack_require__(260);
 
-	var _BoundingClientRect2 = _interopRequireDefault(_BoundingClientRect);
+	var _boundingClientRect2 = _interopRequireDefault(_boundingClientRect);
 
 	var _BatchUpdates = __webpack_require__(261);
 
@@ -40148,7 +40147,7 @@
 
 	  attachedCallback() {
 	    this.scrobberTrackEL = this.__shadowRoot.querySelector('.scrobberTrack');
-	    this.dimensions = (0, _BoundingClientRect2.default)(this.__shadowRoot.querySelector('div'));
+	    this.dimensions = (0, _boundingClientRect2.default)(this.__shadowRoot.querySelector('div'));
 	  },
 
 	  __updatePosition(completion) {
