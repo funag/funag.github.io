@@ -37994,9 +37994,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	const resetValue = () => (0, _dom.h)(`input.${ _search2.default.input }`, { type: 'text', placeholder: 'Search', value: '' });
+	const resetValue = () => (0, _dom.h)(`input.${ _search2.default.input }`, {
+	  attrs: { type: 'text', placeholder: 'Search' },
+	  props: { value: '' }
+	});
 
-	const ignoreValue = () => (0, _dom.h)(`input.${ _search2.default.input }`, { type: 'text', placeholder: 'Search' });
+	const ignoreValue = () => (0, _dom.h)(`input.${ _search2.default.input }`, {
+	  attrs: { type: 'text', placeholder: 'Search' }
+	});
 
 	const selectValue = _ramda2.default.ifElse(_ramda2.default.identity, resetValue, ignoreValue);
 	const Form = _ramda2.default.curry((reset, icon) => (0, _dom.h)(`form.${ _search2.default.searchContainer }.search`, [(0, _dom.h)(`div.${ _search2.default.inputContainer }.flb.row.jc_sa.ai_c`, [selectValue(reset), icon])]));
