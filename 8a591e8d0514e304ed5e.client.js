@@ -36792,10 +36792,12 @@
 
 	exports.default = (0, _JSSHelpers.addRules)({
 	  controlsContainer: {
-	    transform: 'translateZ(0)',
 	    boxShadow: _Themes.Palette.zDepth__1,
 	    backgroundColor: _Themes.Palette.bg__control,
-	    color: _Themes.Palette.fg__control
+	    color: _Themes.Palette.fg__control,
+	    position: 'fixed',
+	    width: '100%',
+	    bottom: 0
 	  },
 	  hide: {
 	    display: 'none'
@@ -37653,10 +37655,12 @@
 
 	var _JSSHelpers = __webpack_require__(161);
 
+	var _Themes = __webpack_require__(152);
+
 	exports.default = (0, _JSSHelpers.addRules)({
 	  playlist: {
-	    height: '100%',
-	    overflow: 'auto'
+	    marginTop: `${ _Themes.BlockHeight * 2 }px`,
+	    marginBottom: `${ _Themes.BlockHeight }px`
 	  },
 	  'disableScroll': {
 	    overflow: 'hidden'
@@ -38044,7 +38048,6 @@
 	  },
 	  searchContainer: {
 	    paddingLeft: `${ T.BlockSpace }px`,
-	    transform: 'translateZ(0)',
 	    color: T.Palette.fg__search,
 	    margin: '0'
 	  },
@@ -38168,7 +38171,10 @@
 	    backgroundColor: _Themes.Palette.bg__header,
 	    boxShadow: _Themes.Palette.zDepth__1,
 	    color: _Themes.Palette.fg__header,
-	    transform: 'translateZ(0)',
+	    position: 'fixed',
+	    top: 0,
+	    width: '100%',
+	    zIndex: 1,
 	    '& small': {
 	      color: _Themes.Palette.fg__trackDetail__light,
 	      fontSize: '0.6rem',
