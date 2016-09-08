@@ -36942,7 +36942,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = icon => (0, _dom.h)(`div.${ _squareIcon2.default.squareIcon }.${ icon }`, [(0, _dom.h)('funag-icon', { props: { icon } })]);
+	exports.default = icon => (0, _dom.h)(`div.${ _squareIcon2.default.squareIcon }`, { class: { [icon]: true } }, [(0, _dom.h)('funag-icon', { props: { icon } })]);
 
 /***/ },
 /* 193 */
@@ -37188,8 +37188,8 @@
 	const model = ({ track: { artwork_url }, status }) => {
 	  const OverlayMap = {
 	    [_OverlayStatus.DEFAULT]: (0, _artwork.DefaultArtwork)(artwork_url),
-	    [_OverlayStatus.PAUSED]: (0, _artwork.PausedArtwork)(),
-	    [_OverlayStatus.PLAYING]: (0, _artwork.PlayingArtwork)()
+	    [_OverlayStatus.PAUSED]: (0, _artwork.ArtworkOverlay)(true),
+	    [_OverlayStatus.PLAYING]: (0, _artwork.ArtworkOverlay)(false)
 	  };
 
 	  const icon$ = _rx.Observable.just(OverlayMap[status]);
@@ -37211,7 +37211,7 @@
 
 	// TODO: Rename file PlayListItem => Track
 
-	exports.default = sources => (0, _isolate2.default)(PlayListItem)(sources);
+	exports.default = sources => (0, _isolate2.default)(PlayListItem, sources.INDEX)(sources);
 
 /***/ },
 /* 199 */
@@ -37226,7 +37226,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.DefaultArtwork = exports.ArtworkBG = exports.PausedArtwork = exports.PlayingArtwork = exports.ArtworkOverlay = exports.Placeholder = undefined;
+	exports.DefaultArtwork = exports.ArtworkBG = exports.ArtworkOverlay = exports.Placeholder = undefined;
 
 	var _artwork = __webpack_require__(200);
 
@@ -37245,9 +37245,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	const Placeholder = exports.Placeholder = () => (0, _dom.h)(`div.${ _artwork2.default.artworkPlaceholder }`, [(0, _squareIcon2.default)('music_note')]);
-	const ArtworkOverlay = exports.ArtworkOverlay = isAnimated => (0, _dom.h)(`div.${ _artwork2.default.artworkContainer }.fade-in`, [(0, _dom.h)(`div.${ _artwork2.default.playingAnimation }.${ isAnimated }`, _ramda2.default.repeat((0, _dom.h)('li'), 3))]);
-	const PlayingArtwork = exports.PlayingArtwork = () => ArtworkOverlay('');
-	const PausedArtwork = exports.PausedArtwork = () => ArtworkOverlay('pause-animation');
+	const ArtworkOverlay = exports.ArtworkOverlay = isAnimated => (0, _dom.h)(`div.${ _artwork2.default.artworkContainer }.fade-in`, [(0, _dom.h)(`div.${ _artwork2.default.playingAnimation }`, { class: { 'pause-animation': isAnimated } }, _ramda2.default.repeat((0, _dom.h)('li'), 3))]);
 	const ArtworkBG = exports.ArtworkBG = url => (0, _dom.h)(`div.${ _artwork2.default.artwork }`, { style: { backgroundImage: `url(${ url })` } });
 	const DefaultArtwork = exports.DefaultArtwork = url => url ? ArtworkBG(url) : Placeholder();
 
@@ -37305,7 +37303,7 @@
 	      '&:nth-child(2)': animation(1000),
 	      '&:nth-child(3)': animation(750)
 	    },
-	    '&.pause-animation li': { animationPlayState: 'paused' }
+	    '&.pause-animation li': { animation: 'none', transform: 'scaleY(0.1)' }
 	  },
 	  '@keyframes playing-animation': {
 	    '0%': { transform: 'scaleY(0.1)' },
