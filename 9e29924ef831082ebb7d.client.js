@@ -15549,7 +15549,7 @@
 	        return _ramda2.default.assoc('selected', params, state);
 	      case 'CLICK':
 	        const node = (0, _findParent2.default)(_ramda2.default.prop('track'), params.target);
-	        return [node ? _ramda2.default.assoc('selected', node.track, state) : state, node ? _trackList.TrackChanged.of(node.track) : null];
+	        return [node ? _ramda2.default.merge(state, { selected: node.track, playing: false }) : state, node ? _trackList.TrackChanged.of(node.track) : null];
 	      default:
 	        return state;
 	    }
