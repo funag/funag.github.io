@@ -1,254 +1,4 @@
-<html><head><title>funag</title><style>.loaderContainer-321408580 {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.loader-714654009 {
-  width: 30px;
-  height: 30px;
-  border: 3px solid rgba(255, 255, 255, 1);
-  transform: translateZ(0);
-  animation: load8 1s infinite linear;
-  border-left-color: rgba(0, 0, 0, 0.1);
-}
-.loader-714654009, .loader-714654009:after {
-  border-radius: 50%;
-}
-@keyframes load8 {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.squareIcon-3114541924 {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-.controlsContainer-3646547836 {
-  color: rgb(34, 34, 34);
-  width: 100%;
-  bottom: 0;
-  position: fixed;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-  background-color: #EEE;
-}
-.hide-5987815 {
-  display: none;
-}
-.artworkContainer-108618841 {
-  width: 50px;
-  height: 50px;
-  margin: 6px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #F6F6F6;
-}
-.playingAnimation-2796476043 {
-  width: 17px;
-  height: 17px;
-  margin: 0;
-  display: flex;
-  padding: 0;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.playingAnimation-2796476043 li {
-  display: block;
-  flex-grow: 1;
-  margin-right: 1px;
-  background-color: rgb(34, 34, 34);
-  transform-origin: 0 100%;
-}
-.playingAnimation-2796476043.pause-animation li {
-  animation: none;
-  transform: scaleY(0.1);
-}
-.playingAnimation-2796476043 li:last-child {
-  margin-right: 0;
-}
-.playingAnimation-2796476043 li:nth-child(1) {
-  animation: playing-animation 1250ms infinite;
-}
-.playingAnimation-2796476043 li:nth-child(2) {
-  animation: playing-animation 1000ms infinite;
-}
-.playingAnimation-2796476043 li:nth-child(3) {
-  animation: playing-animation 750ms infinite;
-}
-@keyframes playing-animation {
-  0% {
-    transform: scaleY(0.1);
-  }
-  50% {
-    transform: scaleY(1);
-  }
-  100% {
-    transform: scaleY(0.1);
-  }
-}
-.artworkPlaceholder-1334151721 {
-  width: 50px;
-  color: rgb(172, 172, 172);
-  height: 50px;
-  margin: 6px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #F6F6F6;
-}
-.artwork-2708085301 {
-  width: 50px;
-  height: 50px;
-  margin: 6px;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: 50%;
-}
-.trackDuration-826315269 {
-  color: rgb(172, 172, 172);
-  font-size: 0.8rem;
-}
-.trackDetailContainer-1769433369 {
-  flex: 1 0 0;
-  overflow: hidden;
-  margin-right: 6px;
-}
-.trackDetail-1507891793 {
-  flex: 1 0 0;
-  overflow: hidden;
-  margin-right: 6px;
-}
-.title-237929881 {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.artist-2943762832 {
-  color: rgb(172, 172, 172);
-  overflow: hidden;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.playlistItem-1570386229 {
-  overflow: hidden;
-  font-size: 1rem;
-}
-.trackInfo-2816264288 {
-  color: rgb(34, 34, 34);
-  border-bottom: 1px solid rgb(249, 246, 246);
-}
-.playlist-1806788577 {
-  margin-top: 100px;
-  margin-bottom: 50px;
-}
-.disableScroll-772068234 {
-  overflow: hidden;
-}
-.animatedBG-814673597 {
-  animation: horizontal-motion 1000ms linear infinite;
-  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
-  background-size: 400%;
-}
-.square50-3604708811 {
-  width: 50px;
-  height: 50px;
-  animation: horizontal-motion 1000ms linear infinite;
-  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
-  background-size: 400%;
-}
-.line100-2432056525 {
-  width: 100%;
-  height: 1rem;
-  animation: horizontal-motion 1000ms linear infinite;
-  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
-  background-size: 400%;
-}
-.line75-2461449564 {
-  width: 75%;
-  height: 1rem;
-  animation: horizontal-motion 1000ms linear infinite;
-  background: linear-gradient(to right , rgb(245, 245, 245), #fff);
-  background-size: 400%;
-}
-.lineCol-2505690528 {
-  flex: 1 0 0;
-  margin: 0 10px;
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-.placeholder-2321705659 {
-  padding: 6px;
-  align-items: center;
-  border-bottom: 1px solid rgb(249, 246, 246);
-  border-radius: 2px;
-}
-@keyframes horizontal-motion {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-.input-1163643174 {
-  flex: 1 0 0;
-  color: rgb(34, 34, 34);
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  font-weight: 600;
-  background-color: transparent;
-}
-.searchContainer-2051844494 {
-  color: rgb(34, 34, 34);
-  margin: 0;
-  padding-left: 6px;
-}
-.inputContainer-1276098108 {
-  min-height: 50px;
-}
-.headerContainer-1925818057 {
-  top: 0;
-  color: rgb(34, 34, 34);
-  width: 100%;
-  z-index: 1;
-  position: fixed;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-  background-color: #EEE;
-}
-.headerContainer-1925818057 small {
-  color: rgb(172, 172, 172);
-  font-size: 0.6rem;
-  line-height: 1rem;
-}
-.headerText-4085337931 {
-  height: 50px;
-  display: flex;
-  padding-left: 6px;
-  flex-direction: column;
-  justify-content: center;
-}
-.main-1651175958 {
-  height: 100%;
-}
-body, html {
+<html><head><title>funag</title><style>body, html {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -284,6 +34,24 @@ div, form {
   to {
     opacity: 1;
   }
+}
+.headerContainer-250534609 {
+  color: rgb(34, 34, 34);
+  width: 100%;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  background-color: #EEE;
+}
+.headerContainer-250534609 small {
+  color: rgb(172, 172, 172);
+  font-size: 0.6rem;
+  line-height: 1rem;
+}
+.headerText-4085337931 {
+  height: 50px;
+  display: flex;
+  padding-left: 6px;
+  flex-direction: column;
+  justify-content: center;
 }</style><style>.flb.row {
   display: flex;
   flex-direction: row;
@@ -323,6 +91,6 @@ div, form {
   flex-wrap: wrap;
 }</style><script>
    if ('navigator' in window) {
-      navigator.serviceWorker.register('5096bae9ce6d5cadf279.sw.js', {scope: '/'})
-      .catch(err => console.error(err))
-   }</script><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="manifest" href="5dedb5aad89c8e7942788723f6a4985c.manifest.json"><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600"><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons"></head><body><div id="container"><div class="main-1651175958 flb col"><div class="headerContainer-1925818057"><div class="headerText-4085337931"><div><strong>Funag</strong></div><small>Unofficial soundcloud player</small></div><form class="searchContainer-2051844494 search"><div class="inputContainer-1276098108 flb row jc_sa ai_c"><input type="text" placeholder="Search" class="input-1163643174"><div class="search squareIcon-3114541924"><funag-icon icon="search"></funag-icon></div></div></form></div><div class="playlist-1806788577"><div><div class="placeholder-2321705659 flb row js_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-2321705659 flb row js_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div><div class="placeholder-2321705659 flb row js_s"><div class="square50-3604708811"></div><div class="lineCol-2505690528"><div class="line100-2432056525"></div><div class="line75-2461449564"></div></div></div></div></div><div class="controlsContainer-3646547836 control"><x-slider completion="0"></x-slider><div class="flb row jc_s ai_c"><div><div class="loaderContainer-321408580"><div class="loader-714654009"></div></div></div></div></div></div></div><script src="a237a477172e09b566b0.client.js"></script></body></html>
+      navigator.serviceWorker.register('6fdb41c8ac290d2157b2.sw.js', {scope: '/'})
+      .catch(function () {console.error(err)})
+   }</script><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><link rel="manifest" href="/manifest.json"><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600"></head><body><div class="headerContainer-250534609"><div class="headerText-4085337931"><div><strong>Funag</strong></div><small>Unofficial SoundCloud player</small></div></div><fg-app></fg-app><script src="91e87d36c4be515b962b.client.js"></script></body></html>

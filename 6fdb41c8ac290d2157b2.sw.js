@@ -51,7 +51,7 @@
 
 	'use strict';
 
-	var _swToolbox = __webpack_require__(283);
+	var _swToolbox = __webpack_require__(108);
 
 	var _swToolbox2 = _interopRequireDefault(_swToolbox);
 
@@ -59,19 +59,13 @@
 
 	const swConfig = ({"env":"production","port":8081,"sw":{"debug":false,"preCache":true,"appCache":{"policy":"fastest"},"externalCache":{"policy":"fastest"}},"express":{"useGzipped":true},"webpack":{"devtool":false,"middleware":false,"optimizeJS":true,"compression":true},"baseURI":"https://api.soundcloud.com","proxy":false,"soundCloud":{"clientID":"1862b9bf02ed7c80d0f545f835ad8773"},"reduxLogger":false}).sw;
 
-	if (swConfig.appCache) {
-	  const { policy } = swConfig.appCache;
-	  _swToolbox2.default.router.get('/', _swToolbox2.default[policy]);
-	  _swToolbox2.default.router.get(/.*client.*/, _swToolbox2.default[policy]);
-	}
+	_swToolbox2.default.router.get('/', _swToolbox2.default.fastest);
+	_swToolbox2.default.router.get(/.*client.*/, _swToolbox2.default.fastest);
 
-	if (swConfig.externalCache) {
-	  const { policy } = swConfig.externalCache;
-	  _swToolbox2.default.router.get(/^.*googleapis.*$/, _swToolbox2.default[policy]);
-	  _swToolbox2.default.router.get(/^.*gstatic.*$/, _swToolbox2.default[policy]);
-	  _swToolbox2.default.router.get(/^.*bootstrapcdn.*$/, _swToolbox2.default[policy]);
-	  _swToolbox2.default.router.get(/^.*snd\.cdn.*$/, _swToolbox2.default[policy]);
-	}
+	_swToolbox2.default.router.get(/^.*googleapis.*$/, _swToolbox2.default.fastest);
+	_swToolbox2.default.router.get(/^.*gstatic.*$/, _swToolbox2.default.fastest);
+	_swToolbox2.default.router.get(/^.*bootstrapcdn.*$/, _swToolbox2.default.fastest);
+	_swToolbox2.default.router.get(/^.*snd\.cdn.*$/, _swToolbox2.default.fastest);
 
 	if (swConfig.debug) {
 	  _swToolbox2.default.options.debug = true;
@@ -79,7 +73,7 @@
 
 /***/ },
 
-/***/ 283:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -99,11 +93,11 @@
 	*/
 	'use strict';
 
-	__webpack_require__(284);
-	var options = __webpack_require__(285);
-	var router = __webpack_require__(286);
-	var helpers = __webpack_require__(290);
-	var strategies = __webpack_require__(292);
+	__webpack_require__(109);
+	var options = __webpack_require__(110);
+	var router = __webpack_require__(111);
+	var helpers = __webpack_require__(115);
+	var strategies = __webpack_require__(117);
 
 	helpers.debug('Service Worker Toolbox is loading');
 
@@ -210,7 +204,7 @@
 
 /***/ },
 
-/***/ 284:
+/***/ 109:
 /***/ function(module, exports) {
 
 	/**
@@ -319,7 +313,7 @@
 
 /***/ },
 
-/***/ 285:
+/***/ 110:
 /***/ function(module, exports) {
 
 	/*
@@ -366,7 +360,7 @@
 
 /***/ },
 
-/***/ 286:
+/***/ 111:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -386,7 +380,7 @@
 	*/
 	'use strict';
 
-	var Route = __webpack_require__(287);
+	var Route = __webpack_require__(112);
 
 	function regexEscape(s) {
 	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -500,7 +494,7 @@
 
 /***/ },
 
-/***/ 287:
+/***/ 112:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -523,7 +517,7 @@
 	// TODO: Use self.registration.scope instead of self.location
 	var url = new URL('./', self.location);
 	var basePath = url.pathname;
-	var pathRegexp = __webpack_require__(288);
+	var pathRegexp = __webpack_require__(113);
 
 	var Route = function(method, path, handler, options) {
 	  if (path instanceof RegExp) {
@@ -567,10 +561,10 @@
 
 /***/ },
 
-/***/ 288:
+/***/ 113:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(289)
+	var isarray = __webpack_require__(114)
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -1000,7 +994,7 @@
 
 /***/ },
 
-/***/ 289:
+/***/ 114:
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -1010,7 +1004,7 @@
 
 /***/ },
 
-/***/ 290:
+/***/ 115:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1030,8 +1024,8 @@
 	*/
 	'use strict';
 
-	var globalOptions = __webpack_require__(285);
-	var idbCacheExpiration = __webpack_require__(291);
+	var globalOptions = __webpack_require__(110);
+	var idbCacheExpiration = __webpack_require__(116);
 
 	function debug(message, options) {
 	  options = options || {};
@@ -1157,7 +1151,7 @@
 
 /***/ },
 
-/***/ 291:
+/***/ 116:
 /***/ function(module, exports) {
 
 	/*
@@ -1322,7 +1316,7 @@
 
 /***/ },
 
-/***/ 292:
+/***/ 117:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1341,17 +1335,17 @@
 		limitations under the License.
 	*/
 	module.exports = {
-	  networkOnly: __webpack_require__(293),
-	  networkFirst: __webpack_require__(294),
-	  cacheOnly: __webpack_require__(295),
-	  cacheFirst: __webpack_require__(296),
-	  fastest: __webpack_require__(297)
+	  networkOnly: __webpack_require__(118),
+	  networkFirst: __webpack_require__(119),
+	  cacheOnly: __webpack_require__(120),
+	  cacheFirst: __webpack_require__(121),
+	  fastest: __webpack_require__(122)
 	};
 
 
 /***/ },
 
-/***/ 293:
+/***/ 118:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1370,7 +1364,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(290);
+	var helpers = __webpack_require__(115);
 
 	function networkOnly(request, values, options) {
 	  helpers.debug('Strategy: network only [' + request.url + ']', options);
@@ -1382,7 +1376,7 @@
 
 /***/ },
 
-/***/ 294:
+/***/ 119:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1401,8 +1395,8 @@
 	 limitations under the License.
 	*/
 	'use strict';
-	var globalOptions = __webpack_require__(285);
-	var helpers = __webpack_require__(290);
+	var globalOptions = __webpack_require__(110);
+	var helpers = __webpack_require__(115);
 
 	function networkFirst(request, values, options) {
 	  options = options || {};
@@ -1483,7 +1477,7 @@
 
 /***/ },
 
-/***/ 295:
+/***/ 120:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1502,7 +1496,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(290);
+	var helpers = __webpack_require__(115);
 
 	function cacheOnly(request, values, options) {
 	  helpers.debug('Strategy: cache only [' + request.url + ']', options);
@@ -1516,7 +1510,7 @@
 
 /***/ },
 
-/***/ 296:
+/***/ 121:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1535,7 +1529,7 @@
 		limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(290);
+	var helpers = __webpack_require__(115);
 
 	function cacheFirst(request, values, options) {
 	  helpers.debug('Strategy: cache first [' + request.url + ']', options);
@@ -1555,7 +1549,7 @@
 
 /***/ },
 
-/***/ 297:
+/***/ 122:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -1574,8 +1568,8 @@
 	  limitations under the License.
 	*/
 	'use strict';
-	var helpers = __webpack_require__(290);
-	var cacheOnly = __webpack_require__(295);
+	var helpers = __webpack_require__(115);
+	var cacheOnly = __webpack_require__(120);
 
 	function fastest(request, values, options) {
 	  helpers.debug('Strategy: fastest [' + request.url + ']', options);
