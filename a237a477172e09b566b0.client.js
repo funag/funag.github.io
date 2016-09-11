@@ -36391,6 +36391,8 @@
 	 * @return {(Object|Array|Number|String)} resulting value
 	 */
 	function iterate(prop, value, options) {
+	  if (!value) return value;
+
 	  var convertedValue = value;
 	  switch (value.constructor) {
 	    case Object:
@@ -36409,6 +36411,7 @@
 	    default:
 	      break;
 	  }
+
 	  return convertedValue;
 	}
 
